@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://World/Platform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://wallpaper.png" type="Texture" id=5]
 [ext_resource path="res://Replay/Replay.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Buzz/Buzz.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Ray/Ray.tscn" type="PackedScene" id=8]
 
 [node name="Main" type="Node2D"]
 
@@ -45,9 +44,6 @@ position = Vector2( 213, 102 )
 [node name="Platform2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 435, 98 )
 
-[node name="Zap" parent="." instance=ExtResource( 3 )]
-position = Vector2( 287, 86 )
-
 [node name="Ceiling" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, -95 )
 scale = Vector2( 1000, 50 )
@@ -56,8 +52,8 @@ scale = Vector2( 1000, 50 )
 position = Vector2( 0, 245 )
 scale = Vector2( 1000, 50 )
 
-[node name="Buzz" parent="." instance=ExtResource( 7 )]
-position = Vector2( 200, 72 )
+[node name="Zap" parent="." instance=ExtResource( 3 )]
+position = Vector2( 90, 91 )
 
-[node name="Ray" parent="." instance=ExtResource( 8 )]
-position = Vector2( 448, 71 )
+[node name="Buzz" parent="." instance=ExtResource( 7 )]
+position = Vector2( 137, 87 )

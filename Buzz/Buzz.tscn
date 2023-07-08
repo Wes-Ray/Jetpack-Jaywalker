@@ -52,7 +52,7 @@ playback_speed = 0.8
 anims/RESET = SubResource( 1 )
 anims/spin = SubResource( 2 )
 
-[node name="Blade" type="StaticBody2D" parent="."]
+[node name="Blade" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Blade"]
 shape = SubResource( 3 )
@@ -61,3 +61,5 @@ shape = SubResource( 3 )
 texture = ExtResource( 1 )
 hframes = 8
 frame = 1
+
+[connection signal="area_entered" from="Blade" to="." method="_on_Blade_area_entered"]

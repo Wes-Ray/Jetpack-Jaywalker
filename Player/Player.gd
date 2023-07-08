@@ -33,6 +33,10 @@ func _ready() -> void:
 	replay_object = GlobalReplayOrchestrator.register_player_to_record(self)
 
 
+func kill_player() -> void:
+	player_state = State.DEAD
+
+
 func _physics_process(_delta: float) -> void:
 	###############################################################################################
 	# INPUT

@@ -11,7 +11,11 @@ func _ready():
 	$AnimationPlayer.play("spin")
 
 
-func _process(delta):
+func _process(_delta):
 	blade.position.x = sin((float(i)/rotation_speed)*TAU) * radius
 	blade.position.y = cos((float(i)/rotation_speed)*TAU) * radius
 	i = (i+1) % rotation_speed
+
+
+func _on_Blade_area_entered(area: Area2D) -> void:
+	GlobalReplayOrchestrator.apply_damage(area)
