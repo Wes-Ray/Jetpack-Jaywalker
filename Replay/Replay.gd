@@ -13,8 +13,11 @@ var coord_record := PoolVector2Array()
 var INITIAL_ARRAY_SIZE = 2400
 
 var current_frame = 0
+var death_frame = 0
 var recording = true
 var _replaying = false
+
+onready var debug_misc_label = $debug_misc_label
 
 
 # note, will have to set all later coords to the same value as when the player is dead
@@ -27,9 +30,6 @@ func _ready() -> void:
 	coord_record.resize(INITIAL_ARRAY_SIZE)  # inits to all Vector2.ZERO
 	
 	GlobalReplayOrchestrator.register_record_object(self)
-	
-#	record_frame(State.DEAD, Vector2(2, 3))
-#	record_frame(State.IDLE, Vector2(4, 4))
 
 
 func record_frame(state, coord) -> void:
@@ -38,18 +38,27 @@ func record_frame(state, coord) -> void:
 
 	state_record.set(current_frame, state)
 	coord_record.set(current_frame, coord)
-	current_frame += 1
 	
 	if state == State.DEAD:
+		death_frame = current_frame
 		recording = false
+	
+	current_frame += 1
+	
+	if current_frame >= INITIAL_ARRAY_SIZE:
+		print("EXCEEDING ARRAY SIZE")
 
 func _physics_process(_delta: float) -> void:
 	if not _replaying:
 		return
+	if current_frame >= death_frame:
+		return
 	
-	print("coord: ", coord_record[current_frame])
 	position = coord_record[current_frame]
-	print("\tposition: ", position)
+	
+	debug_misc_label.text = str(position)
+	debug_misc_label.set_global_position(Vector2(0, 50))
+	
 	current_frame += 1
 
 
