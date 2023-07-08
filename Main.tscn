@@ -7,43 +7,28 @@
 [node name="Main" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 104, 144 )
+position = Vector2( 13, 131 )
 
 [node name="Platform" parent="." instance=ExtResource( 1 )]
-position = Vector2( 120, 296 )
+position = Vector2( 14, 145 )
 
 [node name="Platform10" parent="." instance=ExtResource( 1 )]
-position = Vector2( 384, 504 )
+position = Vector2( 101, 66 )
 
 [node name="Platform11" parent="." instance=ExtResource( 1 )]
-position = Vector2( 624, 424 )
+position = Vector2( 94, 202 )
+
+[node name="Platform13" parent="." instance=ExtResource( 1 )]
+position = Vector2( 234, 127 )
+
+[node name="Platform14" parent="." instance=ExtResource( 1 )]
+position = Vector2( 308, 160 )
 
 [node name="Platform12" parent="." instance=ExtResource( 1 )]
-position = Vector2( 904, 296 )
+position = Vector2( 142, 202 )
 
 [node name="Platform2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 336, 240 )
-
-[node name="Platform3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 584, 216 )
-
-[node name="Platform4" parent="." instance=ExtResource( 1 )]
-position = Vector2( 104, 592 )
-
-[node name="Platform5" parent="." instance=ExtResource( 1 )]
-position = Vector2( 296, 592 )
-
-[node name="Platform6" parent="." instance=ExtResource( 1 )]
-position = Vector2( 488, 592 )
-
-[node name="Platform7" parent="." instance=ExtResource( 1 )]
-position = Vector2( 680, 592 )
-
-[node name="Platform8" parent="." instance=ExtResource( 1 )]
-position = Vector2( 872, 592 )
-
-[node name="Platform9" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1064, 592 )
+position = Vector2( 190, 202 )
 
 [node name="Zap" parent="." instance=ExtResource( 3 )]
-position = Vector2( 309, 185 )
+position = Vector2( 260, 111 )

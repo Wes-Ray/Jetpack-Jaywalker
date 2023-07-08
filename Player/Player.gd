@@ -5,13 +5,13 @@ export var gravity_strength := 10.0
 export var max_fall_speed := 300.0
 #export var friction_strength := 25.0  # not used right now, friction is based on walk_force
 
-export var walk_force := 25.0
-export var max_walk_speed := 300.0
+export var walk_force := 12.0
+export var max_walk_speed := 150.0
 
-export var jump_strength := 200.0
+export var jump_strength := 150.0
 
 export var jet_pack_fuel_duration := 1.5
-export var max_jetpack_speed := 200.0
+export var max_jetpack_speed := 100.0
 export var jet_pack_thrust_strength := 60.0
 
 var velocity := Vector2.ZERO

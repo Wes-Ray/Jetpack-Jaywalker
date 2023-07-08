@@ -14,6 +14,14 @@ config/name="Jetpack Jaywalker"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=363
+window/size/height=212
+window/size/test_width=1024
+window/size/test_height=600
+window/stretch/mode="2d"
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
