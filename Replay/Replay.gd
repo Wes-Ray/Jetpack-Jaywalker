@@ -28,8 +28,6 @@ func _ready() -> void:
 	state_record.resize(INITIAL_ARRAY_SIZE)
 	state_record.fill(State.IDLE)
 	coord_record.resize(INITIAL_ARRAY_SIZE)  # inits to all Vector2.ZERO
-	
-	GlobalReplayOrchestrator.register_record_object(self)
 
 
 func record_frame(state, coord) -> void:
@@ -58,7 +56,7 @@ func _physics_process(_delta: float) -> void:
 	position = coord_record[current_frame]
 	
 	debug_misc_label.text = str(position)
-	debug_misc_label.set_global_position(Vector2(0, 50))
+#	debug_misc_label.set_global_position(Vector2(0, 50))
 	
 	current_frame += 1
 
@@ -67,4 +65,6 @@ func replay(start_frame = 0) -> void:
 	_replaying = true
 	current_frame = start_frame
 	
-	print("replay")
+	print("replay: ")
+	for i in range(10):
+		print("\t", coord_record[i])
