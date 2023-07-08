@@ -19,9 +19,17 @@ text = "none"
 align = 1
 
 [node name="debug_velocity_label" type="Label" parent="."]
-margin_left = -20.0
+margin_left = -30.0
 margin_top = -53.0
-margin_right = 20.0
+margin_right = 30.0
 margin_bottom = -39.0
-text = "vel"
+text = "(VEL, VEL)"
+align = 1
+
+[node name="debug_misc_label" type="Label" parent="."]
+margin_left = -20.0
+margin_top = -71.0
+margin_right = 20.0
+margin_bottom = -57.0
+text = "MISC"
 align = 1
