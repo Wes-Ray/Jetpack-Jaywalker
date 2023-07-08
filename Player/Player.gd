@@ -36,6 +36,8 @@ func _ready() -> void:
 
 
 func kill_player() -> void:
+	if player_state != State.DEAD:
+		animation_player.play("death")
 	player_state = State.DEAD
 
 
@@ -62,11 +64,12 @@ func _physics_process(_delta: float) -> void:
 #	debug_misc_label.text = str(is_jumping)
 	
 	# TODO: TEMPORARY PLAYER ANIMATION LOGIC, EVENTUALLY TIE TO STATES
-	if(walk_input) > 0:
-		animation_player.play("fly_forward")
-	else:
-		animation_player.play("fly_backward")
-	
+	if player_state!= State.DEAD:
+		if walk_input > 0:
+			animation_player.play("fly_forward")
+		else:
+			animation_player.play("fly_backward")
+		
 	###############################################################################################
 	# STATE MACHINE
 	###############################################################################################

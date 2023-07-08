@@ -18,6 +18,7 @@ var recording = true
 var _replaying = false
 
 onready var debug_misc_label = $debug_misc_label
+onready var animation_player = $AnimationPlayer
 
 
 # note, will have to set all later coords to the same value as when the player is dead
@@ -39,6 +40,7 @@ func record_frame(state, coord) -> void:
 	
 	if state == State.DEAD:
 		death_frame = current_frame
+		animation_player.play("death")
 		recording = false
 	
 	current_frame += 1

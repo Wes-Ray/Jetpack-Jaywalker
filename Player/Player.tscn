@@ -1,7 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/jetpacker.png" type="Texture" id=2]
+[ext_resource path="res://World/circle_light.png" type="Texture" id=3]
+[ext_resource path="res://Player/fly_forward.tres" type="Animation" id=4]
+[ext_resource path="res://Player/death.tres" type="Animation" id=5]
+[ext_resource path="res://Player/fly_backward.tres" type="Animation" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -10,38 +14,6 @@ height = 6.0
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 2.0
 height = 2.0
-
-[sub_resource type="Animation" id=3]
-resource_name = "fly_backward"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 1 ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "fly_forward"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -89,9 +61,18 @@ align = 1
 position = Vector2( 0, -2 )
 z_index = 1
 texture = ExtResource( 2 )
-hframes = 2
-frame = 1
+hframes = 9
+frame = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/fly_backward = SubResource( 3 )
-anims/fly_forward = SubResource( 4 )
+autoplay = "fly_forward"
+anims/death = ExtResource( 5 )
+anims/fly_backward = ExtResource( 6 )
+anims/fly_forward = ExtResource( 4 )
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 3 )
+texture_scale = 2.0
+color = Color( 0.92549, 0.588235, 0.588235, 1 )
+energy = 0.5
+shadow_enabled = true
