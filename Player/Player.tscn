@@ -59,7 +59,7 @@ shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 1.2, 1.2 )
+zoom = Vector2( 0.85, 0.85 )
 offset_h = 1.0
 
 [node name="debug_state_label" type="Label" parent="."]
