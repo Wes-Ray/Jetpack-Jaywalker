@@ -1,12 +1,11 @@
 extends KinematicBody2D
 
 
-# Note: a replay object must be instantiated before the player is instantiated
 var replay_object = null
 
 export var gravity_strength := 10.0
 export var max_fall_speed := 300.0
-#export var friction_strength := 25.0  # not used right now, friction is based on walk_force
+#export var friction_strength := 25.0  # not used right now, friction is based on walk_force instead
 
 export var walk_force := 12.0
 export var max_walk_speed := 150.0
@@ -30,19 +29,15 @@ onready var debug_misc_label := $debug_misc_label
 onready var animation_player := $AnimationPlayer
 
 
-func _ready() -> void:
-	GlobalReplayOrchestrator.register_player(self)
-	replay_object = GlobalReplayOrchestrator.get_current_record()
-
-
 func kill_player() -> void:
 	player_state = State.DEAD
 
 
-func respawn() -> void:
-	replay_object = GlobalReplayOrchestrator.get_current_record()
+# should be called from the Orchestrator
+func respawn(new_replay_obj, new_spawn_pos) -> void:
+	replay_object = new_replay_obj
 	player_state = State.IDLE
-	position = Vector2(20, 100)
+	position = new_spawn_pos
 
 
 func _physics_process(_delta: float) -> void:
@@ -52,14 +47,12 @@ func _physics_process(_delta: float) -> void:
 	
 	var walk_input = Input.get_axis("move_left", "move_right")
 	
-	# set player to is_jumping manuall between press and release, this allows game logic to turn
+	# set player to is_jumping manually between press and release, this allows game logic to turn
 	# off jumping if needed without inputs overriding game logic. 
 	if is_jumping and Input.is_action_just_released("move_jump"):
 		is_jumping = false
 	elif (not is_jumping) and Input.is_action_just_pressed("move_jump"):
 		is_jumping = true
-	
-#	debug_misc_label.text = str(is_jumping)
 	
 	# TODO: TEMPORARY PLAYER ANIMATION LOGIC, EVENTUALLY TIE TO STATES
 	if(walk_input) > 0:

@@ -18,4 +18,4 @@ func _process(_delta):
 
 
 func _on_Blade_area_entered(area: Area2D) -> void:
-	GlobalReplayOrchestrator.apply_damage(area)
+	Orchestrator.apply_damage(area)

@@ -16,7 +16,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GlobalReplayOrchestrator="*res://Replay/GlobalReplayOrchestrator.gd"
+Orchestrator="*res://Orchestrator.gd"
 
 [display]
 
