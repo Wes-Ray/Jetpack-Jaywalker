@@ -3,6 +3,7 @@ extends Node2D
 # save position coordinates and states for each frame, maybe direction if needed
 var state_record := PoolIntArray()
 var coord_record := PoolVector2Array()
+var input_record := PoolIntArray()
 
 # set to a large number to capture recorded frames
 var INITIAL_ARRAY_SIZE = 99999
@@ -24,18 +25,20 @@ func _ready() -> void:
 	state_record.resize(INITIAL_ARRAY_SIZE)
 	state_record.fill(Orchestrator.PlayerStates.IDLE)
 	coord_record.resize(INITIAL_ARRAY_SIZE)  # inits to all Vector2.ZERO
+	input_record.resize(INITIAL_ARRAY_SIZE)
+	input_record.fill(Orchestrator.Inputs.RIGHT)
 
 
-func record_frame(state, coord) -> void:
+func record_frame(state, coord, input) -> void:
 	if not recording:
 		return
-
+	
 	state_record.set(current_frame, state)
 	coord_record.set(current_frame, coord)
+	input_record.set(current_frame, input)
 	
 	if state == Orchestrator.PlayerStates.DEAD:
 		death_frame = current_frame
-		animation_player.play("death")
 		recording = false
 	
 	current_frame += 1
@@ -47,8 +50,37 @@ func record_frame(state, coord) -> void:
 func _physics_process(_delta: float) -> void:
 	if not _replaying:
 		return
-	if current_frame >= death_frame:
+	
+	if current_frame == death_frame:
+		animation_player.play("death")
+	elif current_frame > death_frame:
 		return
+	
+#	match state_record[current_frame]:
+#		Orchestrator.PlayerStates.IDLE: 
+#			pass
+#		Orchestrator.PlayerStates.RUN: 
+#			pass
+#		Orchestrator.PlayerStates.FALL: 
+#			pass
+#		Orchestrator.PlayerStates.JUMP: 
+#			pass
+#		Orchestrator.PlayerStates.JET_PACK: 
+#			pass
+#		Orchestrator.PlayerStates.ON_WALL: 
+#			pass
+#		Orchestrator.PlayerStates.DEAD: 
+#			pass
+#		Orchestrator.PlayerStates.PAUSED: 
+#			pass
+#		_: 
+#			pass
+	
+	if state_record[current_frame] != Orchestrator.PlayerStates.DEAD:
+		if input_record[current_frame] == Orchestrator.Inputs.RIGHT:
+			animation_player.play("fly_forward")
+		elif input_record[current_frame] == Orchestrator.Inputs.LEFT:
+			animation_player.play("fly_backward")
 	
 	position = coord_record[current_frame]
 	
@@ -61,6 +93,7 @@ func _physics_process(_delta: float) -> void:
 func replay(start_frame = 0) -> void:
 	_replaying = true
 	current_frame = start_frame
+	$AnimationPlayer.play("fly_forward")
 	
 #	print("replay: ")
 #	for i in range(10):

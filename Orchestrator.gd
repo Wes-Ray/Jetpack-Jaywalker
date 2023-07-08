@@ -1,6 +1,7 @@
 extends Node
 
 enum PlayerStates {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD, PAUSED}
+enum Inputs {LEFT = 1, RIGHT = 0}
 
 var record_objects := []
 var current_record := -1  # current player saves to this record

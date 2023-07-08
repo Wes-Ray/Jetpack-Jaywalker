@@ -59,6 +59,13 @@ func _physics_process(_delta: float) -> void:
 	###############################################################################################
 	
 	var walk_input = Input.get_axis("move_left", "move_right")
+	var current_input : int
+	# TODO: TEMPORARY PLAYER ANIMATION LOGIC, EVENTUALLY TIE TO STATES
+	if player_state != Orchestrator.PlayerStates.DEAD:
+		if walk_input > 0:
+			current_input = Orchestrator.Inputs.RIGHT
+		else:
+			current_input = Orchestrator.Inputs.LEFT
 	
 	# set player to is_jumping manually between press and release, this allows game logic to turn
 	# off jumping if needed without inputs overriding game logic. 
@@ -67,12 +74,7 @@ func _physics_process(_delta: float) -> void:
 	elif (not is_jumping) and Input.is_action_just_pressed("move_jump"):
 		is_jumping = true
 	
-	# TODO: TEMPORARY PLAYER ANIMATION LOGIC, EVENTUALLY TIE TO STATES
-	if player_state!= Orchestrator.PlayerStates.DEAD:
-		if walk_input > 0:
-			animation_player.play("fly_forward")
-		else:
-			animation_player.play("fly_backward")
+	
 		
 	###############################################################################################
 	# STATE MACHINE
@@ -126,6 +128,15 @@ func _physics_process(_delta: float) -> void:
 		
 		_:
 			debug_state_label.text = "ERROR"
+	###############################################################################################
+	# ANIMATION
+	###############################################################################################
+	if player_state != Orchestrator.PlayerStates.DEAD:
+		if current_input == Orchestrator.Inputs.RIGHT:
+			animation_player.play("fly_forward")
+		elif current_input == Orchestrator.Inputs.LEFT:
+			animation_player.play("fly_backward")
+	
 	
 	###############################################################################################
 	# MOVEMENT
@@ -146,4 +157,4 @@ func _physics_process(_delta: float) -> void:
 	###############################################################################################
 	# REPLAY
 	###############################################################################################
-	replay_object.record_frame(player_state, position)
+	replay_object.record_frame(player_state, position, current_input)
