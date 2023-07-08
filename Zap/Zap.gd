@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends Area2D
 
 
 # Declare member variables here. Examples:
@@ -14,3 +14,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_Zap_area_entered(area: Area2D) -> void:
+	GlobalReplayOrchestrator.apply_damage(area)

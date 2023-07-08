@@ -9,8 +9,8 @@ enum State {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD}
 var state_record := PoolIntArray()
 var coord_record := PoolVector2Array()
 
-# 60 fps * 10s = 600 elements, 4x for room (guess)
-var INITIAL_ARRAY_SIZE = 2400
+# set to a large number to capture recorded frames
+var INITIAL_ARRAY_SIZE = 99999
 
 var current_frame = 0
 var death_frame = 0
@@ -47,6 +47,7 @@ func record_frame(state, coord) -> void:
 	
 	if current_frame >= INITIAL_ARRAY_SIZE:
 		print("EXCEEDING ARRAY SIZE")
+
 
 func _physics_process(_delta: float) -> void:
 	if not _replaying:
