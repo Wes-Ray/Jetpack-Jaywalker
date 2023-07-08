@@ -15,6 +15,7 @@ func _physics_process(delta):
 func laser_fire():
 	firing = true
 	update_laser()
+	$CollisionShape2D.disabled = false
 	$Sprite.visible = true
 	
 	
@@ -31,8 +32,9 @@ func update_laser():
 func laser_off():
 	firing = false
 	$RayCast2D.enabled = false
-	$CollisionShape2D.position = self.position
+	$CollisionShape2D.position.y = 0
 	$CollisionShape2D.shape.extents.y = 0
+	$CollisionShape2D.disabled = true
 	$Sprite.visible = false
 
 

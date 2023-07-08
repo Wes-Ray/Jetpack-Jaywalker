@@ -20,9 +20,6 @@ texture = ExtResource( 5 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 4000, 140 )
 
-[node name="Node2D" parent="Wallpaper" instance=ExtResource( 10 )]
-position = Vector2( 123, 18 )
-
 [node name="Replay" parent="." instance=ExtResource( 6 )]
 position = Vector2( 17, 102 )
 
@@ -65,7 +62,10 @@ scale = Vector2( 1000, 50 )
 position = Vector2( 200, 72 )
 
 [node name="Ray" parent="." instance=ExtResource( 8 )]
-position = Vector2( 335, 37 )
+position = Vector2( 333, 51 )
 
 [node name="Box" parent="." instance=ExtResource( 9 )]
-position = Vector2( -10, 37 )
+position = Vector2( -9, 45 )
+
+[node name="Laser" parent="." instance=ExtResource( 10 )]
+position = Vector2( 85, 93 )

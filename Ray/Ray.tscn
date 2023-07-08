@@ -19,19 +19,19 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.5 ),
+"times": PoolRealArray( 0, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0, 1 ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath(".")
+tracks/1/path = NodePath("Area2D")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1, 1.5 ),
+"times": PoolRealArray( 0, 1, 2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],
@@ -46,39 +46,39 @@ tracks/1/keys = {
 }
 
 [node name="Ray" type="Node2D"]
-script = ExtResource( 3 )
 
 [node name="GunSprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 hframes = 2
+frame = 1
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( -15, 0 )
+script = ExtResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -25, 0 )
 shape = SubResource( 1 )
 
 [node name="FireSprite" type="Sprite" parent="Area2D"]
 visible = false
+position = Vector2( -25, 0 )
 texture = ExtResource( 5 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 50, 7 )
 
 [node name="WarnSprite" type="Sprite" parent="Area2D"]
 visible = false
+position = Vector2( -25, 0 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 50, 7 )
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2( -15, 0 )
+[node name="RayCast2D" type="RayCast2D" parent="Area2D"]
 cast_to = Vector2( -1000, 0 )
-
-[node name="RayBegin" type="Position2D" parent="."]
-position = Vector2( -15, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "fire"
 anims/fire = SubResource( 2 )
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_entered" from="Area2D" to="Area2D" method="_on_Area2D_area_entered"]
