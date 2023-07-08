@@ -31,11 +31,18 @@ onready var animation_player := $AnimationPlayer
 
 
 func _ready() -> void:
-	replay_object = GlobalReplayOrchestrator.register_player_to_record(self)
+	GlobalReplayOrchestrator.register_player(self)
+	replay_object = GlobalReplayOrchestrator.get_current_record()
 
 
 func kill_player() -> void:
 	player_state = State.DEAD
+
+
+func respawn() -> void:
+	replay_object = GlobalReplayOrchestrator.get_current_record()
+	player_state = State.IDLE
+	position = Vector2(20, 100)
 
 
 func _physics_process(_delta: float) -> void:
@@ -106,10 +113,6 @@ func _physics_process(_delta: float) -> void:
 		
 		State.DEAD:
 			debug_state_label.text = "DEAD"
-			# code for freezing player in place
-			velocity = Vector2.ZERO
-			max_walk_speed = 0
-			max_fall_speed = 0
 		
 		_:
 			debug_state_label.text = "ERROR"
@@ -120,8 +123,12 @@ func _physics_process(_delta: float) -> void:
 	# note: consider move_and_slide_with_snap() if the player goes down ramps
 	# note: may need to move velocity updates into states themselves, but could also just adjust
 	# movement multipliers in each state as appropriate
-	velocity.x = move_toward(velocity.x, walk_input * max_walk_speed, walk_force)
-	velocity.y = move_toward(velocity.y, max_fall_speed, gravity_strength)
+	
+	if player_state == State.DEAD:
+		velocity = Vector2.ZERO
+	else:
+		velocity.x = move_toward(velocity.x, walk_input * max_walk_speed, walk_force)
+		velocity.y = move_toward(velocity.y, max_fall_speed, gravity_strength)
 	
 	debug_velocity_label.text = str(velocity)
 	velocity = move_and_slide(velocity, Vector2.UP)
