@@ -48,4 +48,4 @@ func ray_off():
 
 
 func _on_Area2D_area_entered(area):
-	GlobalReplayOrchestrator.apply_damage(area)
+	Orchestrator.apply_damage(area)
