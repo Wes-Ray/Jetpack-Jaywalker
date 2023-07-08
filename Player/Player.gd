@@ -30,9 +30,8 @@ onready var camera := $Camera2D
 
 
 func kill_player() -> void:
-	if player_state != State.DEAD:
+	if player_state != Orchestrator.PlayerStates.DEAD:
 		animation_player.play("death")
-	player_state = State.DEAD
 	player_state = Orchestrator.PlayerStates.DEAD
 
 
@@ -69,7 +68,7 @@ func _physics_process(_delta: float) -> void:
 		is_jumping = true
 	
 	# TODO: TEMPORARY PLAYER ANIMATION LOGIC, EVENTUALLY TIE TO STATES
-	if player_state!= State.DEAD:
+	if player_state!= Orchestrator.PlayerStates.DEAD:
 		if walk_input > 0:
 			animation_player.play("fly_forward")
 		else:
