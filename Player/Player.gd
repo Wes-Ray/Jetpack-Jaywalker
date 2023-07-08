@@ -27,6 +27,7 @@ var is_jumping = false
 onready var debug_state_label := $debug_state_label
 onready var debug_velocity_label := $debug_velocity_label
 onready var debug_misc_label := $debug_misc_label
+onready var animation_player := $AnimationPlayer
 
 
 func _ready() -> void:
@@ -52,6 +53,12 @@ func _physics_process(_delta: float) -> void:
 		is_jumping = true
 	
 #	debug_misc_label.text = str(is_jumping)
+	
+	# TODO: TEMPORARY PLAYER ANIMATION LOGIC, EVENTUALLY TIE TO STATES
+	if(walk_input) > 0:
+		animation_player.play("fly_forward")
+	else:
+		animation_player.play("fly_backward")
 	
 	###############################################################################################
 	# STATE MACHINE
