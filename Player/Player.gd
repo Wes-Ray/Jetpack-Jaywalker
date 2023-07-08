@@ -1,6 +1,9 @@
 extends KinematicBody2D
 
 
+# Note: a replay object must be instantiated before the player is instantiated
+var replay_object = null
+
 export var gravity_strength := 10.0
 export var max_fall_speed := 300.0
 #export var friction_strength := 25.0  # not used right now, friction is based on walk_force
@@ -16,7 +19,8 @@ export var jet_pack_thrust_strength := 60.0
 
 var velocity := Vector2.ZERO
 
-enum State {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL}
+# Note: MUST match States in Replay.gd, consider moving to global/parent class if needed
+enum State {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD}
 var player_state = State.IDLE
 var is_jumping = false
 
@@ -26,7 +30,7 @@ onready var debug_misc_label := $debug_misc_label
 
 
 func _ready() -> void:
-	pass
+	replay_object = GlobalReplayOrchestrator.register_player_to_record(self)
 
 
 func _physics_process(_delta: float) -> void:
@@ -89,6 +93,12 @@ func _physics_process(_delta: float) -> void:
 		State.ON_WALL:
 			debug_state_label.text = "ON_WALL"
 		
+		State.DEAD:
+			debug_state_label.text = "DEAD"
+			# code for freezing player in place
+			max_walk_speed = 0
+			max_fall_speed = 0
+		
 		_:
 			debug_state_label.text = "ERROR"
 	
@@ -103,3 +113,8 @@ func _physics_process(_delta: float) -> void:
 	
 	debug_velocity_label.text = str(velocity)
 	velocity = move_and_slide(velocity, Vector2.UP)
+	
+	###############################################################################################
+	# REPLAY
+	###############################################################################################
+	replay_object.record_frame(player_state, position)

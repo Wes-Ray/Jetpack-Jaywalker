@@ -15,31 +15,30 @@ shape = SubResource( 1 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 0.6, 0.6 )
+zoom = Vector2( 1.2, 1.2 )
 offset_h = 1.0
 
 [node name="debug_state_label" type="Label" parent="."]
 margin_left = -20.0
-margin_top = -37.0
+margin_top = -25.0
 margin_right = 20.0
-margin_bottom = -23.0
+margin_bottom = -11.0
 text = "none"
 align = 1
 
 [node name="debug_velocity_label" type="Label" parent="."]
 margin_left = -30.0
-margin_top = -53.0
+margin_top = -41.0
 margin_right = 30.0
-margin_bottom = -39.0
+margin_bottom = -27.0
 text = "(VEL, VEL)"
 align = 1
 
 [node name="debug_misc_label" type="Label" parent="."]
 margin_left = -20.0
-margin_top = -71.0
+margin_top = 10.0
 margin_right = 20.0
-margin_bottom = -57.0
-text = "MISC"
+margin_bottom = 24.0
 align = 1
 
 [node name="Sprite" type="Sprite" parent="."]
