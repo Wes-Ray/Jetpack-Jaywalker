@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/box.png-196cb2b6d7422a4ab3b9c60b5a994fe3.stex"
+path="res://.import/square.png-999d588869dbb5810f898389612e4e86.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://box.png"
-dest_files=[ "res://.import/box.png-196cb2b6d7422a4ab3b9c60b5a994fe3.stex" ]
+source_file="res://World/square.png"
+dest_files=[ "res://.import/square.png-999d588869dbb5810f898389612e4e86.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

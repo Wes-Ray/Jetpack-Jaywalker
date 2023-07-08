@@ -1,12 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://box.png" type="Texture" id=1]
+[ext_resource path="res://World/box.png" type="Texture" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
 
 [node name="Box" type="StaticBody2D"]
 position = Vector2( 241, 45 )
+collision_mask = 2
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
