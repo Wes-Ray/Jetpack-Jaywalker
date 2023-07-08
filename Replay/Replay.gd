@@ -1,10 +1,5 @@
 extends Node2D
 
-
-# Note: MUST match States in Player.gd, consider moving to global/parent class if needed
-# States or 0 indexed ints
-enum State {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD}
-
 # save position coordinates and states for each frame, maybe direction if needed
 var state_record := PoolIntArray()
 var coord_record := PoolVector2Array()
@@ -27,7 +22,7 @@ onready var animation_player = $AnimationPlayer
 
 func _ready() -> void:
 	state_record.resize(INITIAL_ARRAY_SIZE)
-	state_record.fill(State.IDLE)
+	state_record.fill(Orchestrator.PlayerStates.IDLE)
 	coord_record.resize(INITIAL_ARRAY_SIZE)  # inits to all Vector2.ZERO
 
 
@@ -38,7 +33,7 @@ func record_frame(state, coord) -> void:
 	state_record.set(current_frame, state)
 	coord_record.set(current_frame, coord)
 	
-	if state == State.DEAD:
+	if state == Orchestrator.PlayerStates.DEAD:
 		death_frame = current_frame
 		animation_player.play("death")
 		recording = false

@@ -1,14 +1,16 @@
 extends Node
 
-# DEBUG PURPOSES
-# Note: MUST match States in Replay.gd, consider moving to global/parent class if needed
-enum State {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD}
+enum PlayerStates {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD, PAUSED}
 
 var record_objects := []
 var current_record := -1  # current player saves to this record
 
 var player : KinematicBody2D
 onready var player_spawn_position := Vector2.ZERO
+
+var defense : Node2D
+
+var global_ui : Label
 
 const record_preload := preload("res://Replay/Replay.tscn")
 const player_preload := preload("res://Player/Player.tscn")
@@ -20,11 +22,20 @@ func init_spawn_created(spawn : Position2D) -> void:
 	make_new_player()
 
 
+func register_global_UI(ui_in : Label):
+	global_ui = ui_in
+
+
+func register_defense(new_defense : Node2D):
+	defense = new_defense
+
+
 func make_new_record() -> void:
 	print("make new record")
 	
 	var new_record = record_preload.instance()
 	get_tree().get_current_scene().add_child(new_record)
+	new_record.position = Vector2.ZERO
 	record_objects.append(new_record)
 	current_record += 1
 
@@ -47,6 +58,27 @@ func apply_damage(area) -> void:
 		player.kill_player()
 
 
+func goal_entered(area) -> void:
+	print("goal entered")
+	if area.is_in_group("player"):
+		# add switch sides logic here
+#		new_round()
+#		replay_all_records()
+		switch_to_defense()
+
+
+func switch_to_defense() -> void:
+	print("switch to defense")
+	defense.activate_defense()
+	player.deactivate_player()
+
+
+func switch_to_offense() -> void:
+	print("switch to offense")
+	player.activate_player()
+	defense.deactivate_defense()
+
+
 func replay_all_records() -> void:
 	print("replay all records")
 	for replay in record_objects:
@@ -66,12 +98,12 @@ func _physics_process(_delta: float) -> void:
 	# DEBUG
 	if Input.is_action_just_released("debug1"):
 		print("DEBUG 1")
-	
+		switch_to_defense()
 	
 	if Input.is_action_just_released("debug2"):
 		print("DEBUG 2")
 		# kill player
-		player.kill_player()
+		switch_to_offense()
 	
 	if Input.is_action_just_released("debug3"):
 		print("DEBUG 3")

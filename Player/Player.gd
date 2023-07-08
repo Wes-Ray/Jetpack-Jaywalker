@@ -18,28 +18,40 @@ export var jet_pack_thrust_strength := 60.0
 
 var velocity := Vector2.ZERO
 
-# Note: MUST match States in Replay.gd, consider moving to global/parent class if needed
-enum State {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD}
-var player_state = State.IDLE
+
+var player_state = Orchestrator.PlayerStates.IDLE
 var is_jumping = false
 
 onready var debug_state_label := $debug_state_label
 onready var debug_velocity_label := $debug_velocity_label
 onready var debug_misc_label := $debug_misc_label
 onready var animation_player := $AnimationPlayer
+onready var camera := $Camera2D
 
 
 func kill_player() -> void:
 	if player_state != State.DEAD:
 		animation_player.play("death")
 	player_state = State.DEAD
+	player_state = Orchestrator.PlayerStates.DEAD
 
 
 # should be called from the Orchestrator
 func respawn(new_replay_obj, new_spawn_pos) -> void:
 	replay_object = new_replay_obj
-	player_state = State.IDLE
+	player_state = Orchestrator.PlayerStates.IDLE
 	position = new_spawn_pos
+
+
+func activate_player() -> void:
+	print("activate player")
+	player_state = Orchestrator.PlayerStates.IDLE
+	camera.current = true
+
+
+func deactivate_player() -> void:
+	print("deactivate player")
+	player_state = Orchestrator.PlayerStates.PAUSED
 
 
 func _physics_process(_delta: float) -> void:
@@ -68,47 +80,50 @@ func _physics_process(_delta: float) -> void:
 	###############################################################################################
 	# TODO: consider adding floor detect distance
 	match player_state:
-		State.IDLE:
+		Orchestrator.PlayerStates.IDLE:
 			debug_state_label.text = "IDLE"
 			if ( not is_zero_approx(walk_input) ):# and is_on_floor():
-				player_state = State.RUN
+				player_state = Orchestrator.PlayerStates.RUN
 			if is_jumping:
-				player_state = State.JUMP
+				player_state = Orchestrator.PlayerStates.JUMP
 		
-		State.RUN:
+		Orchestrator.PlayerStates.RUN:
 			debug_state_label.text = "RUN"
 			if ( is_zero_approx(walk_input) ):# and is_on_floor():
-				player_state = State.IDLE
+				player_state = Orchestrator.PlayerStates.IDLE
 			if is_jumping:
-				player_state = State.JUMP
+				player_state = Orchestrator.PlayerStates.JUMP
 		
-		State.FALL:
+		Orchestrator.PlayerStates.FALL:
 			debug_state_label.text = "FALL"
 			if is_on_floor():
-				player_state = State.IDLE
+				player_state = Orchestrator.PlayerStates.IDLE
 			if is_jumping:
-				player_state = State.JET_PACK
+				player_state = Orchestrator.PlayerStates.JET_PACK
 		
-		State.JUMP:
+		Orchestrator.PlayerStates.JUMP:
 			debug_state_label.text = "JUMP"
 			if not is_on_floor():
 				is_jumping = false
-				player_state = State.FALL
+				player_state = Orchestrator.PlayerStates.FALL
 			
 			velocity.y = -jump_strength
 		
-		State.JET_PACK:
+		Orchestrator.PlayerStates.JET_PACK:
 			debug_state_label.text = "JET_PACK"
 			if not is_jumping:
-				player_state = State.FALL
+				player_state = Orchestrator.PlayerStates.FALL
 			
 			velocity.y = move_toward(velocity.y, -max_jetpack_speed, jet_pack_thrust_strength)
 		
-		State.ON_WALL:
+		Orchestrator.PlayerStates.ON_WALL:
 			debug_state_label.text = "ON_WALL"
 		
-		State.DEAD:
+		Orchestrator.PlayerStates.DEAD:
 			debug_state_label.text = "DEAD"
+		
+		Orchestrator.PlayerStates.PAUSED:
+			debug_state_label.text = "PAUSED"
 		
 		_:
 			debug_state_label.text = "ERROR"
@@ -120,7 +135,7 @@ func _physics_process(_delta: float) -> void:
 	# note: may need to move velocity updates into states themselves, but could also just adjust
 	# movement multipliers in each state as appropriate
 	
-	if player_state == State.DEAD:
+	if (player_state == Orchestrator.PlayerStates.DEAD) or (player_state == Orchestrator.PlayerStates.PAUSED):
 		velocity = Vector2.ZERO
 	else:
 		velocity.x = move_toward(velocity.x, walk_input * max_walk_speed, walk_force)
