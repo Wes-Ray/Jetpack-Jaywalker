@@ -65,6 +65,6 @@ func replay(start_frame = 0) -> void:
 	_replaying = true
 	current_frame = start_frame
 	
-	print("replay: ")
-	for i in range(10):
-		print("\t", coord_record[i])
+#	print("replay: ")
+#	for i in range(10):
+#		print("\t", coord_record[i])

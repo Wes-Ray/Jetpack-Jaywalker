@@ -17,4 +17,4 @@ func _ready():
 
 
 func _on_Zap_area_entered(area: Area2D) -> void:
-	GlobalReplayOrchestrator.apply_damage(area)
+	Orchestrator.apply_damage(area)

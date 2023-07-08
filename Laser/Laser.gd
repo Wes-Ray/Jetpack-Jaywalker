@@ -8,7 +8,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _physics_process(_delta):
 	if firing:
 		update_laser()
 
@@ -37,8 +37,8 @@ func laser_off():
 
 
 func _on_BottomLaser_area_entered(area):
-	GlobalReplayOrchestrator.apply_damage(area)
+	Orchestrator.apply_damage(area)
 
 
 func _on_TopLaser_area_entered(area):
-	GlobalReplayOrchestrator.apply_damage(area)
+	Orchestrator.apply_damage(area)
