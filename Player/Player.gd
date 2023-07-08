@@ -96,6 +96,7 @@ func _physics_process(_delta: float) -> void:
 		State.DEAD:
 			debug_state_label.text = "DEAD"
 			# code for freezing player in place
+			velocity = Vector2.ZERO
 			max_walk_speed = 0
 			max_fall_speed = 0
 		

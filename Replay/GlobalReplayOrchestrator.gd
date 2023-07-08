@@ -44,3 +44,8 @@ func _physics_process(_delta: float) -> void:
 		print("DEBUG 2")
 		# kill player
 		player_objects[0].player_state = State.DEAD
+	
+	if Input.is_action_just_released("debug3"):
+		print("DEBUG 3")
+		
+		print("record coords: ", record_objects[0].coord_record)
