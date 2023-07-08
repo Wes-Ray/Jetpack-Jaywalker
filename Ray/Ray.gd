@@ -20,7 +20,6 @@ func ray_warning():
 	$Area2D/WarnSprite.visible = true
 	$Area2D/FireSprite.visible = false
 	$Area2D/WarnSprite.region_rect.size.x = ray_distance
-	print($RayBegin.global_position.x, " ", ray.get_collision_point().x,"  ", ray_distance)
 	
 	
 func ray_fire():
@@ -39,3 +38,7 @@ func ray_off():
 	$Area2D/CollisionShape2D.shape.extents.x = 0
 	$Area2D/FireSprite.visible = false
 	$Area2D/WarnSprite.visible = false
+
+
+func _on_Area2D_area_entered(area):
+	GlobalReplayOrchestrator.apply_damage(area)
