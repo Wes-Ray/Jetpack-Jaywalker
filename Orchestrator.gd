@@ -12,19 +12,23 @@ onready var player_spawn_position := Vector2.ZERO
 var defense : Node2D
 var main : Node2D
 
-var global_ui : Label
+var global_ui : Label  # round counter
+var round_counter := 0
 
 const record_preload := preload("res://Replay/Replay.tscn")
 const player_preload := preload("res://Player/Player.tscn")
 
-onready var defense_switch_timer : Timer
-onready var offense_switch_timer : Timer
-onready var game_over_timer : Timer
-onready var replay_delay_timer : Timer
+const splash_preload := preload("res://splash.tscn")
+
+var defense_switch_timer : Timer
+var offense_switch_timer : Timer
+var game_over_timer : Timer
+var replay_delay_timer : Timer
 
 var game_over := false
 
 func _ready() -> void:
+	
 	defense_switch_timer = Timer.new()
 	add_child(defense_switch_timer)
 	defense_switch_timer.wait_time = 0.7
@@ -68,7 +72,11 @@ func init_spawn_created(spawn : Position2D) -> void:
 
 func register_global_UI(ui_in : Label):
 	global_ui = ui_in
+	incremenent_round()
 
+func incremenent_round():
+	round_counter += 1
+	global_ui.text = str("Round: ", round_counter)
 
 func register_defense(new_defense : Node2D):
 	defense = new_defense
@@ -194,6 +202,8 @@ func _on_offense_timer_timout():
 
 func switch_to_defense() -> void:
 	print("switch to defense")
+	
+	incremenent_round()
 	player.deactivate_player()
 	defense_switch_timer.start(0)
 	main.player_help(false)
@@ -202,6 +212,8 @@ func switch_to_defense() -> void:
 
 func switch_to_offense() -> void:
 	print("switch to offense")
+	
+	incremenent_round()
 	defense.deactivate_defense()
 #	new_round()
 	offense_switch_timer.start(0)
@@ -231,32 +243,36 @@ func _physics_process(_delta: float) -> void:
 	if game_over:
 		defense.strafe_defense_camera()
 	
+	if Input.is_action_just_pressed("ui_cancel"):
+		print("reset")
+		get_tree().change_scene_to(splash_preload)
+	
 	# DEBUG
-	if Input.is_action_just_released("debug1"):
-		print("DEBUG 1")
-		switch_to_defense()
-	
-	if Input.is_action_just_released("debug2"):
-		print("DEBUG 2")
-		# kill player
-		switch_to_offense()
-	
-	if Input.is_action_just_released("debug3"):
-		print("DEBUG 3")
-		
-		# start a new round
-		new_round()
-		replay_all_records()
-	
-	if Input.is_action_just_released("debug4"):
-		print("DEBUG 4")
-		player.screen_wipe()
-	
-	if Input.is_action_just_released("debug5"):
-		print("DEBUG 5")
-		player.screen_unwipe()
-	
-	if Input.is_action_just_released("debug6"):
-		print("DEBUG 6")
-		defense.camera.current = true
+#	if Input.is_action_just_released("debug1"):
+#		print("DEBUG 1")
+#		switch_to_defense()
+#
+#	if Input.is_action_just_released("debug2"):
+#		print("DEBUG 2")
+#		# kill player
+#		switch_to_offense()
+#
+#	if Input.is_action_just_released("debug3"):
+#		print("DEBUG 3")
+#
+#		# start a new round
+#		new_round()
+#		replay_all_records()
+#
+#	if Input.is_action_just_released("debug4"):
+#		print("DEBUG 4")
+#		player.screen_wipe()
+#
+#	if Input.is_action_just_released("debug5"):
+#		print("DEBUG 5")
+#		player.screen_unwipe()
+#
+#	if Input.is_action_just_released("debug6"):
+#		print("DEBUG 6")
+#		defense.camera.current = true
 	
