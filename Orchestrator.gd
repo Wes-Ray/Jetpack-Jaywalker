@@ -20,7 +20,7 @@ var game_over := false
 const record_preload := preload("res://Replay/Replay.tscn")
 const player_preload := preload("res://Player/Player.tscn")
 
-const splash_preload := preload("res://splash.tscn")
+const splash_preload := preload("res://menu.tscn")
 
 var defense_switch_timer : Timer
 var offense_switch_timer : Timer
@@ -246,6 +246,14 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		print("reset")
 		get_tree().change_scene_to(splash_preload)
+		
+		# reset globals
+		GlobalReset.reset()
+#		record_objects = []
+#		current_record = -1
+#		round_counter = 0
+#		game_over = false
+#		make_new_player()
 	
 	# DEBUG
 #	if Input.is_action_just_released("debug1"):
