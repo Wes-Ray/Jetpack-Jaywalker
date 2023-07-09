@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://World/Platform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://World/Box.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Laser/Laser.tscn" type="PackedScene" id=10]
 [ext_resource path="res://World/Wall.tscn" type="PackedScene" id=11]
+[ext_resource path="res://World/KillBoundary.tscn" type="PackedScene" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -100,5 +101,11 @@ position = Vector2( 440, 343 )
 
 [node name="Node2D" parent="." instance=ExtResource( 11 )]
 position = Vector2( 651, 335 )
+
+[node name="KillBoundary" parent="." instance=ExtResource( 12 )]
+position = Vector2( 447, 266 )
+
+[node name="KillBoundary2" parent="." instance=ExtResource( 12 )]
+position = Vector2( 449, 400 )
 
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]

@@ -1,0 +1,192 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://World/Platform.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Main.gd" type="Script" id=2]
+[ext_resource path="res://Zap/Zap.tscn" type="PackedScene" id=3]
+[ext_resource path="res://World/Floor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://World/wallpaper.png" type="Texture" id=5]
+[ext_resource path="res://Defense/Defense.tscn" type="PackedScene" id=6]
+[ext_resource path="res://World/flag.png" type="Texture" id=7]
+[ext_resource path="res://World/KillBoundary.tscn" type="PackedScene" id=8]
+[ext_resource path="res://World/Box.tscn" type="PackedScene" id=9]
+[ext_resource path="res://World/Wall.tscn" type="PackedScene" id=11]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="SpawnPosition" type="Position2D" parent="."]
+position = Vector2( 307, 369 )
+
+[node name="Defense" parent="." instance=ExtResource( 6 )]
+position = Vector2( 551, 343 )
+
+[node name="AttackerGoal" type="Area2D" parent="."]
+position = Vector2( 1363, 334 )
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackerGoal"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="AttackerGoal"]
+position = Vector2( -1, 0 )
+texture = ExtResource( 7 )
+
+[node name="UI" type="Label" parent="."]
+margin_left = 325.0
+margin_top = 275.0
+margin_right = 397.0
+margin_bottom = 289.0
+text = "GLOBAL UI"
+
+[node name="Wallpaper" type="Sprite" parent="."]
+position = Vector2( 282, 333 )
+z_index = -1
+texture = ExtResource( 5 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 4000, 140 )
+
+[node name="Ceiling" parent="." instance=ExtResource( 4 )]
+position = Vector2( 282, 163 )
+scale = Vector2( 1000, 50 )
+
+[node name="Floor" parent="." instance=ExtResource( 4 )]
+position = Vector2( 282, 503 )
+scale = Vector2( 1000, 50 )
+
+[node name="Platform" parent="." instance=ExtResource( 1 )]
+position = Vector2( 440, 345 )
+
+[node name="Platform2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 307, 382 )
+
+[node name="Platform3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 392, 345 )
+
+[node name="Platform4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 488, 345 )
+
+[node name="Platform5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 620, 360 )
+
+[node name="Platform6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 620, 325 )
+
+[node name="Platform7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 668, 360 )
+
+[node name="Platform8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 812, 369 )
+
+[node name="Platform9" parent="." instance=ExtResource( 1 )]
+position = Vector2( 951, 378 )
+
+[node name="Platform11" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1364, 346 )
+
+[node name="Platform12" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1191, 346 )
+
+[node name="Platform13" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1191, 322 )
+
+[node name="Platform15" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1297, 384 )
+
+[node name="Platform16" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1143, 322 )
+
+[node name="Platform17" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1095, 322 )
+
+[node name="Platform18" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1095, 346 )
+
+[node name="Platform19" parent="." instance=ExtResource( 1 )]
+position = Vector2( 813, 293 )
+
+[node name="Platform20" parent="." instance=ExtResource( 1 )]
+position = Vector2( 861, 293 )
+
+[node name="Platform14" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1143, 346 )
+
+[node name="Wall" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1213, 364 )
+
+[node name="Wall3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 440, 363 )
+
+[node name="Wall4" parent="." instance=ExtResource( 11 )]
+position = Vector2( 594, 320 )
+
+[node name="Wall5" parent="." instance=ExtResource( 11 )]
+position = Vector2( 743, 282 )
+
+[node name="Wall6" parent="." instance=ExtResource( 11 )]
+position = Vector2( 743, 384 )
+
+[node name="Wall7" parent="." instance=ExtResource( 11 )]
+position = Vector2( 743, 314 )
+
+[node name="Wall2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1073, 304 )
+
+[node name="Wall11" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1319, 282 )
+
+[node name="Wall8" parent="." instance=ExtResource( 11 )]
+position = Vector2( 886, 307 )
+
+[node name="Wall9" parent="." instance=ExtResource( 11 )]
+position = Vector2( 967, 311 )
+
+[node name="Wall10" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1024, 356 )
+
+[node name="Zap" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1415, 288 )
+
+[node name="Zap2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1415, 333 )
+
+[node name="Zap3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1415, 378 )
+
+[node name="Box" parent="." instance=ExtResource( 9 )]
+position = Vector2( 967, 335 )
+
+[node name="Box2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 816, 359 )
+
+[node name="Box3" parent="." instance=ExtResource( 9 )]
+position = Vector2( 614, 315 )
+
+[node name="Box4" parent="." instance=ExtResource( 9 )]
+position = Vector2( 392, 335 )
+
+[node name="Box5" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1119, 375 )
+
+[node name="Box7" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1261, 313 )
+
+[node name="Box8" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1296, 348 )
+
+[node name="Box6" parent="." instance=ExtResource( 9 )]
+position = Vector2( 547, 392 )
+
+[node name="KillBoundary" parent="." instance=ExtResource( 8 )]
+position = Vector2( 860, 266 )
+
+[node name="KillBoundary2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 860, 400 )
+
+[node name="KillBoundary3" parent="." instance=ExtResource( 8 )]
+position = Vector2( 35, 335 )
+rotation = 1.5708
+
+[connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]
