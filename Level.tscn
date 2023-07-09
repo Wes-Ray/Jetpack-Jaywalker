@@ -18,7 +18,7 @@
 script = ExtResource( 2 )
 
 [node name="SpawnPosition" type="Position2D" parent="."]
-position = Vector2( 307, 334 )
+position = Vector2( 307, 317 )
 
 [node name="Sprite" type="Sprite" parent="SpawnPosition"]
 texture = ExtResource( 10 )
@@ -61,16 +61,16 @@ position = Vector2( 282, 503 )
 scale = Vector2( 1000, 50 )
 
 [node name="Platform" parent="." instance=ExtResource( 1 )]
-position = Vector2( 440, 345 )
+position = Vector2( 457, 345 )
 
 [node name="Platform2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 307, 382 )
+position = Vector2( 317, 379 )
 
 [node name="Platform3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 392, 345 )
+position = Vector2( 409, 345 )
 
 [node name="Platform4" parent="." instance=ExtResource( 1 )]
-position = Vector2( 488, 345 )
+position = Vector2( 505, 345 )
 
 [node name="Platform5" parent="." instance=ExtResource( 1 )]
 position = Vector2( 620, 360 )
@@ -121,7 +121,22 @@ position = Vector2( 1143, 346 )
 position = Vector2( 1213, 364 )
 
 [node name="Wall3" parent="." instance=ExtResource( 11 )]
-position = Vector2( 440, 363 )
+position = Vector2( 457, 363 )
+
+[node name="Wall13" parent="." instance=ExtResource( 11 )]
+position = Vector2( 321, 304 )
+
+[node name="Wall14" parent="." instance=ExtResource( 11 )]
+position = Vector2( 321, 336 )
+
+[node name="Wall16" parent="." instance=ExtResource( 11 )]
+position = Vector2( 293, 304 )
+
+[node name="Wall17" parent="." instance=ExtResource( 11 )]
+position = Vector2( 293, 336 )
+
+[node name="Wall15" parent="." instance=ExtResource( 11 )]
+position = Vector2( 343, 365 )
 
 [node name="Wall4" parent="." instance=ExtResource( 11 )]
 position = Vector2( 594, 320 )
@@ -169,7 +184,7 @@ position = Vector2( 816, 359 )
 position = Vector2( 614, 315 )
 
 [node name="Box4" parent="." instance=ExtResource( 9 )]
-position = Vector2( 392, 335 )
+position = Vector2( 409, 335 )
 
 [node name="Box5" parent="." instance=ExtResource( 9 )]
 position = Vector2( 1119, 375 )
@@ -192,5 +207,9 @@ position = Vector2( 860, 400 )
 [node name="KillBoundary3" parent="." instance=ExtResource( 8 )]
 position = Vector2( 35, 335 )
 rotation = 1.5708
+
+[node name="Wall12" parent="." instance=ExtResource( 11 )]
+position = Vector2( -58, 339 )
+scale = Vector2( 1, 10 )
 
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]
