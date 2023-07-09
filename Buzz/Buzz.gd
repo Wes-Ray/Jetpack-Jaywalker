@@ -1,7 +1,7 @@
 extends Node2D
 
 export var rotation_speed = 200
-export var radius = 50
+export var radius = 25
 onready var blade = $Blade
 var i = 0
 
