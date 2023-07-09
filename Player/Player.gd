@@ -28,8 +28,7 @@ onready var debug_misc_label := $debug_misc_label
 onready var animation_player := $AnimationPlayer
 onready var camera := $Camera2D
 
-func _ready():
-	$AudioStreamPlayer2D.play()
+
 
 func kill_player() -> void:
 	if player_state != Orchestrator.PlayerStates.DEAD:

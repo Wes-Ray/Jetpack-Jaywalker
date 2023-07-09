@@ -2,14 +2,12 @@ extends Node2D
 
 export var rotation_speed = 180
 export var radius = 50
-var blade
+onready var blade = $Blade
 var i = 0
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	blade = $Blade
-	$Blade/AudioStreamPlayer2D.play()
-
+#func _ready():
+#	pass
 
 func _process(_delta):
 	blade.position.x = sin((float(i)/rotation_speed)*TAU) * radius

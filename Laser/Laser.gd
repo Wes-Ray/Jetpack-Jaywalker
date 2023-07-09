@@ -18,7 +18,6 @@ func laser_fire():
 	$CollisionShape2D.disabled = false
 	$Sprite.visible = true
 	$Light2D.visible = true
-	$AudioStreamPlayer2D.play()
 	
 func update_laser():
 	$RayCast2D.enabled = true
@@ -40,7 +39,6 @@ func laser_off():
 	$CollisionShape2D.disabled = true
 	$Sprite.visible = false
 	$Light2D.visible = false
-	$AudioStreamPlayer2D.stop()
 
 
 func _on_BottomLaser_area_entered(area):
