@@ -1,6 +1,6 @@
 extends Node2D
 
-export var rotation_speed = 180
+export var rotation_speed = 200
 export var radius = 50
 onready var blade = $Blade
 var i = 0
@@ -17,3 +17,5 @@ func _process(_delta):
 
 func _on_Blade_area_entered(area: Area2D) -> void:
 	Orchestrator.apply_damage(area)
+
+
