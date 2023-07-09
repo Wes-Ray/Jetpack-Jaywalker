@@ -44,7 +44,7 @@ func _ready() -> void:
 	
 	replay_delay_timer = Timer.new()
 	add_child(replay_delay_timer)
-	replay_delay_timer.wait_time = .9
+	replay_delay_timer.wait_time = .01
 	replay_delay_timer.one_shot = true
 	replay_delay_timer.connect("timeout", self, "_on_replay_delay_timer_timout")
 

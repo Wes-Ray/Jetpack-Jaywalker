@@ -9,14 +9,16 @@ onready var wipe_goal: Position2D = $WipeGoal
 onready var unwipe_goal: Position2D = $UnwipeGoal
 onready var current_wiper_goal: Vector2 = $WipeGoal.position
 
+var first_trap := true
+
 var velocity := Vector2.ZERO
 
 # trap preloads, in a list for random selection
 const preloads := [
 	preload("res://Zap/Zap.tscn"), 
-#	preload("res://Buzz/Buzz.tscn"),
-#	preload("res://Laser/Laser.tscn"),
-#	preload("res://Ray/Ray.tscn"),
+	preload("res://Buzz/Buzz.tscn"),
+	preload("res://Laser/Laser.tscn"),
+	preload("res://Ray/Ray.tscn"),
 	]
 
 
@@ -33,15 +35,21 @@ func unwipe():
 
 
 func reset_defense_camera() -> void:
-	self.position.x = 550
+	self.position.x = 500
 
 
 func activate_defense() -> void:
 	unwipe()
 	
 	# generate new trap
-	var rand_i = randi() % len(preloads)
+	var rand_i = 0
+	if first_trap:
+		first_trap = false
+	else:
+		rand_i = randi() % len(preloads)
+	
 	var new_trap = preloads[rand_i].instance()
+	new_trap.position = Vector2(999999,999999)  # offset spawn so it doesn't intersect with replay immediately
 	get_tree().get_current_scene().add_child(new_trap)
 	
 #	new_trap.z_index = 3
@@ -62,7 +70,7 @@ func strafe_defense_camera() -> void:
 	velocity.x = move_toward(velocity.x, 5 * strafe_input, 0.25)
 	
 	self.position.x += velocity.x
-	self.position.x = clamp(position.x, 550, 1150)
+	self.position.x = clamp(position.x, 500, 1200)
 
 
 func _physics_process(_delta: float) -> void:
