@@ -50,9 +50,9 @@ func _ready() -> void:
 
 
 func is_last_active_replay(replay) -> bool:
-	print("checking last active")
-	print("\t: ", replay)
-	print("\t: ", record_objects[-1])
+#	print("checking last active")
+#	print("\t: ", replay)
+#	print("\t: ", record_objects[-1])
 	
 	if replay == record_objects[-1]:
 		return true
@@ -122,6 +122,7 @@ func end_game(message : String):
 	game_over = true
 	player.deactivate_player()
 	defense.deactivate_defense()
+	defense.reset_defense_camera()
 	game_over_timer.start(0)
 #	defense.camera.current = true
 #	defense.wiper.visible = false
@@ -130,7 +131,8 @@ func end_game(message : String):
 
 func apply_damage(area) -> void:
 	
-	if area.is_in_group("player"):
+	if area.is_in_group("player") and \
+		(player.player_state != PlayerStates.REACHED_GOAL) and (player.player_state != PlayerStates.PAUSED):
 		player.kill_player()
 		if game_over == true:
 			return
@@ -217,7 +219,8 @@ func new_round() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	pass
+	if game_over:
+		defense.strafe_defense_camera()
 	
 	# DEBUG
 	if Input.is_action_just_released("debug1"):
