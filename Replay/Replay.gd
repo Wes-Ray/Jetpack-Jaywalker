@@ -11,7 +11,8 @@ var INITIAL_ARRAY_SIZE = 99999
 var current_frame = 0
 var death_frame = 0
 var recording = true
-var _replaying = false
+var replaying = false
+var dead = false
 
 onready var debug_misc_label = $debug_misc_label
 onready var animation_player = $AnimationPlayer
@@ -29,6 +30,16 @@ func _ready() -> void:
 	input_record.fill(Orchestrator.Inputs.RIGHT)
 
 
+func kill_replay(_state = Orchestrator.PlayerStates.DEAD):
+#	print("KILL REPLAY")
+	
+	if not dead:
+		animation_player.play("death")
+		death_frame = current_frame
+	dead = true
+	recording = false
+
+
 func record_frame(state, coord, input) -> void:
 	if not recording:
 		return
@@ -38,8 +49,7 @@ func record_frame(state, coord, input) -> void:
 	input_record.set(current_frame, input)
 	
 	if (state == Orchestrator.PlayerStates.DEAD) or (state == Orchestrator.PlayerStates.REACHED_GOAL):
-		death_frame = current_frame
-		recording = false
+		kill_replay(state)
 	
 	current_frame += 1
 	
@@ -48,12 +58,9 @@ func record_frame(state, coord, input) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if not _replaying:
+	if not replaying:
 		return
-	
-	if current_frame == death_frame:
-		animation_player.play("death")
-	elif current_frame > death_frame:
+	if current_frame >= death_frame:
 		return
 	
 #	match state_record[current_frame]:
@@ -84,15 +91,16 @@ func _physics_process(_delta: float) -> void:
 	
 	position = coord_record[current_frame]
 	
-	debug_misc_label.text = str(position)
+	debug_misc_label.text = str(position, "\n", current_frame, "\n", death_frame)
 #	debug_misc_label.set_global_position(Vector2(0, 50))
 	
 	current_frame += 1
 
 
 func replay(start_frame = 0) -> void:
-	_replaying = true
+	replaying = true
 	current_frame = start_frame
+	dead = false
 	$AnimationPlayer.play("fly_forward")
 	
 #	print("replay: ")

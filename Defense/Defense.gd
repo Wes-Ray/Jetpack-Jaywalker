@@ -17,9 +17,6 @@ const preloads := [
 	preload("res://Ray/Ray.tscn"),
 	]
 
-#const zap_preload := preload("res://Zap/Zap.tscn")
-#const zap_preload := preload("res://test.tscn")
-# const player_preload := preload("res://Player/Player.tscn")
 
 var active = false
 
@@ -28,9 +25,13 @@ func _ready() -> void:
 	Orchestrator.register_defense(self)
 
 
-func activate_defense() -> void:
+func unwipe():
 	current_wiper_goal = unwipe_goal.position
 	camera.current = true
+
+
+func activate_defense() -> void:
+	unwipe()
 	
 	# generate new trap
 	var rand_i = randi() % len(preloads)

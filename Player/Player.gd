@@ -55,7 +55,7 @@ func activate_player() -> void:
 
 func deactivate_player() -> void:
 	print("deactivate player")
-	player_state = Orchestrator.PlayerStates.PAUSED
+#	player_state = Orchestrator.PlayerStates.PAUSED
 	screen_wipe()
 
 

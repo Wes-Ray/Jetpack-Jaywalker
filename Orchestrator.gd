@@ -18,6 +18,10 @@ const player_preload := preload("res://Player/Player.tscn")
 
 onready var defense_switch_timer : Timer
 onready var offense_switch_timer : Timer
+onready var game_over_timer : Timer
+onready var replay_delay_timer : Timer
+
+var game_over := false
 
 func _ready() -> void:
 	defense_switch_timer = Timer.new()
@@ -31,6 +35,18 @@ func _ready() -> void:
 	offense_switch_timer.wait_time = 0.7
 	offense_switch_timer.one_shot = true
 	offense_switch_timer.connect("timeout", self, "_on_offense_timer_timout")
+	
+	game_over_timer = Timer.new()
+	add_child(game_over_timer)
+	game_over_timer.wait_time = 1.7
+	game_over_timer.one_shot = true
+	game_over_timer.connect("timeout", self, "_on_game_over_timer_timout")
+	
+	replay_delay_timer = Timer.new()
+	add_child(replay_delay_timer)
+	replay_delay_timer.wait_time = .9
+	replay_delay_timer.one_shot = true
+	replay_delay_timer.connect("timeout", self, "_on_replay_delay_timer_timout")
 
 
 # entry point: called once the SpawnPosition node first enters the Main scene
@@ -73,19 +89,66 @@ func get_current_record() -> Node:
 	return record_objects[current_record]
 
 
+func all_replays_dead() -> bool:
+	for replay in record_objects:
+#		print("\t: ", replay.dead)
+		if not replay.dead:
+			return false
+	return true
+
+
+func _on_game_over_timer_timout():
+	print("game over timer timeout")
+	player.wiper.visible = false
+	defense.wiper.visible = true
+	defense.unwipe()
+	replay_all_records()
+	game_over_timer.start(0)
+
+func end_game(message : String):
+	print(message)
+	global_ui.text = message
+	game_over = true
+	player.deactivate_player()
+	defense.deactivate_defense()
+	game_over_timer.start(0)
+#	defense.camera.current = true
+#	defense.wiper.visible = false
+#	replay_all_records()
+
+
 func apply_damage(area) -> void:
+	
 	if area.is_in_group("player"):
 		player.kill_player()
+		if game_over == true:
+			return
+		end_game("GAME OVER, PLAYER LOST")
+	
+	if area.is_in_group("replay"):
+#		print("REPLAY TOOK DAMAGE")
+		area.kill_replay()
+		if game_over == true:
+			return
+		if all_replays_dead():
+			print("all replays are dead")
+			switch_to_offense()
+#		else:
+#			print("NOT ALL REPLAYS DEAD")
 
 
 func goal_entered(area) -> void:
-	print("goal entered")
+	if game_over == true:
+		return
+	
 	if area.is_in_group("player"):
 		# add switch sides logic here
-#		new_round()
-#		replay_all_records()
+		print("player goal entered")
 		player.player_state = PlayerStates.REACHED_GOAL
 		switch_to_defense()
+	
+	if area.is_in_group("replay"):
+		end_game("REPLAY ENTERED GOAL\nGAME OVER, DEFENSE LOST")
 
 
 func _on_defense_timer_timout():
@@ -97,8 +160,8 @@ func _on_defense_timer_timout():
 	
 	# TODO: for some reason it only replays runs where the player dies, maybe when reaching the goal
 	# I need to make it do the same thing that happens on a death?
-	print(x)
-	new_round()
+#	print(x)
+	
 	replay_all_records()  # might need to add a timer before starting
 
 
@@ -106,6 +169,8 @@ func _on_offense_timer_timout():
 	print("offense timer timed out")
 	player.activate_player()
 	player.visible = true
+	new_round()
+	replay_all_records()
 	defense.wiper.visible = false
 
 
@@ -118,13 +183,19 @@ func switch_to_defense() -> void:
 func switch_to_offense() -> void:
 	print("switch to offense")
 	defense.deactivate_defense()
+#	new_round()
 	offense_switch_timer.start(0)
 
 
-func replay_all_records() -> void:
-	print("replay all records")
+func _on_replay_delay_timer_timout():
 	for replay in record_objects:
 		replay.replay()
+
+func replay_all_records() -> void:
+	print("replay all records")
+#	for replay in record_objects:
+#		replay.replay()
+	replay_delay_timer.start(0)
 
 
 func new_round() -> void:
@@ -164,4 +235,5 @@ func _physics_process(_delta: float) -> void:
 	
 	if Input.is_action_just_released("debug6"):
 		print("DEBUG 6")
+		defense.camera.current = true
 	
