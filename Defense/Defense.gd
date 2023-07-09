@@ -81,7 +81,9 @@ func _physics_process(_delta: float) -> void:
 	
 	# animate trap on cursor location
 #	active_trap.position = get_local_mouse_position()
-	active_trap.position = get_global_mouse_position()
+	var new_trap_pos = get_global_mouse_position()
+	new_trap_pos.x = clamp(new_trap_pos.x, 400, 1400)
+	active_trap.position = new_trap_pos
 	
 	# place track at cursor location
 	if Input.is_action_just_pressed("def_place_trap"):
