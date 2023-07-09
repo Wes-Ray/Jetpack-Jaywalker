@@ -8,7 +8,7 @@ var i = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	blade = $Blade
-	$AnimationPlayer.play("spin")
+	$Blade/AudioStreamPlayer2D.play()
 
 
 func _process(_delta):

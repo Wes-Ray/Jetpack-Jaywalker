@@ -19,6 +19,8 @@ func ray_warning():
 	$WarnSprite.visible = true
 	$Light2D.visible = true
 	$Light2D.energy = 0.5
+	$AudioStreamPlayer2D.play()
+	
 	
 func ray_fire():
 	firing = true
@@ -28,6 +30,7 @@ func ray_fire():
 	$WarnSprite.visible = false
 	$Light2D.visible = true
 	$Light2D.energy = 0.8
+	
 	
 func update_ray():
 	$RayCast2D.enabled = true
@@ -51,7 +54,7 @@ func ray_off():
 	$FireSprite.visible = false
 	$WarnSprite.visible = false
 	$Light2D.visible = false
-
+	$AudioStreamPlayer2D.stop()
 
 func _on_Area2D_area_entered(area):
 	Orchestrator.apply_damage(area)
