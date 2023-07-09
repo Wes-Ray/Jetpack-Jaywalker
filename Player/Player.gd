@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 
+onready var new_orchestrator = preload("res://Main.gd")
+
 var replay_object = null
 
 export var gravity_strength := 10.0
@@ -23,7 +25,7 @@ onready var screen_wipe_goal: Position2D = $ScreenWipeGoal
 onready var screen_unwipe_goal: Position2D = $ScreenUnwipeGoal
 onready var current_screen_goal := screen_unwipe_goal.position
 
-var player_state = Orchestrator.PlayerStates.IDLE
+var player_state = new_orchestrator.PlayerStates.IDLE
 var is_jumping = false
 
 onready var debug_state_label := $debug_state_label
@@ -34,28 +36,28 @@ onready var camera := $Camera2D
 
 
 func kill_player() -> void:
-	if player_state != Orchestrator.PlayerStates.DEAD:
+	if player_state != new_orchestrator.PlayerStates.DEAD:
 		animation_player.play("death")
-	player_state = Orchestrator.PlayerStates.DEAD
+	player_state = new_orchestrator.PlayerStates.DEAD
 
 
-# should be called from the Orchestrator
+# should be called from the new_orchestrator
 func respawn(new_replay_obj, new_spawn_pos) -> void:
 	replay_object = new_replay_obj
-	player_state = Orchestrator.PlayerStates.IDLE
+	player_state = new_orchestrator.PlayerStates.IDLE
 	position = new_spawn_pos
 
 
 func activate_player() -> void:
 	print("activate player")
-	player_state = Orchestrator.PlayerStates.IDLE
+	player_state = new_orchestrator.PlayerStates.IDLE
 	camera.current = true
 	screen_unwipe()
 
 
 func deactivate_player() -> void:
 	print("deactivate player")
-#	player_state = Orchestrator.PlayerStates.PAUSED
+#	player_state = new_orchestrator.PlayerStates.PAUSED
 	screen_wipe()
 
 
@@ -80,11 +82,11 @@ func _physics_process(_delta: float) -> void:
 	var walk_input = Input.get_axis("move_left", "move_right")
 	var current_input : int
 	# TODO: TEMPORARY PLAYER ANIMATION LOGIC, EVENTUALLY TIE TO STATES
-	if player_state != Orchestrator.PlayerStates.DEAD:
+	if player_state != new_orchestrator.PlayerStates.DEAD:
 		if walk_input > 0:
-			current_input = Orchestrator.Inputs.RIGHT
+			current_input = new_orchestrator.Inputs.RIGHT
 		else:
-			current_input = Orchestrator.Inputs.LEFT
+			current_input = new_orchestrator.Inputs.LEFT
 	
 	# set player to is_jumping manually between press and release, this allows game logic to turn
 	# off jumping if needed without inputs overriding game logic. 
@@ -100,52 +102,52 @@ func _physics_process(_delta: float) -> void:
 	###############################################################################################
 	# TODO: consider adding floor detect distance
 	match player_state:
-		Orchestrator.PlayerStates.IDLE:
+		new_orchestrator.PlayerStates.IDLE:
 			debug_state_label.text = "IDLE"
 			if ( not is_zero_approx(walk_input) ):# and is_on_floor():
-				player_state = Orchestrator.PlayerStates.RUN
+				player_state = new_orchestrator.PlayerStates.RUN
 			if is_jumping:
-				player_state = Orchestrator.PlayerStates.JUMP
+				player_state = new_orchestrator.PlayerStates.JUMP
 		
-		Orchestrator.PlayerStates.RUN:
+		new_orchestrator.PlayerStates.RUN:
 			debug_state_label.text = "RUN"
 			if ( is_zero_approx(walk_input) ):# and is_on_floor():
-				player_state = Orchestrator.PlayerStates.IDLE
+				player_state = new_orchestrator.PlayerStates.IDLE
 			if is_jumping:
-				player_state = Orchestrator.PlayerStates.JUMP
+				player_state = new_orchestrator.PlayerStates.JUMP
 		
-		Orchestrator.PlayerStates.FALL:
+		new_orchestrator.PlayerStates.FALL:
 			debug_state_label.text = "FALL"
 			if is_on_floor():
-				player_state = Orchestrator.PlayerStates.IDLE
+				player_state = new_orchestrator.PlayerStates.IDLE
 			if is_jumping:
-				player_state = Orchestrator.PlayerStates.JET_PACK
+				player_state = new_orchestrator.PlayerStates.JET_PACK
 		
-		Orchestrator.PlayerStates.JUMP:
+		new_orchestrator.PlayerStates.JUMP:
 			debug_state_label.text = "JUMP"
 			if not is_on_floor():
 				is_jumping = false
-				player_state = Orchestrator.PlayerStates.FALL
+				player_state = new_orchestrator.PlayerStates.FALL
 			
 			velocity.y = -jump_strength
 		
-		Orchestrator.PlayerStates.JET_PACK:
+		new_orchestrator.PlayerStates.JET_PACK:
 			debug_state_label.text = "JET_PACK"
 			if not is_jumping:
-				player_state = Orchestrator.PlayerStates.FALL
+				player_state = new_orchestrator.PlayerStates.FALL
 			
 			velocity.y = move_toward(velocity.y, -max_jetpack_speed, jet_pack_thrust_strength)
 		
-		Orchestrator.PlayerStates.ON_WALL:
+		new_orchestrator.PlayerStates.ON_WALL:
 			debug_state_label.text = "ON_WALL"
 		
-		Orchestrator.PlayerStates.DEAD:
+		new_orchestrator.PlayerStates.DEAD:
 			debug_state_label.text = "DEAD"
 		
-		Orchestrator.PlayerStates.PAUSED:
+		new_orchestrator.PlayerStates.PAUSED:
 			debug_state_label.text = "PAUSED"
 		
-		Orchestrator.PlayerStates.REACHED_GOAL:
+		new_orchestrator.PlayerStates.REACHED_GOAL:
 			debug_state_label.text = "REACHED_GOAL"
 		
 		_:
@@ -153,10 +155,10 @@ func _physics_process(_delta: float) -> void:
 	###############################################################################################
 	# ANIMATION
 	###############################################################################################
-	if player_state != Orchestrator.PlayerStates.DEAD:
-		if current_input == Orchestrator.Inputs.RIGHT:
+	if player_state != new_orchestrator.PlayerStates.DEAD:
+		if current_input == new_orchestrator.Inputs.RIGHT:
 			animation_player.play("fly_forward")
-		elif current_input == Orchestrator.Inputs.LEFT:
+		elif current_input == new_orchestrator.Inputs.LEFT:
 			animation_player.play("fly_backward")
 	
 	
@@ -167,9 +169,9 @@ func _physics_process(_delta: float) -> void:
 	# note: may need to move velocity updates into states themselves, but could also just adjust
 	# movement multipliers in each state as appropriate
 	
-	if (player_state == Orchestrator.PlayerStates.DEAD) \
-			or (player_state == Orchestrator.PlayerStates.PAUSED) \
-			or (player_state == Orchestrator.PlayerStates.REACHED_GOAL):
+	if (player_state == new_orchestrator.PlayerStates.DEAD) \
+			or (player_state == new_orchestrator.PlayerStates.PAUSED) \
+			or (player_state == new_orchestrator.PlayerStates.REACHED_GOAL):
 		velocity = Vector2.ZERO
 	else:
 		velocity.x = move_toward(velocity.x, walk_input * max_walk_speed, walk_force)

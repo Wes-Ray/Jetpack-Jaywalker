@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var new_orchestrator = preload("res://Main.gd")
+
 # save position coordinates and states for each frame, maybe direction if needed
 var state_record := PoolIntArray()
 var coord_record := PoolVector2Array()
@@ -29,7 +31,7 @@ func _ready() -> void:
 	state_record.fill(Orchestrator.PlayerStates.IDLE)
 	coord_record.resize(INITIAL_ARRAY_SIZE)  # inits to all Vector2.ZERO
 	input_record.resize(INITIAL_ARRAY_SIZE)
-	input_record.fill(Orchestrator.Inputs.RIGHT)
+	input_record.fill(new_orchestrator.Inputs.RIGHT)
 	
 	replay_delay_timer = Timer.new()
 	add_child(replay_delay_timer)
@@ -38,7 +40,7 @@ func _ready() -> void:
 	replay_delay_timer.connect("timeout", self, "_on_replay_delay_timer_timout")
 
 
-func kill_replay(_state = Orchestrator.PlayerStates.DEAD):
+func kill_replay(_state = new_orchestrator.PlayerStates.DEAD):
 #	print("KILL REPLAY")
 	
 	if not dead:
@@ -56,7 +58,7 @@ func record_frame(state, coord, input) -> void:
 	coord_record.set(current_frame, coord)
 	input_record.set(current_frame, input)
 	
-	if (state == Orchestrator.PlayerStates.DEAD) or (state == Orchestrator.PlayerStates.REACHED_GOAL):
+	if (state == new_orchestrator.PlayerStates.DEAD) or (state == new_orchestrator.PlayerStates.REACHED_GOAL):
 		kill_replay(state)
 	
 	current_frame += 1
@@ -72,29 +74,29 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 #	match state_record[current_frame]:
-#		Orchestrator.PlayerStates.IDLE: 
+#		new_orchestrator.PlayerStates.IDLE: 
 #			pass
-#		Orchestrator.PlayerStates.RUN: 
+#		new_orchestrator.PlayerStates.RUN: 
 #			pass
-#		Orchestrator.PlayerStates.FALL: 
+#		new_orchestrator.PlayerStates.FALL: 
 #			pass
-#		Orchestrator.PlayerStates.JUMP: 
+#		new_orchestrator.PlayerStates.JUMP: 
 #			pass
-#		Orchestrator.PlayerStates.JET_PACK: 
+#		new_orchestrator.PlayerStates.JET_PACK: 
 #			pass
-#		Orchestrator.PlayerStates.ON_WALL: 
+#		new_orchestrator.PlayerStates.ON_WALL: 
 #			pass
-#		Orchestrator.PlayerStates.DEAD: 
+#		new_orchestrator.PlayerStates.DEAD: 
 #			pass
-#		Orchestrator.PlayerStates.PAUSED: 
+#		new_orchestrator.PlayerStates.PAUSED: 
 #			pass
 #		_: 
 #			pass
 	
-	if state_record[current_frame] != Orchestrator.PlayerStates.DEAD:
-		if input_record[current_frame] == Orchestrator.Inputs.RIGHT:
+	if state_record[current_frame] != new_orchestrator.PlayerStates.DEAD:
+		if input_record[current_frame] == new_orchestrator.Inputs.RIGHT:
 			animation_player.play("fly_forward")
-		elif input_record[current_frame] == Orchestrator.Inputs.LEFT:
+		elif input_record[current_frame] == new_orchestrator.Inputs.LEFT:
 			animation_player.play("fly_backward")
 	
 	position = coord_record[current_frame]
@@ -111,7 +113,7 @@ func replay(start_frame = 0) -> void:
 	current_frame = start_frame
 	dead = false
 	
-	if Orchestrator.is_last_active_replay(self):
+	if new_orchestrator.is_last_active_replay(self):
 		debug_misc_label.text = "LAST ACTIVE"
 		$Light2D.enabled = true
 	else:

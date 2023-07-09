@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var new_orchestrator = preload("res://Main.gd")
+
 export var rotation_speed = 200
 export var radius = 25
 onready var blade = $Blade
@@ -16,6 +18,6 @@ func _process(_delta):
 
 
 func _on_Blade_area_entered(area: Area2D) -> void:
-	Orchestrator.apply_damage(area)
+	new_orchestrator.apply_damage(area)
 
 

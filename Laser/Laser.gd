@@ -1,5 +1,6 @@
 extends Area2D
 
+onready var new_orchestrator = preload("res://Main.gd")
 onready var firing = false
 
 # Called when the node enters the scene tree for the first time.
@@ -42,8 +43,8 @@ func laser_off():
 
 
 func _on_BottomLaser_area_entered(area):
-	Orchestrator.apply_damage(area)
+	new_orchestrator.apply_damage(area)
 
 
 func _on_TopLaser_area_entered(area):
-	Orchestrator.apply_damage(area)
+	new_orchestrator.apply_damage(area)

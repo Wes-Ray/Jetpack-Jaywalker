@@ -1,5 +1,7 @@
 extends Node2D
 
+
+onready var new_orchestrator = preload("res://Main.gd")
 onready var firing := false
 
 # Called when the node enters the scene tree for the first time.
@@ -55,4 +57,4 @@ func ray_off():
 	$Light2D.visible = false
 
 func _on_Area2D_area_entered(area):
-	Orchestrator.apply_damage(area)
+	new_orchestrator.apply_damage(area)

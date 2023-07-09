@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var new_orchestrator = preload("res://Main.gd")
+
 
 onready var camera = $Camera2D
 var active_trap := Node2D
@@ -26,7 +28,7 @@ var active = false
 
 
 func _ready() -> void:
-	Orchestrator.register_defense(self)
+	new_orchestrator.register_defense(self)
 
 
 func unwipe():

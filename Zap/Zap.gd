@@ -1,6 +1,7 @@
 extends Node2D
 
 
+onready var new_orchestrator = preload("res://Main.gd")
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -11,5 +12,5 @@ extends Node2D
 #	pass
 
 func _on_Area2D_area_entered(area: Area2D) -> void:
-	Orchestrator.apply_damage(area)
+	new_orchestrator.apply_damage(area)
 	print('DAMAGED')
