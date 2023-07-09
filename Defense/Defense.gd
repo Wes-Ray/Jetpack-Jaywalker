@@ -4,15 +4,19 @@ extends Node2D
 onready var camera = $Camera2D
 var active_trap := Node2D
 
-# trap preloads, in a list for random selection
-#const preloads := [
-#	preload("res://Zap/Zap.tscn"), 
-#	preload("res://Buzz/Buzz.tscn")
-#	]
+onready var wiper: Sprite = $Wiper
+onready var wipe_goal: Position2D = $WipeGoal
+onready var unwipe_goal: Position2D = $UnwipeGoal
+onready var current_wiper_goal: Vector2 = $WipeGoal.position
 
-const zap_preload := preload("res://Zap/Zap.tscn")
-#const zap_preload := preload("res://test.tscn")
-# const player_preload := preload("res://Player/Player.tscn")
+# trap preloads, in a list for random selection
+const preloads := [
+	preload("res://Zap/Zap.tscn"), 
+	preload("res://Buzz/Buzz.tscn"),
+	preload("res://Laser/Laser.tscn"),
+	preload("res://Ray/Ray.tscn"),
+	]
+
 
 var active = false
 
@@ -21,15 +25,38 @@ func _ready() -> void:
 	Orchestrator.register_defense(self)
 
 
+func unwipe():
+	current_wiper_goal = unwipe_goal.position
+	camera.current = true
+
+
+func activate_defense() -> void:
+	unwipe()
+	
+	# generate new trap
+	var rand_i = randi() % len(preloads)
+	var new_trap = preloads[rand_i].instance()
+	add_child(new_trap)
+	
+#	new_trap.z_index = 3
+	active_trap = new_trap
+	
+	active = true
+
+
+func deactivate_defense() -> void:
+	current_wiper_goal = wipe_goal.position
+	active = false
+
+
 func _physics_process(_delta: float) -> void:
+	wiper.position = lerp(wiper.position, current_wiper_goal, 0.2)
+	
 	if not active:
 		return
 	
-	Orchestrator.global_ui.text = str(active_trap.position, "\n", $Sprite.position)
-	
 	# animate trap on cursor location
 	active_trap.position = get_local_mouse_position()
-	$Sprite.position = get_local_mouse_position()
 	
 	# place track at cursor location
 	if Input.is_action_just_pressed("def_place_trap"):
@@ -40,21 +67,3 @@ func _physics_process(_delta: float) -> void:
 	# if player dies, switch back to offense
 	# if player makes it to goal, game over
 
-
-func activate_defense() -> void:
-	print("activate defense")
-	camera.current = true
-	
-	# generate new trap
-#	var new_trap = preloads[0].instance()
-	var new_trap = zap_preload.instance()
-#	get_tree().get_current_scene().add_child(new_trap)
-	add_child(new_trap)
-	
-#	new_trap.z_index = 3
-	active_trap = new_trap
-	
-	active = true
-
-func deactivate_defense() -> void:
-	active = false

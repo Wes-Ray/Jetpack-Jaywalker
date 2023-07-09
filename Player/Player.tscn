@@ -8,6 +8,7 @@
 [ext_resource path="res://Player/fly_backward.tres" type="Animation" id=6]
 [ext_resource path="res://Player/jetpack.ogg" type="AudioStream" id=7]
 [ext_resource path="res://Player/explosion.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Player/wiper.png" type="Texture" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -86,3 +87,13 @@ volume_db = -40.0
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
 volume_db = -30.0
+[node name="ScreenWipeGoal" type="Position2D" parent="."]
+position = Vector2( 23, 0 )
+
+[node name="ScreenUnwipeGoal" type="Position2D" parent="."]
+position = Vector2( -478, 0 )
+
+[node name="Wiper" type="Sprite" parent="."]
+position = Vector2( -525, -2 )
+z_index = 2
+texture = ExtResource( 7 )
