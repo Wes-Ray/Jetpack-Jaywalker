@@ -79,8 +79,16 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"clips": [  ],
-"times": PoolRealArray(  )
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 6 )
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": null
+} ],
+"times": PoolRealArray( 1.3, 2.5 )
 }
 
 [node name="Laser" type="Node2D"]
@@ -91,7 +99,7 @@ position = Vector2( -17, 0 )
 texture = ExtResource( 2 )
 
 [node name="GunSprite" type="Sprite" parent="."]
-position = Vector2( -1, 0 )
+position = Vector2( -3.69831, 0 )
 texture = ExtResource( 1 )
 
 [node name="TopLaser" type="Area2D" parent="GunSprite"]
