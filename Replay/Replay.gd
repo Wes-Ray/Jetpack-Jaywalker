@@ -103,8 +103,10 @@ func replay(start_frame = 0) -> void:
 	
 	if Orchestrator.is_last_active_replay(self):
 		debug_misc_label.text = "LAST ACTIVE"
+		$Light2D.enabled = true
 	else:
 		debug_misc_label.text = "not"
+		$Light2D.enabled = false
 	
 	$AnimationPlayer.play("fly_forward")
 	
