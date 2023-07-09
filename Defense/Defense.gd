@@ -12,9 +12,9 @@ onready var current_wiper_goal: Vector2 = $WipeGoal.position
 # trap preloads, in a list for random selection
 const preloads := [
 	preload("res://Zap/Zap.tscn"), 
-	preload("res://Buzz/Buzz.tscn"),
-	preload("res://Laser/Laser.tscn"),
-	preload("res://Ray/Ray.tscn"),
+#	preload("res://Buzz/Buzz.tscn"),
+#	preload("res://Laser/Laser.tscn"),
+#	preload("res://Ray/Ray.tscn"),
 	]
 
 
