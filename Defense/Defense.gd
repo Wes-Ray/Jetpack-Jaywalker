@@ -5,12 +5,14 @@ onready var camera = $Camera2D
 var active_trap := Node2D
 
 # trap preloads, in a list for random selection
-#const preloads := [
-#	preload("res://Zap/Zap.tscn"), 
-#	preload("res://Buzz/Buzz.tscn")
-#	]
+const preloads := [
+	preload("res://Zap/Zap.tscn"), 
+	preload("res://Buzz/Buzz.tscn"),
+	preload("res://Laser/Laser.tscn"),
+	preload("res://Ray/Ray.tscn"),
+	]
 
-const zap_preload := preload("res://Zap/Zap.tscn")
+#const zap_preload := preload("res://Zap/Zap.tscn")
 #const zap_preload := preload("res://test.tscn")
 # const player_preload := preload("res://Player/Player.tscn")
 
@@ -46,9 +48,8 @@ func activate_defense() -> void:
 	camera.current = true
 	
 	# generate new trap
-#	var new_trap = preloads[0].instance()
-	var new_trap = zap_preload.instance()
-#	get_tree().get_current_scene().add_child(new_trap)
+	var rand_i = randi() % len(preloads)
+	var new_trap = preloads[rand_i].instance()
 	add_child(new_trap)
 	
 #	new_trap.z_index = 3
