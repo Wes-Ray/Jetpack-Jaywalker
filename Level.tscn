@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://World/Platform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
@@ -11,14 +11,24 @@
 [ext_resource path="res://World/Box.tscn" type="PackedScene" id=9]
 [ext_resource path="res://World/hatch.png" type="Texture" id=10]
 [ext_resource path="res://World/Wall.tscn" type="PackedScene" id=11]
+[ext_resource path="res://INVASION2000.TTF" type="DynamicFontData" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 12 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="SpawnPosition" type="Position2D" parent="."]
-position = Vector2( 307, 317 )
+position = Vector2( 307, 304 )
 
 [node name="Sprite" type="Sprite" parent="SpawnPosition"]
 texture = ExtResource( 10 )
@@ -46,14 +56,14 @@ margin_bottom = 289.0
 text = "GLOBAL UI"
 
 [node name="Wallpaper" type="Sprite" parent="."]
-position = Vector2( 282, 333 )
+position = Vector2( 282, 326 )
 z_index = -1
 texture = ExtResource( 5 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 4000, 140 )
+region_rect = Rect2( 0, 0, 4000, 156 )
 
 [node name="Ceiling" parent="." instance=ExtResource( 4 )]
-position = Vector2( 282, 163 )
+position = Vector2( 282, 148 )
 scale = Vector2( 1000, 50 )
 
 [node name="Floor" parent="." instance=ExtResource( 4 )]
@@ -76,7 +86,7 @@ position = Vector2( 505, 345 )
 position = Vector2( 620, 360 )
 
 [node name="Platform6" parent="." instance=ExtResource( 1 )]
-position = Vector2( 620, 325 )
+position = Vector2( 620, 310 )
 
 [node name="Platform7" parent="." instance=ExtResource( 1 )]
 position = Vector2( 668, 360 )
@@ -85,28 +95,28 @@ position = Vector2( 668, 360 )
 position = Vector2( 812, 369 )
 
 [node name="Platform9" parent="." instance=ExtResource( 1 )]
-position = Vector2( 951, 378 )
+position = Vector2( 948, 383 )
 
 [node name="Platform11" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1364, 346 )
 
 [node name="Platform12" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1191, 346 )
+position = Vector2( 1191, 343 )
 
 [node name="Platform13" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1191, 322 )
+position = Vector2( 1191, 314 )
 
 [node name="Platform15" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1297, 384 )
 
 [node name="Platform16" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1143, 322 )
+position = Vector2( 1143, 314 )
 
 [node name="Platform17" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1095, 322 )
+position = Vector2( 1095, 314 )
 
 [node name="Platform18" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1095, 346 )
+position = Vector2( 1095, 343 )
 
 [node name="Platform19" parent="." instance=ExtResource( 1 )]
 position = Vector2( 813, 293 )
@@ -115,43 +125,43 @@ position = Vector2( 813, 293 )
 position = Vector2( 861, 293 )
 
 [node name="Platform14" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1143, 346 )
+position = Vector2( 1143, 343 )
 
 [node name="Wall" parent="." instance=ExtResource( 11 )]
-position = Vector2( 1213, 364 )
+position = Vector2( 1213, 361 )
 
 [node name="Wall3" parent="." instance=ExtResource( 11 )]
 position = Vector2( 457, 363 )
 
 [node name="Wall13" parent="." instance=ExtResource( 11 )]
-position = Vector2( 321, 304 )
+position = Vector2( 321, 291 )
 
 [node name="Wall14" parent="." instance=ExtResource( 11 )]
-position = Vector2( 321, 336 )
+position = Vector2( 321, 323 )
 
 [node name="Wall16" parent="." instance=ExtResource( 11 )]
-position = Vector2( 293, 304 )
+position = Vector2( 293, 291 )
 
 [node name="Wall17" parent="." instance=ExtResource( 11 )]
-position = Vector2( 293, 336 )
+position = Vector2( 293, 323 )
 
 [node name="Wall15" parent="." instance=ExtResource( 11 )]
 position = Vector2( 343, 365 )
 
 [node name="Wall4" parent="." instance=ExtResource( 11 )]
-position = Vector2( 594, 320 )
+position = Vector2( 594, 305 )
 
 [node name="Wall5" parent="." instance=ExtResource( 11 )]
-position = Vector2( 743, 282 )
+position = Vector2( 743, 267 )
 
 [node name="Wall6" parent="." instance=ExtResource( 11 )]
 position = Vector2( 743, 384 )
 
 [node name="Wall7" parent="." instance=ExtResource( 11 )]
-position = Vector2( 743, 314 )
+position = Vector2( 743, 299 )
 
 [node name="Wall2" parent="." instance=ExtResource( 11 )]
-position = Vector2( 1073, 304 )
+position = Vector2( 1073, 296 )
 
 [node name="Wall11" parent="." instance=ExtResource( 11 )]
 position = Vector2( 1319, 282 )
@@ -160,10 +170,10 @@ position = Vector2( 1319, 282 )
 position = Vector2( 886, 307 )
 
 [node name="Wall9" parent="." instance=ExtResource( 11 )]
-position = Vector2( 967, 311 )
+position = Vector2( 972, 279 )
 
 [node name="Wall10" parent="." instance=ExtResource( 11 )]
-position = Vector2( 1024, 356 )
+position = Vector2( 1026, 352 )
 
 [node name="Zap" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1415, 288 )
@@ -175,19 +185,19 @@ position = Vector2( 1415, 333 )
 position = Vector2( 1415, 378 )
 
 [node name="Box" parent="." instance=ExtResource( 9 )]
-position = Vector2( 967, 335 )
+position = Vector2( 972, 303 )
 
 [node name="Box2" parent="." instance=ExtResource( 9 )]
 position = Vector2( 816, 359 )
 
 [node name="Box3" parent="." instance=ExtResource( 9 )]
-position = Vector2( 614, 315 )
+position = Vector2( 614, 300 )
 
 [node name="Box4" parent="." instance=ExtResource( 9 )]
 position = Vector2( 409, 335 )
 
 [node name="Box5" parent="." instance=ExtResource( 9 )]
-position = Vector2( 1119, 375 )
+position = Vector2( 1119, 378 )
 
 [node name="Box7" parent="." instance=ExtResource( 9 )]
 position = Vector2( 1261, 313 )
@@ -199,7 +209,7 @@ position = Vector2( 1296, 348 )
 position = Vector2( 547, 392 )
 
 [node name="KillBoundary" parent="." instance=ExtResource( 8 )]
-position = Vector2( 860, 266 )
+position = Vector2( 860, 252 )
 
 [node name="KillBoundary2" parent="." instance=ExtResource( 8 )]
 position = Vector2( 860, 400 )
@@ -211,5 +221,51 @@ rotation = 1.5708
 [node name="Wall12" parent="." instance=ExtResource( 11 )]
 position = Vector2( -58, 339 )
 scale = Vector2( 1, 10 )
+
+[node name="PlayerHelp" type="Label" parent="."]
+margin_left = 231.0
+margin_top = 413.0
+margin_right = 1189.0
+margin_bottom = 614.0
+rect_scale = Vector2( 0.2, 0.2 )
+theme = SubResource( 3 )
+text = "A / D to move
+SPACE to jump / jetpack"
+align = 1
+
+[node name="GameOverOffense" type="Label" parent="."]
+visible = false
+margin_left = 310.0
+margin_top = 220.0
+margin_right = 1750.0
+margin_bottom = 421.0
+rect_scale = Vector2( 0.2, 0.2 )
+theme = SubResource( 3 )
+text = "Game Over, offense made it to the goal"
+align = 1
+
+[node name="GameOverDefense" type="Label" parent="."]
+visible = false
+margin_left = 310.0
+margin_top = 220.0
+margin_right = 1750.0
+margin_bottom = 421.0
+rect_scale = Vector2( 0.2, 0.2 )
+theme = SubResource( 3 )
+text = "Game Over, all attackers died"
+align = 1
+
+[node name="DefenseHelp" type="Label" parent="."]
+visible = false
+margin_left = 401.0
+margin_top = 413.0
+margin_right = 1359.0
+margin_bottom = 614.0
+rect_scale = Vector2( 0.2, 0.2 )
+theme = SubResource( 3 )
+text = "A / D to pan camera
+MOUSE to move trap
+"
+align = 1
 
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]

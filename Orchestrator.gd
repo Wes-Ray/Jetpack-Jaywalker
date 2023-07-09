@@ -10,6 +10,7 @@ var player : KinematicBody2D
 onready var player_spawn_position := Vector2.ZERO
 
 var defense : Node2D
+var main : Node2D
 
 var global_ui : Label
 
@@ -71,6 +72,9 @@ func register_global_UI(ui_in : Label):
 
 func register_defense(new_defense : Node2D):
 	defense = new_defense
+	
+func register_main(new_main : Node2D):
+	main = new_main
 
 
 func make_new_record() -> void:
@@ -116,14 +120,15 @@ func _on_game_over_timer_timout():
 	game_over_timer.wait_time = 8
 	game_over_timer.start(0)
 
-func end_game(message : String):
-	print(message)
-	global_ui.text = message
+func end_game(offense_win : bool):
 	game_over = true
 	player.deactivate_player()
 	defense.deactivate_defense()
 	defense.reset_defense_camera()
 	game_over_timer.start(0)
+	main.player_help(false)
+	main.defense_help(false)
+	main.game_winner(offense_win)
 #	defense.camera.current = true
 #	defense.wiper.visible = false
 #	replay_all_records()
@@ -136,7 +141,7 @@ func apply_damage(area) -> void:
 		player.kill_player()
 		if game_over == true:
 			return
-		end_game("GAME OVER, PLAYER LOST")
+		end_game(false)
 	
 	if area.is_in_group("replay"):
 #		print("REPLAY TOOK DAMAGE")
@@ -161,7 +166,7 @@ func goal_entered(area) -> void:
 		switch_to_defense()
 	
 	if area.is_in_group("replay"):
-		end_game("REPLAY ENTERED GOAL\nGAME OVER, DEFENSE LOST")
+		end_game(true)
 
 
 func _on_defense_timer_timout():
@@ -191,6 +196,8 @@ func switch_to_defense() -> void:
 	print("switch to defense")
 	player.deactivate_player()
 	defense_switch_timer.start(0)
+	main.player_help(false)
+	main.defense_help(true)
 
 
 func switch_to_offense() -> void:
@@ -198,6 +205,8 @@ func switch_to_offense() -> void:
 	defense.deactivate_defense()
 #	new_round()
 	offense_switch_timer.start(0)
+	main.player_help(true)
+	main.defense_help(false)
 
 
 func _on_replay_delay_timer_timout():
