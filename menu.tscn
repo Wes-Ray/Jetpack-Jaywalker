@@ -25,18 +25,18 @@ default_font = SubResource( 2 )
 script = ExtResource( 11 )
 
 [node name="Wallpaper" type="Sprite" parent="."]
-position = Vector2( 282, 326 )
+position = Vector2( 282, 325 )
 z_index = -1
 texture = ExtResource( 10 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 4000, 156 )
+region_rect = Rect2( 0, 0, 4000, 180 )
 
 [node name="Ceiling" parent="." instance=ExtResource( 8 )]
-position = Vector2( 282, 148 )
+position = Vector2( 282, 135 )
 scale = Vector2( 1000, 50 )
 
 [node name="Floor" parent="." instance=ExtResource( 8 )]
-position = Vector2( 282, 503 )
+position = Vector2( 282, 515 )
 scale = Vector2( 1000, 50 )
 
 [node name="Platform" parent="." instance=ExtResource( 2 )]
