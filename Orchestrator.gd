@@ -15,6 +15,8 @@ var main : Node2D
 var global_ui : Label  # round counter
 var round_counter := 0
 
+var game_over := false
+
 const record_preload := preload("res://Replay/Replay.tscn")
 const player_preload := preload("res://Player/Player.tscn")
 
@@ -24,8 +26,6 @@ var defense_switch_timer : Timer
 var offense_switch_timer : Timer
 var game_over_timer : Timer
 var replay_delay_timer : Timer
-
-var game_over := false
 
 func _ready() -> void:
 	
