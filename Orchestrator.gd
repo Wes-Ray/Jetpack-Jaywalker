@@ -49,6 +49,15 @@ func _ready() -> void:
 	replay_delay_timer.connect("timeout", self, "_on_replay_delay_timer_timout")
 
 
+func is_last_active_replay(replay) -> bool:
+	print("checking last active")
+	print("\t: ", replay)
+	print("\t: ", record_objects[-1])
+	
+	if replay == record_objects[-1]:
+		return true
+	return false
+
 # entry point: called once the SpawnPosition node first enters the Main scene
 func init_spawn_created(spawn : Position2D) -> void:
 	player_spawn_position = spawn.position
@@ -103,6 +112,8 @@ func _on_game_over_timer_timout():
 	defense.wiper.visible = true
 	defense.unwipe()
 	replay_all_records()
+	
+	game_over_timer.wait_time = 8
 	game_over_timer.start(0)
 
 func end_game(message : String):

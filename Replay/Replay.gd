@@ -91,8 +91,7 @@ func _physics_process(_delta: float) -> void:
 	
 	position = coord_record[current_frame]
 	
-	debug_misc_label.text = str(position, "\n", current_frame, "\n", death_frame)
-#	debug_misc_label.set_global_position(Vector2(0, 50))
+#	debug_misc_label.text = str(position, "\n", current_frame, "\n", death_frame)
 	
 	current_frame += 1
 
@@ -101,6 +100,12 @@ func replay(start_frame = 0) -> void:
 	replaying = true
 	current_frame = start_frame
 	dead = false
+	
+	if Orchestrator.is_last_active_replay(self):
+		debug_misc_label.text = "LAST ACTIVE"
+	else:
+		debug_misc_label.text = "not"
+	
 	$AnimationPlayer.play("fly_forward")
 	
 #	print("replay: ")
