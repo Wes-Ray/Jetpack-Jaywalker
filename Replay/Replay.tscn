@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Replay/Replay.gd" type="Script" id=1]
 [ext_resource path="res://Player/jetpacker.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Player/death.tres" type="Animation" id=4]
 [ext_resource path="res://Player/fly_backward.tres" type="Animation" id=5]
 [ext_resource path="res://Player/explosion.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Player/jetpack.ogg" type="AudioStream" id=7]
 
 [node name="Replay" type="Node2D"]
 script = ExtResource( 1 )
@@ -13,7 +14,6 @@ script = ExtResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 hframes = 9
-frame = 4
 
 [node name="debug_misc_label" type="Label" parent="."]
 visible = false
@@ -34,3 +34,8 @@ anims/fly_forward = ExtResource( 3 )
 stream = ExtResource( 6 )
 volume_db = -35.0
 attenuation = 30.0
+
+[node name="JetpackSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+volume_db = -40.0
+attenuation = 100.0

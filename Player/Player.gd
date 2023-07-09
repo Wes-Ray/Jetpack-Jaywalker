@@ -29,7 +29,6 @@ onready var animation_player := $AnimationPlayer
 onready var camera := $Camera2D
 
 
-
 func kill_player() -> void:
 	if player_state != Orchestrator.PlayerStates.DEAD:
 		animation_player.play("death")

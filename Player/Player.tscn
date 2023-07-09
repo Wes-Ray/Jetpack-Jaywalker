@@ -75,13 +75,13 @@ anims/fly_forward = ExtResource( 4 )
 [node name="Light2D" type="Light2D" parent="."]
 texture = ExtResource( 3 )
 texture_scale = 2.0
-color = Color( 0.92549, 0.588235, 0.588235, 1 )
-energy = 0.5
+color = Color( 0.956863, 0.560784, 0.560784, 1 )
+energy = 0.6
 shadow_enabled = true
 
 [node name="JetpackSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 7 )
-volume_db = -35.0
+volume_db = -40.0
 
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )

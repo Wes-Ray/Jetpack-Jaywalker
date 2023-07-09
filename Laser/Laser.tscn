@@ -120,8 +120,8 @@ energy = 0.7
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GunSprite/TopLaser"]
 stream = ExtResource( 6 )
-volume_db = -25.0
-attenuation = 80.0
+volume_db = -20.0
+attenuation = 70.0
 
 [node name="BottomLaser" type="Area2D" parent="GunSprite"]
 position = Vector2( 0, 6 )
