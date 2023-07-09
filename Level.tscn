@@ -48,13 +48,6 @@ shape = SubResource( 1 )
 position = Vector2( -1, 0 )
 texture = ExtResource( 7 )
 
-[node name="UI" type="Label" parent="."]
-margin_left = 325.0
-margin_top = 275.0
-margin_right = 397.0
-margin_bottom = 289.0
-text = "GLOBAL UI"
-
 [node name="Wallpaper" type="Sprite" parent="."]
 position = Vector2( 282, 326 )
 z_index = -1
@@ -78,6 +71,9 @@ position = Vector2( 317, 379 )
 
 [node name="Platform3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 409, 345 )
+
+[node name="Platform10" parent="." instance=ExtResource( 1 )]
+position = Vector2( 347, 277 )
 
 [node name="Platform4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 505, 345 )
@@ -231,6 +227,16 @@ rect_scale = Vector2( 0.2, 0.2 )
 theme = SubResource( 3 )
 text = "A / D to move
 SPACE to jump / jetpack"
+align = 1
+
+[node name="UI" type="Label" parent="."]
+margin_left = 264.0
+margin_top = 282.0
+margin_right = 1222.0
+margin_bottom = 483.0
+rect_scale = Vector2( 0.2, 0.2 )
+theme = SubResource( 3 )
+text = "Round: "
 align = 1
 
 [node name="GameOverOffense" type="Label" parent="."]
