@@ -37,7 +37,7 @@ func record_frame(state, coord, input) -> void:
 	coord_record.set(current_frame, coord)
 	input_record.set(current_frame, input)
 	
-	if state == Orchestrator.PlayerStates.DEAD:
+	if (state == Orchestrator.PlayerStates.DEAD) or (state == Orchestrator.PlayerStates.REACHED_GOAL):
 		death_frame = current_frame
 		recording = false
 	

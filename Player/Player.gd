@@ -18,6 +18,10 @@ export var jet_pack_thrust_strength := 60.0
 
 var velocity := Vector2.ZERO
 
+onready var wiper: Sprite = $Wiper
+onready var screen_wipe_goal: Position2D = $ScreenWipeGoal
+onready var screen_unwipe_goal: Position2D = $ScreenUnwipeGoal
+onready var current_screen_goal := screen_unwipe_goal.position
 
 var player_state = Orchestrator.PlayerStates.IDLE
 var is_jumping = false
@@ -46,14 +50,29 @@ func activate_player() -> void:
 	print("activate player")
 	player_state = Orchestrator.PlayerStates.IDLE
 	camera.current = true
+	screen_unwipe()
 
 
 func deactivate_player() -> void:
 	print("deactivate player")
 	player_state = Orchestrator.PlayerStates.PAUSED
+	screen_wipe()
+
+
+func screen_wipe() -> void:
+	current_screen_goal = screen_wipe_goal.position
+
+
+func screen_unwipe() -> void:
+	current_screen_goal = screen_unwipe_goal.position
 
 
 func _physics_process(_delta: float) -> void:
+	###############################################################################################
+	# SCREEN WIPE
+	###############################################################################################
+	wiper.position = lerp(wiper.position, current_screen_goal, 0.2)
+	
 	###############################################################################################
 	# INPUT
 	###############################################################################################
@@ -126,6 +145,9 @@ func _physics_process(_delta: float) -> void:
 		Orchestrator.PlayerStates.PAUSED:
 			debug_state_label.text = "PAUSED"
 		
+		Orchestrator.PlayerStates.REACHED_GOAL:
+			debug_state_label.text = "REACHED_GOAL"
+		
 		_:
 			debug_state_label.text = "ERROR"
 	###############################################################################################
@@ -145,7 +167,9 @@ func _physics_process(_delta: float) -> void:
 	# note: may need to move velocity updates into states themselves, but could also just adjust
 	# movement multipliers in each state as appropriate
 	
-	if (player_state == Orchestrator.PlayerStates.DEAD) or (player_state == Orchestrator.PlayerStates.PAUSED):
+	if (player_state == Orchestrator.PlayerStates.DEAD) \
+			or (player_state == Orchestrator.PlayerStates.PAUSED) \
+			or (player_state == Orchestrator.PlayerStates.REACHED_GOAL):
 		velocity = Vector2.ZERO
 	else:
 		velocity.x = move_toward(velocity.x, walk_input * max_walk_speed, walk_force)
@@ -158,3 +182,4 @@ func _physics_process(_delta: float) -> void:
 	# REPLAY
 	###############################################################################################
 	replay_object.record_frame(player_state, position, current_input)
+

@@ -1,6 +1,6 @@
 extends Node
 
-enum PlayerStates {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD, PAUSED}
+enum PlayerStates {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD, PAUSED, REACHED_GOAL}
 enum Inputs {LEFT = 1, RIGHT = 0}
 
 var record_objects := []
@@ -15,6 +15,23 @@ var global_ui : Label
 
 const record_preload := preload("res://Replay/Replay.tscn")
 const player_preload := preload("res://Player/Player.tscn")
+
+onready var defense_switch_timer : Timer
+onready var offense_switch_timer : Timer
+
+func _ready() -> void:
+	defense_switch_timer = Timer.new()
+	add_child(defense_switch_timer)
+	defense_switch_timer.wait_time = 0.7
+	defense_switch_timer.one_shot = true
+	defense_switch_timer.connect("timeout", self, "_on_defense_timer_timout")
+	
+	offense_switch_timer = Timer.new()
+	add_child(offense_switch_timer)
+	offense_switch_timer.wait_time = 0.7
+	offense_switch_timer.one_shot = true
+	offense_switch_timer.connect("timeout", self, "_on_offense_timer_timout")
+
 
 # entry point: called once the SpawnPosition node first enters the Main scene
 func init_spawn_created(spawn : Position2D) -> void:
@@ -67,19 +84,41 @@ func goal_entered(area) -> void:
 		# add switch sides logic here
 #		new_round()
 #		replay_all_records()
+		player.player_state = PlayerStates.REACHED_GOAL
 		switch_to_defense()
+
+
+func _on_defense_timer_timout():
+	print("defense timer timed out")
+	defense.activate_defense()
+	defense.wiper.visible = true
+	player.visible = false
+	
+	
+	# TODO: for some reason it only replays runs where the player dies, maybe when reaching the goal
+	# I need to make it do the same thing that happens on a death?
+	print(x)
+	new_round()
+	replay_all_records()  # might need to add a timer before starting
+
+
+func _on_offense_timer_timout():
+	print("offense timer timed out")
+	player.activate_player()
+	player.visible = true
+	defense.wiper.visible = false
 
 
 func switch_to_defense() -> void:
 	print("switch to defense")
-	defense.activate_defense()
 	player.deactivate_player()
+	defense_switch_timer.start(0)
 
 
 func switch_to_offense() -> void:
 	print("switch to offense")
-	player.activate_player()
 	defense.deactivate_defense()
+	offense_switch_timer.start(0)
 
 
 func replay_all_records() -> void:
@@ -114,3 +153,15 @@ func _physics_process(_delta: float) -> void:
 		# start a new round
 		new_round()
 		replay_all_records()
+	
+	if Input.is_action_just_released("debug4"):
+		print("DEBUG 4")
+		player.screen_wipe()
+	
+	if Input.is_action_just_released("debug5"):
+		print("DEBUG 5")
+		player.screen_unwipe()
+	
+	if Input.is_action_just_released("debug6"):
+		print("DEBUG 6")
+	

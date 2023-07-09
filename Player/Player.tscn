@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/jetpacker.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Player/fly_forward.tres" type="Animation" id=4]
 [ext_resource path="res://Player/death.tres" type="Animation" id=5]
 [ext_resource path="res://Player/fly_backward.tres" type="Animation" id=6]
+[ext_resource path="res://Player/wiper.png" type="Texture" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -76,3 +77,14 @@ texture_scale = 2.0
 color = Color( 0.92549, 0.588235, 0.588235, 1 )
 energy = 0.5
 shadow_enabled = true
+
+[node name="ScreenWipeGoal" type="Position2D" parent="."]
+position = Vector2( 23, 0 )
+
+[node name="ScreenUnwipeGoal" type="Position2D" parent="."]
+position = Vector2( -478, 0 )
+
+[node name="Wiper" type="Sprite" parent="."]
+position = Vector2( -525, -2 )
+z_index = 2
+texture = ExtResource( 7 )
