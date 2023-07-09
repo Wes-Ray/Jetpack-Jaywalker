@@ -96,6 +96,6 @@ position = Vector2( 23, 0 )
 position = Vector2( -478, 0 )
 
 [node name="Wiper" type="Sprite" parent="."]
-position = Vector2( -525, -2 )
+position = Vector2( 239, 4 )
 z_index = 2
 texture = ExtResource( 7 )

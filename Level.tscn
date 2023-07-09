@@ -271,6 +271,7 @@ rect_scale = Vector2( 0.2, 0.2 )
 theme = SubResource( 3 )
 text = "A / D to pan camera
 MOUSE to move trap
+( 1 to skip if stuck )
 "
 align = 1
 
