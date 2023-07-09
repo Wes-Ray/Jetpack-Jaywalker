@@ -17,7 +17,7 @@ func laser_fire():
 	update_laser()
 	$CollisionShape2D.disabled = false
 	$Sprite.visible = true
-	
+	$Light2D.visible = true
 	
 func update_laser():
 	$RayCast2D.enabled = true
@@ -27,6 +27,8 @@ func update_laser():
 	$CollisionShape2D.shape.extents.y = ray_distance / 2
 	$Sprite.position.y = 0 - ray_distance / 2
 	$Sprite.region_rect.size.y = abs(ray_distance)
+	$Light2D.position.y = 0 - ray_distance / 2
+	$Light2D.scale.y = abs(ray_distance) / 60
 	
 
 func laser_off():
@@ -36,6 +38,7 @@ func laser_off():
 	$CollisionShape2D.shape.extents.y = 0
 	$CollisionShape2D.disabled = true
 	$Sprite.visible = false
+	$Light2D.visible = false
 
 
 func _on_BottomLaser_area_entered(area):

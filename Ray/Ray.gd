@@ -17,6 +17,8 @@ func ray_warning():
 	$CollisionShape2D.disabled = true
 	$FireSprite.visible = false
 	$WarnSprite.visible = true
+	$Light2D.visible = true
+	$Light2D.energy = 0.5
 	
 	
 func ray_fire():
@@ -25,6 +27,9 @@ func ray_fire():
 	$CollisionShape2D.disabled = false
 	$FireSprite.visible = true
 	$WarnSprite.visible = false
+	$Light2D.visible = true
+	$Light2D.energy = 0.8
+	
 	
 func update_ray():
 	$RayCast2D.enabled = true
@@ -36,6 +41,8 @@ func update_ray():
 	$WarnSprite.region_rect.size.x = abs(ray_distance)
 	$FireSprite.position.x = 0 - ray_distance / 2
 	$FireSprite.region_rect.size.x = abs(ray_distance)
+	$Light2D.position.x = 0 - ray_distance / 2
+	$Light2D.scale.y = abs(ray_distance) / 60
 	
 func ray_off():
 	firing = false
@@ -45,7 +52,7 @@ func ray_off():
 	$CollisionShape2D.disabled = true
 	$FireSprite.visible = false
 	$WarnSprite.visible = false
-
+	$Light2D.visible = false
 
 func _on_Area2D_area_entered(area):
 	Orchestrator.apply_damage(area)

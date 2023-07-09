@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/jetpacker.png" type="Texture" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Player/fly_forward.tres" type="Animation" id=4]
 [ext_resource path="res://Player/death.tres" type="Animation" id=5]
 [ext_resource path="res://Player/fly_backward.tres" type="Animation" id=6]
+[ext_resource path="res://Player/jetpack.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Player/explosion.ogg" type="AudioStream" id=8]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -73,6 +75,14 @@ anims/fly_forward = ExtResource( 4 )
 [node name="Light2D" type="Light2D" parent="."]
 texture = ExtResource( 3 )
 texture_scale = 2.0
-color = Color( 0.92549, 0.588235, 0.588235, 1 )
-energy = 0.5
+color = Color( 0.956863, 0.560784, 0.560784, 1 )
+energy = 0.6
 shadow_enabled = true
+
+[node name="JetpackSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+volume_db = -40.0
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+volume_db = -30.0
