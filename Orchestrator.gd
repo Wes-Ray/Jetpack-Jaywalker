@@ -173,7 +173,7 @@ func goal_entered(area) -> void:
 		player.player_state = PlayerStates.REACHED_GOAL
 		switch_to_defense()
 	
-	if area.is_in_group("replay"):
+	if area.is_in_group("replay") and defense.camera.current == true:
 		end_game(true)
 
 
@@ -256,9 +256,10 @@ func _physics_process(_delta: float) -> void:
 #		make_new_player()
 	
 	# DEBUG
-#	if Input.is_action_just_released("debug1"):
-#		print("DEBUG 1")
-#		switch_to_defense()
+	if Input.is_action_just_released("debug1"):
+		print("DEBUG 1")
+		if defense.camera.current == true:
+			switch_to_offense()
 #
 #	if Input.is_action_just_released("debug2"):
 #		print("DEBUG 2")
