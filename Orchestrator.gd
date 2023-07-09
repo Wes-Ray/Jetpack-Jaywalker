@@ -36,7 +36,9 @@ func make_new_record() -> void:
 	
 	var new_record = record_preload.instance()
 	get_tree().get_current_scene().add_child(new_record)
+	
 	new_record.position = Vector2.ZERO
+	
 	record_objects.append(new_record)
 	current_record += 1
 
