@@ -17,6 +17,8 @@ var dead = false
 onready var debug_misc_label = $debug_misc_label
 onready var animation_player = $AnimationPlayer
 
+onready var replay_delay_timer : Timer
+
 
 # note, will have to set all later coords to the same value as when the player is dead
 # 	OR: stop updating coords once hitting a DEAD state, but keep player corpse there
@@ -28,6 +30,12 @@ func _ready() -> void:
 	coord_record.resize(INITIAL_ARRAY_SIZE)  # inits to all Vector2.ZERO
 	input_record.resize(INITIAL_ARRAY_SIZE)
 	input_record.fill(Orchestrator.Inputs.RIGHT)
+	
+	replay_delay_timer = Timer.new()
+	add_child(replay_delay_timer)
+	replay_delay_timer.wait_time = 0.7
+	replay_delay_timer.one_shot = true
+	replay_delay_timer.connect("timeout", self, "_on_replay_delay_timer_timout")
 
 
 func kill_replay(_state = Orchestrator.PlayerStates.DEAD):
@@ -95,9 +103,11 @@ func _physics_process(_delta: float) -> void:
 	
 	current_frame += 1
 
+func _on_replay_delay_timer_timout() -> void:
+	replaying = true
 
 func replay(start_frame = 0) -> void:
-	replaying = true
+	#replaying = true  # moved to timer
 	current_frame = start_frame
 	dead = false
 	
@@ -109,6 +119,8 @@ func replay(start_frame = 0) -> void:
 		$Light2D.enabled = false
 	
 	$AnimationPlayer.play("fly_forward")
+	
+	replay_delay_timer.start(0)
 	
 #	print("replay: ")
 #	for i in range(10):
