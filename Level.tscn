@@ -28,7 +28,7 @@ default_font = SubResource( 2 )
 script = ExtResource( 2 )
 
 [node name="SpawnPosition" type="Position2D" parent="."]
-position = Vector2( 307, 304 )
+position = Vector2( 307, 326 )
 
 [node name="Sprite" type="Sprite" parent="SpawnPosition"]
 texture = ExtResource( 10 )
@@ -37,7 +37,7 @@ texture = ExtResource( 10 )
 position = Vector2( 551, 343 )
 
 [node name="AttackerGoal" type="Area2D" parent="."]
-position = Vector2( 1363, 334 )
+position = Vector2( 1441, 334 )
 collision_layer = 4
 collision_mask = 2
 
@@ -67,13 +67,13 @@ scale = Vector2( 1000, 50 )
 position = Vector2( 457, 345 )
 
 [node name="Platform2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 317, 379 )
+position = Vector2( 317, 398 )
 
 [node name="Platform3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 409, 345 )
 
 [node name="Platform10" parent="." instance=ExtResource( 1 )]
-position = Vector2( 347, 277 )
+position = Vector2( 347, 296 )
 
 [node name="Platform4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 505, 345 )
@@ -94,7 +94,7 @@ position = Vector2( 812, 369 )
 position = Vector2( 948, 383 )
 
 [node name="Platform11" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1364, 346 )
+position = Vector2( 1442, 346 )
 
 [node name="Platform12" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1191, 343 )
@@ -130,19 +130,19 @@ position = Vector2( 1213, 361 )
 position = Vector2( 457, 363 )
 
 [node name="Wall13" parent="." instance=ExtResource( 11 )]
-position = Vector2( 321, 291 )
+position = Vector2( 321, 310 )
 
 [node name="Wall14" parent="." instance=ExtResource( 11 )]
-position = Vector2( 321, 323 )
+position = Vector2( 321, 342 )
 
 [node name="Wall16" parent="." instance=ExtResource( 11 )]
-position = Vector2( 293, 291 )
+position = Vector2( 293, 310 )
 
 [node name="Wall17" parent="." instance=ExtResource( 11 )]
-position = Vector2( 293, 323 )
+position = Vector2( 293, 342 )
 
 [node name="Wall15" parent="." instance=ExtResource( 11 )]
-position = Vector2( 343, 365 )
+position = Vector2( 343, 384 )
 
 [node name="Wall4" parent="." instance=ExtResource( 11 )]
 position = Vector2( 594, 305 )
@@ -172,16 +172,16 @@ position = Vector2( 972, 279 )
 position = Vector2( 1026, 352 )
 
 [node name="Zap" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1416, 305 )
+position = Vector2( 1464, 304 )
 
 [node name="Zap2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1416, 350 )
+position = Vector2( 1464, 349 )
 
 [node name="Zap3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1416, 395 )
+position = Vector2( 1464, 394 )
 
 [node name="Zap4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1416, 260 )
+position = Vector2( 1464, 259 )
 
 [node name="Box" parent="." instance=ExtResource( 9 )]
 position = Vector2( 972, 303 )

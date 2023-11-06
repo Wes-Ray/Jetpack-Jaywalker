@@ -208,6 +208,8 @@ align = 1
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 913, 321 )
 current = true
+drag_margin_top = 1.0
+drag_margin_bottom = 1.0
 
 [node name="Buzz" parent="." instance=ExtResource( 1 )]
 position = Vector2( 914, 311 )

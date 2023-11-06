@@ -3,20 +3,22 @@ extends KinematicBody2D
 
 var replay_object = null
 
-export var gravity_strength := 10.0
-export var max_fall_speed := 300.0
-#export var friction_strength := 25.0  # not used right now, friction is based on walk_force instead
+# vertical movement variables
+export var jetpack_force := 60.0
+export var jump_force := 160.0
+export var gravity_strength := 8.0
+export var max_jetpack_thrust := 100.0
+export var max_fall_speed := 180.0
 
-export var walk_force := 12.0
-export var max_walk_speed := 150.0
-
-export var jump_strength := 150.0
-
-export var jet_pack_fuel_duration := 1.5
-export var max_jetpack_speed := 100.0
-export var jet_pack_thrust_strength := 60.0
+# lateral movement variables
+export var move_force := 10.0
+export var drag_force := 1.0
+export var max_move_speed := 120.0
+export var base_move_speed := 70.0
 
 var velocity := Vector2.ZERO
+
+var inputting := false
 
 onready var wiper: Sprite = $Wiper
 onready var screen_wipe_goal: Position2D = $ScreenWipeGoal
@@ -24,7 +26,6 @@ onready var screen_unwipe_goal: Position2D = $ScreenUnwipeGoal
 onready var current_screen_goal := screen_unwipe_goal.position
 
 var player_state = Orchestrator.PlayerStates.IDLE
-var is_jumping = false
 
 onready var debug_state_label := $debug_state_label
 onready var debug_velocity_label := $debug_velocity_label
@@ -77,22 +78,18 @@ func _physics_process(_delta: float) -> void:
 	# INPUT
 	###############################################################################################
 	
-	var walk_input = Input.get_axis("move_left", "move_right")
+	var input_stall = Input.is_action_pressed("move_left")
+	var input_forward = Input.is_action_pressed("move_right")
+	var inputting = input_forward or input_stall
 	var current_input : int
+	
+	
 	# TODO: TEMPORARY PLAYER ANIMATION LOGIC, EVENTUALLY TIE TO STATES
 	if player_state != Orchestrator.PlayerStates.DEAD:
-		if walk_input > 0:
+		if input_forward:
 			current_input = Orchestrator.Inputs.RIGHT
 		else:
 			current_input = Orchestrator.Inputs.LEFT
-	
-	# set player to is_jumping manually between press and release, this allows game logic to turn
-	# off jumping if needed without inputs overriding game logic. 
-	if is_jumping and Input.is_action_just_released("move_jump"):
-		is_jumping = false
-	elif (not is_jumping) and Input.is_action_just_pressed("move_jump"):
-		is_jumping = true
-	
 	
 		
 	###############################################################################################
@@ -102,39 +99,24 @@ func _physics_process(_delta: float) -> void:
 	match player_state:
 		Orchestrator.PlayerStates.IDLE:
 			debug_state_label.text = "IDLE"
-			if ( not is_zero_approx(walk_input) ):# and is_on_floor():
-				player_state = Orchestrator.PlayerStates.RUN
-			if is_jumping:
-				player_state = Orchestrator.PlayerStates.JUMP
+			if ( inputting ):# and is_on_floor():
+				player_state = Orchestrator.PlayerStates.JET_PACK
 		
 		Orchestrator.PlayerStates.RUN:
 			debug_state_label.text = "RUN"
-			if ( is_zero_approx(walk_input) ):# and is_on_floor():
-				player_state = Orchestrator.PlayerStates.IDLE
-			if is_jumping:
-				player_state = Orchestrator.PlayerStates.JUMP
 		
 		Orchestrator.PlayerStates.FALL:
 			debug_state_label.text = "FALL"
 			if is_on_floor():
 				player_state = Orchestrator.PlayerStates.IDLE
-			if is_jumping:
-				player_state = Orchestrator.PlayerStates.JET_PACK
 		
 		Orchestrator.PlayerStates.JUMP:
 			debug_state_label.text = "JUMP"
-			if not is_on_floor():
-				is_jumping = false
-				player_state = Orchestrator.PlayerStates.FALL
 			
-			velocity.y = -jump_strength
-		
 		Orchestrator.PlayerStates.JET_PACK:
 			debug_state_label.text = "JET_PACK"
-			if not is_jumping:
-				player_state = Orchestrator.PlayerStates.FALL
-			
-			velocity.y = move_toward(velocity.y, -max_jetpack_speed, jet_pack_thrust_strength)
+			if not inputting:
+				player_state = Orchestrator.PlayerStates.IDLE
 		
 		Orchestrator.PlayerStates.ON_WALL:
 			debug_state_label.text = "ON_WALL"
@@ -172,11 +154,24 @@ func _physics_process(_delta: float) -> void:
 			or (player_state == Orchestrator.PlayerStates.REACHED_GOAL):
 		velocity = Vector2.ZERO
 	else:
-		velocity.x = move_toward(velocity.x, walk_input * max_walk_speed, walk_force)
+		if (player_state == Orchestrator.PlayerStates.JET_PACK):
+			if input_forward:
+				velocity.x = move_toward(velocity.x, max_move_speed, move_force)
+			elif input_stall:
+				velocity.x = move_toward(velocity.x, 0, move_force)
+			if is_on_floor():
+				velocity.y -= jump_force
+			velocity.y = move_toward(velocity.y, -max_jetpack_thrust, jetpack_force)
+		
+		# drag simulation
+		if velocity.x > base_move_speed:
+			velocity.x = move_toward(velocity.x, base_move_speed, drag_force)
+		# gravity simulation
 		velocity.y = move_toward(velocity.y, max_fall_speed, gravity_strength)
-	
+		
+		velocity = move_and_slide(velocity, Vector2.UP)
+		
 	debug_velocity_label.text = str(velocity)
-	velocity = move_and_slide(velocity, Vector2.UP)
 	
 	###############################################################################################
 	# REPLAY

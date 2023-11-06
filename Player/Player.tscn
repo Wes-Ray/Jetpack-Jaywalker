@@ -34,10 +34,12 @@ shape = SubResource( 2 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 0.85, 0.85 )
+drag_margin_v_enabled = true
 offset_h = 1.0
+drag_margin_top = 1.0
+drag_margin_bottom = 1.0
 
 [node name="debug_state_label" type="Label" parent="."]
-visible = false
 margin_left = -20.0
 margin_top = -25.0
 margin_right = 20.0
@@ -96,6 +98,7 @@ position = Vector2( 23, 0 )
 position = Vector2( -478, 0 )
 
 [node name="Wiper" type="Sprite" parent="."]
+visible = false
 position = Vector2( 239, 4 )
 z_index = 2
 texture = ExtResource( 7 )
