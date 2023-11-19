@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://World/Platform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
+[ext_resource path="res://Zap/Zap.tscn" type="PackedScene" id=3]
 [ext_resource path="res://World/Floor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://World/wallpaper.png" type="Texture" id=5]
-[ext_resource path="res://ReplayController.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Defense/Defense.tscn" type="PackedScene" id=6]
 [ext_resource path="res://World/flag.png" type="Texture" id=7]
 [ext_resource path="res://World/KillBoundary.tscn" type="PackedScene" id=8]
 [ext_resource path="res://World/Box.tscn" type="PackedScene" id=9]
@@ -26,21 +27,17 @@ default_font = SubResource( 2 )
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 567, 322 )
-current = true
-zoom = Vector2( 1.8, 1.8 )
-
-[node name="ReplayController" parent="." instance=ExtResource( 6 )]
-
 [node name="SpawnPosition" type="Position2D" parent="."]
 position = Vector2( 307, 326 )
 
 [node name="Sprite" type="Sprite" parent="SpawnPosition"]
 texture = ExtResource( 10 )
 
+[node name="Defense" parent="." instance=ExtResource( 6 )]
+position = Vector2( 551, 343 )
+
 [node name="AttackerGoal" type="Area2D" parent="."]
-position = Vector2( 817, 338 )
+position = Vector2( 1441, 334 )
 collision_layer = 4
 collision_mask = 2
 
@@ -67,11 +64,124 @@ position = Vector2( 282, 516 )
 scale = Vector2( 1000, 50 )
 
 [node name="Platform" parent="." instance=ExtResource( 1 )]
-position = Vector2( 309, 390 )
-scale = Vector2( 43.8, 1 )
+position = Vector2( 457, 345 )
+
+[node name="Platform2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 317, 398 )
+
+[node name="Platform3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 409, 345 )
+
+[node name="Platform10" parent="." instance=ExtResource( 1 )]
+position = Vector2( 347, 296 )
+
+[node name="Platform4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 505, 345 )
+
+[node name="Platform5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 620, 360 )
+
+[node name="Platform6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 620, 310 )
+
+[node name="Platform7" parent="." instance=ExtResource( 1 )]
+position = Vector2( 668, 360 )
+
+[node name="Platform8" parent="." instance=ExtResource( 1 )]
+position = Vector2( 812, 369 )
+
+[node name="Platform9" parent="." instance=ExtResource( 1 )]
+position = Vector2( 948, 383 )
+
+[node name="Platform11" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1442, 346 )
+
+[node name="Platform12" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1191, 343 )
+
+[node name="Platform13" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1191, 314 )
+
+[node name="Platform15" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1297, 384 )
+
+[node name="Platform16" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1143, 314 )
+
+[node name="Platform17" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1095, 314 )
+
+[node name="Platform18" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1095, 343 )
+
+[node name="Platform19" parent="." instance=ExtResource( 1 )]
+position = Vector2( 813, 293 )
+
+[node name="Platform20" parent="." instance=ExtResource( 1 )]
+position = Vector2( 861, 293 )
+
+[node name="Platform14" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1143, 343 )
 
 [node name="Wall" parent="." instance=ExtResource( 11 )]
 position = Vector2( 1213, 361 )
+
+[node name="Wall3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 457, 363 )
+
+[node name="Wall13" parent="." instance=ExtResource( 11 )]
+position = Vector2( 321, 310 )
+
+[node name="Wall14" parent="." instance=ExtResource( 11 )]
+position = Vector2( 321, 342 )
+
+[node name="Wall16" parent="." instance=ExtResource( 11 )]
+position = Vector2( 293, 310 )
+
+[node name="Wall17" parent="." instance=ExtResource( 11 )]
+position = Vector2( 293, 342 )
+
+[node name="Wall15" parent="." instance=ExtResource( 11 )]
+position = Vector2( 343, 384 )
+
+[node name="Wall4" parent="." instance=ExtResource( 11 )]
+position = Vector2( 594, 305 )
+
+[node name="Wall5" parent="." instance=ExtResource( 11 )]
+position = Vector2( 743, 267 )
+
+[node name="Wall6" parent="." instance=ExtResource( 11 )]
+position = Vector2( 743, 384 )
+
+[node name="Wall7" parent="." instance=ExtResource( 11 )]
+position = Vector2( 743, 299 )
+
+[node name="Wall2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1073, 296 )
+
+[node name="Wall11" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1319, 282 )
+
+[node name="Wall8" parent="." instance=ExtResource( 11 )]
+position = Vector2( 886, 307 )
+
+[node name="Wall9" parent="." instance=ExtResource( 11 )]
+position = Vector2( 972, 279 )
+
+[node name="Wall10" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1026, 352 )
+
+[node name="Zap" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1464, 304 )
+
+[node name="Zap2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1464, 349 )
+
+[node name="Zap3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1464, 394 )
+
+[node name="Zap4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1464, 259 )
 
 [node name="Box" parent="." instance=ExtResource( 9 )]
 position = Vector2( 972, 303 )
@@ -108,11 +218,7 @@ position = Vector2( 35, 335 )
 rotation = 1.5708
 
 [node name="Wall12" parent="." instance=ExtResource( 11 )]
-position = Vector2( 247, 347 )
-scale = Vector2( 1, 10 )
-
-[node name="Wall13" parent="." instance=ExtResource( 11 )]
-position = Vector2( 885, 347 )
+position = Vector2( -58, 339 )
 scale = Vector2( 1, 10 )
 
 [node name="PlayerHelp" type="Label" parent="."]
@@ -172,7 +278,4 @@ MOUSE to move trap
 "
 align = 1
 
-[connection signal="spawn_player" from="ReplayController" to="." method="_on_ReplayController_spawn_player"]
-[connection signal="switch_to_overview" from="ReplayController" to="." method="_on_ReplayController_switch_to_overview"]
-[connection signal="switch_to_player_view" from="ReplayController" to="." method="_on_ReplayController_switch_to_player_view"]
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]

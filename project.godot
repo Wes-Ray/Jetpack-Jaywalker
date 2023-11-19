@@ -11,13 +11,8 @@ config_version=4
 [application]
 
 config/name="Jetpack Jaywalker"
-run/main_scene="res://menu.tscn"
+run/main_scene="res://Level.tscn"
 config/icon="res://icon.png"
-
-[autoload]
-
-GlobalReset="*res://GlobalReset.gd"
-Orchestrator="*res://Orchestrator.gd"
 
 [display]
 
