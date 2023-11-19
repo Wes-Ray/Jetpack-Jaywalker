@@ -3,7 +3,7 @@
 [ext_resource path="res://Laser/laser_gun.png" type="Texture" id=1]
 [ext_resource path="res://Laser/track.png" type="Texture" id=2]
 [ext_resource path="res://World/beam_light.png" type="Texture" id=3]
-[ext_resource path="res://Laser/laser_fire.png" type="Texture" id=4]
+[ext_resource path="res://Cannon/laser.png" type="Texture" id=4]
 [ext_resource path="res://Laser/Laser.gd" type="Script" id=5]
 [ext_resource path="res://Laser/laser.ogg" type="AudioStream" id=6]
 

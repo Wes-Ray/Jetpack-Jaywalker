@@ -1,7 +1,7 @@
 extends Node2D
 
 
-const main_preload := preload("res://Level.tscn")
+const main_preload := preload("res://cannon_level.tscn")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

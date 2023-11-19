@@ -46,6 +46,7 @@ tracks/1/keys = {
 }
 
 [node name="Zap" type="Node2D"]
+position = Vector2( 1, 0 )
 script = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
