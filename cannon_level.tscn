@@ -218,10 +218,6 @@ z_index = -1
 position = Vector2( 860, 419 )
 z_index = -1
 
-[node name="Wall12" parent="." instance=ExtResource( 7 )]
-position = Vector2( -58, 339 )
-scale = Vector2( 1, 10 )
-
 [node name="PlayerHelp" type="Label" parent="."]
 margin_left = 231.0
 margin_top = 420.0
@@ -281,9 +277,10 @@ align = 1
 
 [node name="cannon" parent="." instance=ExtResource( 13 )]
 position = Vector2( 542, 431 )
+scale = Vector2( -1, 1 )
 
 [node name="ChaseWall" parent="." instance=ExtResource( 5 )]
 position = Vector2( 55, 329 )
-speed = 80
+speed = 85
 
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]

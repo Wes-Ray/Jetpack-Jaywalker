@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Cannon/cannon.png" type="Texture" id=1]
+[ext_resource path="res://World/circle_light.png" type="Texture" id=1]
 [ext_resource path="res://Cannon/cannonball.png" type="Texture" id=2]
 [ext_resource path="res://Cannon/laser.png" type="Texture" id=3]
+[ext_resource path="res://Cannon/cannon_parts.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 3.0
@@ -19,37 +20,37 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 11, -14 ) ]
+"values": [ Vector2( 14.9375, -15.875 ) ]
 }
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
 tracks/0/type = "value"
-tracks/0/path = NodePath("cannonball:visible")
+tracks/0/path = NodePath("cannonball:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 1,
-"values": [  ]
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 7, -10 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("laser:self_modulate")
+tracks/1/path = NodePath("cannonball:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.1 ),
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ) ]
+"update": 1,
+"values": [ false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("cannonball:position")
+tracks/2/path = NodePath("laser:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -58,14 +59,26 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 7, -10 ) ]
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("laser/Light2D:energy")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
 }
 
 [sub_resource type="Animation" id=4]
 resource_name = "project"
 length = 1.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("laser:self_modulate")
+tracks/0/path = NodePath("laser:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -76,10 +89,23 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0.156863 ), Color( 1, 1, 1, 0.156863 ), Color( 1, 1, 1, 1 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("laser/Light2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.1, 0.1, 0.5 ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "shoot"
 length = 2.0
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("cannonball:position")
 tracks/0/interp = 1
@@ -90,10 +116,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 16, -19 ), Vector2( 360, -363 ) ]
+"values": [ Vector2( 14.9375, -15.875 ), Vector2( 338.123, -339.013 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("laser:self_modulate")
+tracks/1/path = NodePath("laser:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -104,26 +130,77 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("cannonball:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("laser/Light2D:energy")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
-[node name="cannon" type="Node2D"]
+[node name="Cannon" type="Node2D"]
+position = Vector2( 26, 0 )
+
+[node name="Body" type="Sprite" parent="."]
+position = Vector2( 0, -1 )
+rotation = 0.785398
+texture = ExtResource( 4 )
+offset = Vector2( 0, -9 )
+region_enabled = true
+region_rect = Rect2( 9, 1, 9, 18 )
+
+[node name="Silo" type="Sprite" parent="Body"]
+show_behind_parent = true
+position = Vector2( -5.91991, -5.54951 )
+rotation = -0.785398
+scale = Vector2( 1, 1 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 3, 3, 3, 7 )
+
+[node name="Base" type="Sprite" parent="."]
+position = Vector2( 0, -1 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 1, 13, 7, 6 )
 
 [node name="laser" type="Sprite" parent="."]
-self_modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 12, -16 )
+modulate = Color( 1, 1, 1, 0.156863 )
+position = Vector2( 12.638, -13.7786 )
 rotation = -2.35619
+scale = Vector2( 0.5, 1 )
 texture = ExtResource( 3 )
 centered = false
-offset = Vector2( -1.75, 0 )
+offset = Vector2( -1, 0 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 2, 600 )
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -6, -19 )
+[node name="Light2D" type="Light2D" parent="laser"]
+scale = Vector2( 1, 10 )
 texture = ExtResource( 1 )
-centered = false
+offset = Vector2( 0.5, 30 )
+color = Color( 0.568627, 0.866667, 1, 1 )
+energy = 0.1
 
 [node name="cannonball" type="Sprite" parent="."]
-position = Vector2( 11, -14 )
+position = Vector2( 14.9375, -15.875 )
 texture = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="cannonball"]
@@ -131,7 +208,13 @@ texture = ExtResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="cannonball/Area2D"]
 shape = SubResource( 1 )
 
+[node name="Light2D" type="Light2D" parent="cannonball"]
+texture = ExtResource( 1 )
+color = Color( 0.568627, 0.866667, 1, 1 )
+energy = 0.6
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "shoot"
 anims/RESET = SubResource( 3 )
 anims/idle = SubResource( 2 )
 anims/project = SubResource( 4 )
