@@ -20,6 +20,10 @@ func _on_ReplayController_spawn_player() -> void:
 	get_tree().get_current_scene().add_child(player)
 
 
+func _on_ReplayController_kill_player() -> void:
+	player.free()
+
+
 func _on_ReplayController_switch_to_overview() -> void:
 	camera_2d.current = true
 
@@ -49,5 +53,4 @@ func _on_ReplayController_switch_to_player_view() -> void:
 #
 #func _on_AttackerGoal_area_entered(area: Area2D) -> void:
 #	Orchestrator.goal_entered(area)
-
 

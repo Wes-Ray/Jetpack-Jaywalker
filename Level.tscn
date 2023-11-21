@@ -4,7 +4,7 @@
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://World/Floor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://World/wallpaper.png" type="Texture" id=5]
-[ext_resource path="res://ReplayController.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Replay2/ReplayController.tscn" type="PackedScene" id=6]
 [ext_resource path="res://World/flag.png" type="Texture" id=7]
 [ext_resource path="res://World/KillBoundary.tscn" type="PackedScene" id=8]
 [ext_resource path="res://World/Box.tscn" type="PackedScene" id=9]
@@ -172,6 +172,7 @@ MOUSE to move trap
 "
 align = 1
 
+[connection signal="kill_player" from="ReplayController" to="." method="_on_ReplayController_kill_player"]
 [connection signal="spawn_player" from="ReplayController" to="." method="_on_ReplayController_spawn_player"]
 [connection signal="switch_to_overview" from="ReplayController" to="." method="_on_ReplayController_switch_to_overview"]
 [connection signal="switch_to_player_view" from="ReplayController" to="." method="_on_ReplayController_switch_to_player_view"]
