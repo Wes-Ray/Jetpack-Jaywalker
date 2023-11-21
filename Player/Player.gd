@@ -3,6 +3,9 @@ extends KinematicBody2D
 
 var replay_object = null
 
+enum PlayerStates {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD, PAUSED, REACHED_GOAL}
+enum Inputs {LEFT = 1, RIGHT = 0}
+
 # vertical movement variables
 export var jetpack_force := 60.0
 export var jump_force := 160.0
@@ -25,7 +28,8 @@ onready var screen_wipe_goal: Position2D = $ScreenWipeGoal
 onready var screen_unwipe_goal: Position2D = $ScreenUnwipeGoal
 onready var current_screen_goal := screen_unwipe_goal.position
 
-var player_state = Orchestrator.PlayerStates.IDLE
+#var player_state = Orchestrator.PlayerStates.IDLE
+var player_state = PlayerStates.IDLE
 
 onready var debug_state_label := $debug_state_label
 onready var debug_velocity_label := $debug_velocity_label
@@ -35,29 +39,29 @@ onready var camera := $Camera2D
 
 
 func kill_player() -> void:
-	if player_state != Orchestrator.PlayerStates.DEAD:
+	if player_state != PlayerStates.DEAD:
 		animation_player.play("death")
-	player_state = Orchestrator.PlayerStates.DEAD
+	player_state = PlayerStates.DEAD
 
 
 # should be called from the Orchestrator
-func respawn(new_replay_obj, new_spawn_pos) -> void:
-	replay_object = new_replay_obj
-	player_state = Orchestrator.PlayerStates.IDLE
-	position = new_spawn_pos
+#func respawn(new_replay_obj, new_spawn_pos) -> void:
+#	replay_object = new_replay_obj
+#	player_state = Orchestrator.PlayerStates.IDLE
+#	position = new_spawn_pos
 
 
 func activate_player() -> void:
 	print("activate player")
-	player_state = Orchestrator.PlayerStates.IDLE
-	camera.current = true
-	screen_unwipe()
+	player_state = PlayerStates.IDLE
+#	camera.current = true
+#	screen_unwipe()
 
 
 func deactivate_player() -> void:
 	print("deactivate player")
 #	player_state = Orchestrator.PlayerStates.PAUSED
-	screen_wipe()
+#	screen_wipe()
 
 
 func screen_wipe() -> void:
@@ -85,11 +89,11 @@ func _physics_process(_delta: float) -> void:
 	
 	
 	# TODO: TEMPORARY PLAYER ANIMATION LOGIC, EVENTUALLY TIE TO STATES
-	if player_state != Orchestrator.PlayerStates.DEAD:
+	if player_state != PlayerStates.DEAD:
 		if input_forward:
-			current_input = Orchestrator.Inputs.RIGHT
+			current_input = Inputs.RIGHT
 		else:
-			current_input = Orchestrator.Inputs.LEFT
+			current_input = Inputs.LEFT
 	
 		
 	###############################################################################################
@@ -97,37 +101,37 @@ func _physics_process(_delta: float) -> void:
 	###############################################################################################
 	# TODO: consider adding floor detect distance
 	match player_state:
-		Orchestrator.PlayerStates.IDLE:
+		PlayerStates.IDLE:
 			debug_state_label.text = "IDLE"
 			if ( inputting ):# and is_on_floor():
-				player_state = Orchestrator.PlayerStates.JET_PACK
+				player_state = PlayerStates.JET_PACK
 		
-		Orchestrator.PlayerStates.RUN:
+		PlayerStates.RUN:
 			debug_state_label.text = "RUN"
 		
-		Orchestrator.PlayerStates.FALL:
+		PlayerStates.FALL:
 			debug_state_label.text = "FALL"
 			if is_on_floor():
-				player_state = Orchestrator.PlayerStates.IDLE
+				player_state = PlayerStates.IDLE
 		
-		Orchestrator.PlayerStates.JUMP:
+		PlayerStates.JUMP:
 			debug_state_label.text = "JUMP"
 			
-		Orchestrator.PlayerStates.JET_PACK:
+		PlayerStates.JET_PACK:
 			debug_state_label.text = "JET_PACK"
 			if not inputting:
-				player_state = Orchestrator.PlayerStates.IDLE
+				player_state = PlayerStates.IDLE
 		
-		Orchestrator.PlayerStates.ON_WALL:
+		PlayerStates.ON_WALL:
 			debug_state_label.text = "ON_WALL"
 		
-		Orchestrator.PlayerStates.DEAD:
+		PlayerStates.DEAD:
 			debug_state_label.text = "DEAD"
 		
-		Orchestrator.PlayerStates.PAUSED:
+		PlayerStates.PAUSED:
 			debug_state_label.text = "PAUSED"
 		
-		Orchestrator.PlayerStates.REACHED_GOAL:
+		PlayerStates.REACHED_GOAL:
 			debug_state_label.text = "REACHED_GOAL"
 		
 		_:
@@ -135,10 +139,10 @@ func _physics_process(_delta: float) -> void:
 	###############################################################################################
 	# ANIMATION
 	###############################################################################################
-	if player_state != Orchestrator.PlayerStates.DEAD:
-		if current_input == Orchestrator.Inputs.RIGHT:
+	if player_state != PlayerStates.DEAD:
+		if current_input == Inputs.RIGHT:
 			animation_player.play("fly_forward")
-		elif current_input == Orchestrator.Inputs.LEFT:
+		elif current_input == Inputs.LEFT:
 			animation_player.play("fly_backward")
 	
 	
@@ -149,12 +153,12 @@ func _physics_process(_delta: float) -> void:
 	# note: may need to move velocity updates into states themselves, but could also just adjust
 	# movement multipliers in each state as appropriate
 	
-	if (player_state == Orchestrator.PlayerStates.DEAD) \
-			or (player_state == Orchestrator.PlayerStates.PAUSED) \
-			or (player_state == Orchestrator.PlayerStates.REACHED_GOAL):
+	if (player_state == PlayerStates.DEAD) \
+			or (player_state == PlayerStates.PAUSED) \
+			or (player_state == PlayerStates.REACHED_GOAL):
 		velocity = Vector2.ZERO
 	else:
-		if (player_state == Orchestrator.PlayerStates.JET_PACK):
+		if (player_state == PlayerStates.JET_PACK):
 			if input_forward:
 				velocity.x = move_toward(velocity.x, max_move_speed, move_force)
 			elif input_stall:
@@ -176,5 +180,6 @@ func _physics_process(_delta: float) -> void:
 	###############################################################################################
 	# REPLAY
 	###############################################################################################
-	replay_object.record_frame(player_state, position, current_input)
+	# TODO: add back
+#	replay_object.record_frame(player_state, position, current_input)
 

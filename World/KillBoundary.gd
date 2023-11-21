@@ -16,5 +16,5 @@ func _ready():
 #	pass
 
 
-func _on_KillBoundary_area_entered(area):
-	Orchestrator.apply_damage(area)
+#func _on_KillBoundary_area_entered(area):
+#	Orchestrator.apply_damage(area)
