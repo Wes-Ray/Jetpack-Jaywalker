@@ -13,6 +13,11 @@ func _ready() -> void:
 #	Orchestrator.register_global_UI($UI)
 #	Orchestrator.register_main(self)
 
+func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("debug6"):
+		player.set_pos(spawn_position.position)
+	
+
 func _on_ReplayController_spawn_player() -> void:
 	player = player_preload.instance()
 	player.position = spawn_position.position

@@ -11,9 +11,10 @@ const replay_character_preload := preload("res://Replay2/ReplayCharacter.tscn")
 var player : KinematicBody2D
 var is_replaying := false
 # use PoolIntArray()/PoolVector2Array if more speed is needed
-var pos_data := []  # TODO: expand to more than one player (array of arrays), could also split this up to sub scenes
+var current_pos_data := []
 var replay_tick := 0
-var replay : KinematicBody2D  # will have to add to array for multiple replays
+var replays := []
+const POS_OFFSCREEN := Vector2(-400, -400)
 
 
 func register_player(player_in) -> void:
@@ -29,13 +30,24 @@ func spawn_player():
 #	print("debug kill player")
 #	emit_signal("kill_player")
 
-func start_replay():
-	print("starting replay")
+func start_stop_replay():
 	replay_tick = 0
-	replay = replay_character_preload.instance()
-	replay.position = pos_data[0]
-	get_tree().get_current_scene().add_child(replay)
-	is_replaying = true
+	is_replaying = not is_replaying
+	
+	if is_replaying:
+		print("starting replay")
+	else:
+		print("stopping replay")
+		for r in replays:
+			r.reset()
+
+
+func add_replay():
+	print("adding replay")
+	var tmp_replay = replay_character_preload.instance()
+	tmp_replay.init(current_pos_data.duplicate(), POS_OFFSCREEN)
+	get_tree().get_current_scene().add_child(tmp_replay)
+	replays.append(tmp_replay)
 
 
 func switch_to_overview():
@@ -54,23 +66,29 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_released("debug1"):
 		spawn_player()
 	if Input.is_action_just_pressed("debug2"):
-		start_replay()
+		start_stop_replay()
 	if Input.is_action_just_pressed("debug3"):
 		switch_to_overview()
 	if Input.is_action_just_pressed("debug4"):
 		switch_to_player_view()
+	if Input.is_action_just_pressed("debug5"):
+		add_replay()
 
 
 func _on_ReplayTimer_timeout() -> void:
 	if player and not is_replaying:
 #		print("player pos: ", player.position)
-		pos_data.append(player.position)
+		current_pos_data.append(player.position)
+		replay_tick = 0
 	
 	if is_replaying:
-		if replay_tick > pos_data.size() - 1:
-			print("END OF REPLAY")
-		else:
-			print("replaying: ", pos_data[replay_tick])
-			replay.position = pos_data[replay_tick]
-			replay_tick += 1
+		for r in replays:
+			r.replay(replay_tick)
+		replay_tick += 1
+#		if replay_tick > current_pos_data.size() - 1:
+#			print("END OF REPLAY")
+#		else:
+#			print("replaying: ", current_pos_data[replay_tick])
+#			replay.position = current_pos_data[replay_tick]
+#			replay_tick += 1
 	

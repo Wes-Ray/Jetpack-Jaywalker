@@ -44,6 +44,11 @@ func kill_player() -> void:
 	player_state = PlayerStates.DEAD
 
 
+func set_pos(pos : Vector2) -> void:
+	position = pos
+	velocity = Vector2.ZERO
+
+
 # should be called from the Orchestrator
 #func respawn(new_replay_obj, new_spawn_pos) -> void:
 #	replay_object = new_replay_obj
