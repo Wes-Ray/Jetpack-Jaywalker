@@ -8,34 +8,54 @@ onready var camera_2d: Camera2D = $Camera2D
 var player : KinematicBody2D
 
 func _ready() -> void:
-	pass
+	spawn_player()
 #	Orchestrator.init_spawn_created($SpawnPosition)
 #	Orchestrator.register_global_UI($UI)
 #	Orchestrator.register_main(self)
 
-func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("debug6"):
-		player.set_pos(spawn_position.position)
-	
-
-func _on_ReplayController_spawn_player() -> void:
+func spawn_player() -> void:
 	player = player_preload.instance()
 	player.position = spawn_position.position
+
 	replay_controller.register_player(player)
+	replay_controller.record()
+
 	get_tree().get_current_scene().add_child(player)
 
 
-func _on_ReplayController_kill_player() -> void:
-	player.free()
+func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("debug6"):
+		player.set_pos(spawn_position.position)
+	if Input.is_action_just_pressed("debug1"):
+		spawn_player()
+	
+
+# func _on_ReplayController_spawn_player() -> void:
+# 	player = player_preload.instance()
+# 	player.position = spawn_position.position
+# 	replay_controller.register_player(player)
+# 	get_tree().get_current_scene().add_child(player)
 
 
-func _on_ReplayController_switch_to_overview() -> void:
-	camera_2d.current = true
+# func _on_ReplayController_kill_player() -> void:
+# 	player.free()
 
 
-func _on_ReplayController_switch_to_player_view() -> void:
-	player.camera.current = true
+# func _on_ReplayController_switch_to_overview() -> void:
+# 	camera_2d.current = true
 
+
+# func _on_ReplayController_switch_to_player_view() -> void:
+# 	player.camera.current = true
+
+
+func player_reached_goal() -> void:
+	print("player reached goal")
+	replay_controller.stop_recording_save_replay()
+	player.free()  # must be done second or it will crash
+
+	# TODO: move to other function to allow for delay
+	replay_controller.replay()
 
 #func player_help(on : bool):
 #	if on:
@@ -56,6 +76,7 @@ func _on_ReplayController_switch_to_player_view() -> void:
 #		$GameOverDefense.visible = true
 #
 #
-#func _on_AttackerGoal_area_entered(area: Area2D) -> void:
+func _on_AttackerGoal_area_entered(area: Area2D) -> void:
 #	Orchestrator.goal_entered(area)
+	player_reached_goal()
 

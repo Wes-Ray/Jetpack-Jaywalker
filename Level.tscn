@@ -40,7 +40,7 @@ position = Vector2( 307, 326 )
 texture = ExtResource( 10 )
 
 [node name="AttackerGoal" type="Area2D" parent="."]
-position = Vector2( 817, 338 )
+position = Vector2( 872, 377 )
 collision_layer = 4
 collision_mask = 2
 
