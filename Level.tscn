@@ -172,6 +172,7 @@ MOUSE to move trap
 "
 align = 1
 
+[connection signal="all_replays_complete" from="ReplayController" to="." method="_on_ReplayController_all_replays_complete"]
 [connection signal="kill_player" from="ReplayController" to="." method="_on_ReplayController_kill_player"]
 [connection signal="spawn_player" from="ReplayController" to="." method="_on_ReplayController_spawn_player"]
 [connection signal="switch_to_overview" from="ReplayController" to="." method="_on_ReplayController_switch_to_overview"]

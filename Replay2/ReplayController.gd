@@ -1,6 +1,7 @@
 extends Node
 
 # TODO: add signals for replays_complete, etc
+signal all_replays_complete
 
 # TODO: remove all signals below
 signal spawn_player
@@ -110,6 +111,10 @@ func _on_ReplayTimer_timeout() -> void:
 		current_pos_data.append(player.position)
 	
 	if is_replaying:
+		is_replaying = false
 		for r in replays:
-			r.replay(replay_tick)
+			if r.replay(replay_tick) == true:
+				is_replaying = true
+		if not is_replaying:
+			emit_signal("all_replays_complete")
 		replay_tick += 1

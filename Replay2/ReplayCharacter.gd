@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Node2D
 
 
 var pos_data := []
@@ -21,11 +21,12 @@ func reset():
 # returns false when pos_data runs out
 func replay(tick : int) -> bool:
 	if tick < len(pos_data):
-		print("replay", self, " tick:", tick)
-		print("\treplay position: ", pos_data[tick])
+		# print("replay", self, " tick:", tick)
+		# print("\treplay position: ", pos_data[tick])
 		
 		position = pos_data[tick]
 		
 		return true
 	else:
 		return false
+

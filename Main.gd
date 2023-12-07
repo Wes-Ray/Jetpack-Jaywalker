@@ -49,6 +49,11 @@ func _physics_process(delta: float) -> void:
 # 	player.camera.current = true
 
 
+func _on_ReplayController_all_replays_complete() -> void:
+	print("all replays complete")
+	spawn_player()
+
+
 func player_reached_goal() -> void:
 	print("player reached goal")
 	replay_controller.stop_recording_save_replay()
@@ -79,4 +84,3 @@ func player_reached_goal() -> void:
 func _on_AttackerGoal_area_entered(area: Area2D) -> void:
 #	Orchestrator.goal_entered(area)
 	player_reached_goal()
-
