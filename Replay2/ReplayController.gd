@@ -75,7 +75,7 @@ func record() -> void:
 func stop_recording_save_replay():
 	print("stopping recording, saving current replay")
 	var tmp_replay = replay_character_preload.instance()
-	tmp_replay.init(current_pos_data.duplicate(), POS_OFFSCREEN)
+	tmp_replay.init(current_pos_data.duplicate(), POS_OFFSCREEN, replay_timer.wait_time)
 	get_tree().get_current_scene().call_deferred("add_child", tmp_replay)
 	replays.append(tmp_replay)
 	current_pos_data = []

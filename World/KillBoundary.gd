@@ -16,5 +16,6 @@ func _ready():
 #	pass
 
 # TODO: refactor? 
-#func _on_KillBoundary_area_entered(area):
-#	Orchestrator.apply_damage(area)
+func _on_KillBoundary_area_entered(_area):
+	# Orchestrator.apply_damage(area)
+	pass
