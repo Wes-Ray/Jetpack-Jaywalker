@@ -16,6 +16,7 @@ func _ready() -> void:
 func spawn_player() -> void:
 	player = player_preload.instance()
 	player.position = spawn_position.position
+	player.add_to_group("player")
 
 	replay_controller.register_player(player)
 	replay_controller.record()
@@ -81,6 +82,7 @@ func player_reached_goal() -> void:
 #		$GameOverDefense.visible = true
 #
 #
-func _on_AttackerGoal_area_entered(_area: Area2D) -> void:
+func _on_AttackerGoal_area_entered(area: Area2D) -> void:
 #	Orchestrator.goal_entered(area)
-	player_reached_goal()
+	if area.is_in_group("player"):
+		player_reached_goal()
