@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://World/Platform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
+[ext_resource path="res://ZapWall/ChaseWall.tscn" type="PackedScene" id=3]
 [ext_resource path="res://World/Floor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://World/wallpaper.png" type="Texture" id=5]
 [ext_resource path="res://Replay2/ReplayController.tscn" type="PackedScene" id=6]
@@ -99,6 +100,7 @@ position = Vector2( 547, 392 )
 
 [node name="KillBoundary" parent="." instance=ExtResource( 8 )]
 position = Vector2( 860, 240 )
+scale = Vector2( -1, -1 )
 
 [node name="KillBoundary2" parent="." instance=ExtResource( 8 )]
 position = Vector2( 860, 412 )
@@ -172,9 +174,8 @@ MOUSE to move trap
 "
 align = 1
 
+[node name="ChaseWall" parent="." instance=ExtResource( 3 )]
+position = Vector2( 201, 325 )
+
 [connection signal="all_replays_complete" from="ReplayController" to="." method="_on_ReplayController_all_replays_complete"]
-[connection signal="kill_player" from="ReplayController" to="." method="_on_ReplayController_kill_player"]
-[connection signal="spawn_player" from="ReplayController" to="." method="_on_ReplayController_spawn_player"]
-[connection signal="switch_to_overview" from="ReplayController" to="." method="_on_ReplayController_switch_to_overview"]
-[connection signal="switch_to_player_view" from="ReplayController" to="." method="_on_ReplayController_switch_to_player_view"]
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]

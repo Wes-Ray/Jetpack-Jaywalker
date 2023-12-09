@@ -23,7 +23,7 @@ func spawn_player() -> void:
 	get_tree().get_current_scene().add_child(player)
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("debug6"):
 		player.set_pos(spawn_position.position)
 	if Input.is_action_just_pressed("debug1"):
@@ -57,7 +57,7 @@ func _on_ReplayController_all_replays_complete() -> void:
 func player_reached_goal() -> void:
 	print("player reached goal")
 	replay_controller.stop_recording_save_replay()
-	player.free()  # must be done second or it will crash
+	player.call_deferred("free")  # must be done second or it will crash
 
 	# TODO: move to other function to allow for delay
 	replay_controller.replay()
@@ -81,6 +81,6 @@ func player_reached_goal() -> void:
 #		$GameOverDefense.visible = true
 #
 #
-func _on_AttackerGoal_area_entered(area: Area2D) -> void:
+func _on_AttackerGoal_area_entered(_area: Area2D) -> void:
 #	Orchestrator.goal_entered(area)
 	player_reached_goal()

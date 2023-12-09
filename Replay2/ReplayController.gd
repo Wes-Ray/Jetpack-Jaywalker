@@ -3,12 +3,6 @@ extends Node
 # TODO: add signals for replays_complete, etc
 signal all_replays_complete
 
-# TODO: remove all signals below
-signal spawn_player
-signal kill_player
-signal switch_to_overview
-signal switch_to_player_view
-
 onready var replay_timer: Timer = $ReplayTimer  # set tick rate in the inspector
 const replay_character_preload := preload("res://Replay2/ReplayCharacter.tscn")
 
@@ -82,7 +76,7 @@ func stop_recording_save_replay():
 	print("stopping recording, saving current replay")
 	var tmp_replay = replay_character_preload.instance()
 	tmp_replay.init(current_pos_data.duplicate(), POS_OFFSCREEN)
-	get_tree().get_current_scene().add_child(tmp_replay)
+	get_tree().get_current_scene().call_deferred("add_child", tmp_replay)
 	replays.append(tmp_replay)
 	current_pos_data = []
 

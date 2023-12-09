@@ -1,16 +1,17 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://Buzz/Buzz.tscn" type="PackedScene" id=1]
+[ext_resource path="res://_Archive/Buzz/Buzz.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/Platform.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/Wall.tscn" type="PackedScene" id=3]
 [ext_resource path="res://World/Box.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Zap/Zap.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Laser/Laser.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Ray/Ray.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ZapWall/ZapWall.tscn" type="PackedScene" id=5]
+[ext_resource path="res://_Archive/Laser/Laser.tscn" type="PackedScene" id=6]
+[ext_resource path="res://_Archive/Ray/Ray.tscn" type="PackedScene" id=7]
 [ext_resource path="res://World/Floor.tscn" type="PackedScene" id=8]
 [ext_resource path="res://INVASION2000.TTF" type="DynamicFontData" id=9]
 [ext_resource path="res://World/wallpaper.png" type="Texture" id=10]
 [ext_resource path="res://splash.gd" type="Script" id=11]
+
 
 [sub_resource type="DynamicFont" id=2]
 size = 64

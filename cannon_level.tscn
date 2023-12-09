@@ -3,8 +3,8 @@
 [ext_resource path="res://INVASION2000.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://World/flag.png" type="Texture" id=2]
 [ext_resource path="res://World/Box.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Zap/Zap.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Zap/ChaseWall.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ZapWall/ZapWall.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ZapWall/ChaseWall.tscn" type="PackedScene" id=5]
 [ext_resource path="res://World/Platform.tscn" type="PackedScene" id=6]
 [ext_resource path="res://World/Wall.tscn" type="PackedScene" id=7]
 [ext_resource path="res://World/Deathzone.tscn" type="PackedScene" id=8]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Main.gd" type="Script" id=12]
 [ext_resource path="res://Cannon/Cannon.tscn" type="PackedScene" id=13]
 [ext_resource path="res://World/wallpaper.png" type="Texture" id=14]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 
