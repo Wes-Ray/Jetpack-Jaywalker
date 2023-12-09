@@ -1,6 +1,5 @@
 extends Node
 
-# TODO: add signals for replays_complete, etc
 signal all_replays_complete
 
 onready var replay_timer: Timer = $ReplayTimer  # set tick rate in the inspector
@@ -19,41 +18,6 @@ const POS_OFFSCREEN := Vector2(-400, -400)
 func register_player(player_in) -> void:
 	player = player_in
 
-
-#func spawn_player():
-#	print("debug spawn player")
-#	emit_signal("spawn_player")
-
-
-
-#func start_stop_replay():
-#	replay_tick = 0
-#	is_replaying = not is_replaying
-#
-#	if is_replaying:
-#		print("starting replay")
-#	else:
-#		print("stopping replay")
-#		for r in replays:
-#			r.reset()
-
-
-#func add_replay():
-#	print("adding replay")
-#	var tmp_replay = replay_character_preload.instance()
-#	tmp_replay.init(current_pos_data.duplicate(), POS_OFFSCREEN)
-#	get_tree().get_current_scene().add_child(tmp_replay)
-#	replays.append(tmp_replay)
-
-
-#func switch_to_overview():
-#	print("switching to overview")
-#	emit_signal("switch_to_overview")
-#
-#
-#func switch_to_player_view():
-#	print("switching to player view")
-#	emit_signal("switch_to_player_view")
 
 func replay() -> void:
 	replay_tick = 0
@@ -83,20 +47,6 @@ func stop_recording_save_replay():
 	print("ALL REPLAYS:")
 	for x in replays:
 		print("\t", x)
-
-#func _process(delta: float) -> void:
-#	# debug buttons
-#	############################################################################
-#	if Input.is_action_just_released("debug1"):
-#		spawn_player()
-#	if Input.is_action_just_pressed("debug2"):
-#		start_stop_replay()
-#	if Input.is_action_just_pressed("debug3"):
-#		switch_to_overview()
-#	if Input.is_action_just_pressed("debug4"):
-#		switch_to_player_view()
-#	if Input.is_action_just_pressed("debug5"):
-#		add_replay()
 
 
 func _on_ReplayTimer_timeout() -> void:
