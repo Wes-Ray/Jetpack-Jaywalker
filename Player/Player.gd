@@ -21,8 +21,6 @@ export var base_move_speed := 70.0
 
 var velocity := Vector2.ZERO
 
-var inputting := false
-
 onready var wiper: Sprite = $Wiper
 onready var screen_wipe_goal: Position2D = $ScreenWipeGoal
 onready var screen_unwipe_goal: Position2D = $ScreenUnwipeGoal
