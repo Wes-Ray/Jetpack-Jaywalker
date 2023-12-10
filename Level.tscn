@@ -98,14 +98,14 @@ position = Vector2( 1296, 348 )
 [node name="Box6" parent="." instance=ExtResource( 9 )]
 position = Vector2( 547, 392 )
 
-[node name="KillBoundary" parent="." instance=ExtResource( 8 )]
+[node name="DeathZoneTop" parent="." instance=ExtResource( 8 )]
 position = Vector2( 860, 240 )
 scale = Vector2( -1, -1 )
 
-[node name="KillBoundary2" parent="." instance=ExtResource( 8 )]
+[node name="DeathZoneBottom" parent="." instance=ExtResource( 8 )]
 position = Vector2( 860, 412 )
 
-[node name="KillBoundary3" parent="." instance=ExtResource( 8 )]
+[node name="DeathZoneLeft" parent="." instance=ExtResource( 8 )]
 position = Vector2( 35, 335 )
 rotation = 1.5708
 

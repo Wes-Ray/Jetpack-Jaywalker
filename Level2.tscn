@@ -7,12 +7,11 @@
 [ext_resource path="res://World/wallpaper.png" type="Texture" id=5]
 [ext_resource path="res://Defense/Defense.tscn" type="PackedScene" id=6]
 [ext_resource path="res://World/flag.png" type="Texture" id=7]
-[ext_resource path="res://World/KillBoundary.tscn" type="PackedScene" id=8]
+[ext_resource path="res://World/Deathzone.tscn" type="PackedScene" id=8]
 [ext_resource path="res://World/Box.tscn" type="PackedScene" id=9]
 [ext_resource path="res://World/hatch.png" type="Texture" id=10]
 [ext_resource path="res://World/Wall.tscn" type="PackedScene" id=11]
 [ext_resource path="res://INVASION2000.TTF" type="DynamicFontData" id=12]
-
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -208,13 +207,14 @@ position = Vector2( 1296, 348 )
 [node name="Box6" parent="." instance=ExtResource( 9 )]
 position = Vector2( 547, 392 )
 
-[node name="KillBoundary" parent="." instance=ExtResource( 8 )]
+[node name="DeathZoneTop" parent="." instance=ExtResource( 8 )]
 position = Vector2( 860, 240 )
+scale = Vector2( -1, -1 )
 
-[node name="KillBoundary2" parent="." instance=ExtResource( 8 )]
+[node name="DeathZoneBottom" parent="." instance=ExtResource( 8 )]
 position = Vector2( 860, 412 )
 
-[node name="KillBoundary3" parent="." instance=ExtResource( 8 )]
+[node name="DeathZoneLeft" parent="." instance=ExtResource( 8 )]
 position = Vector2( 35, 335 )
 rotation = 1.5708
 
