@@ -67,7 +67,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.8 )
 }
 
-[node name="Zap" type="Node2D"]
+[node name="ZapWall" type="Node2D"]
 position = Vector2( 1, 0 )
 script = SubResource( 3 )
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://World/Platform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://World/hatch.png" type="Texture" id=10]
 [ext_resource path="res://World/Wall.tscn" type="PackedScene" id=11]
 [ext_resource path="res://INVASION2000.TTF" type="DynamicFontData" id=12]
+[ext_resource path="res://Cannon/Cannon.tscn" type="PackedScene" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -41,7 +42,7 @@ position = Vector2( 307, 326 )
 texture = ExtResource( 10 )
 
 [node name="AttackerGoal" type="Area2D" parent="."]
-position = Vector2( 872, 377 )
+position = Vector2( 872, 386 )
 collision_layer = 4
 collision_mask = 2
 
@@ -68,8 +69,12 @@ position = Vector2( 282, 516 )
 scale = Vector2( 1000, 50 )
 
 [node name="Platform" parent="." instance=ExtResource( 1 )]
-position = Vector2( 309, 390 )
-scale = Vector2( 43.8, 1 )
+position = Vector2( 297, 375 )
+scale = Vector2( 2, 1 )
+
+[node name="Platform2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 836, 398 )
+scale = Vector2( 2, 1 )
 
 [node name="Wall" parent="." instance=ExtResource( 11 )]
 position = Vector2( 1213, 361 )
@@ -176,6 +181,9 @@ align = 1
 
 [node name="ChaseWall" parent="." instance=ExtResource( 3 )]
 position = Vector2( 201, 325 )
+
+[node name="Cannon" parent="." instance=ExtResource( 13 )]
+position = Vector2( 333, 423 )
 
 [connection signal="all_replays_complete" from="ReplayController" to="." method="_on_ReplayController_all_replays_complete"]
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]

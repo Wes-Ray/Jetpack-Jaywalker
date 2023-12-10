@@ -3,7 +3,7 @@ extends Node2D
 onready var replay_controller: Node = $ReplayController
 onready var spawn_position: Position2D = $SpawnPosition
 const player_preload := preload("res://Player/Player.tscn")
-onready var camera_2d: Camera2D = $Camera2D
+# onready var camera_2d: Camera2D = $Camera2D
 
 var player : KinematicBody2D
 

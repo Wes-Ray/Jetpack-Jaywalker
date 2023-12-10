@@ -5,7 +5,7 @@
 [ext_resource path="res://ZapWall/ZapWall.tscn" type="PackedScene" id=3]
 [ext_resource path="res://World/Floor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://World/wallpaper.png" type="Texture" id=5]
-[ext_resource path="res://Defense/Defense.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Replay2/ReplayController.tscn" type="PackedScene" id=6]
 [ext_resource path="res://World/flag.png" type="Texture" id=7]
 [ext_resource path="res://World/Deathzone.tscn" type="PackedScene" id=8]
 [ext_resource path="res://World/Box.tscn" type="PackedScene" id=9]
@@ -32,9 +32,6 @@ position = Vector2( 307, 326 )
 
 [node name="Sprite" type="Sprite" parent="SpawnPosition"]
 texture = ExtResource( 10 )
-
-[node name="Defense" parent="." instance=ExtResource( 6 )]
-position = Vector2( 551, 343 )
 
 [node name="AttackerGoal" type="Area2D" parent="."]
 position = Vector2( 1441, 334 )
@@ -278,5 +275,7 @@ MOUSE to move trap
 ( 1 to skip if stuck )
 "
 align = 1
+
+[node name="ReplayController" parent="." instance=ExtResource( 6 )]
 
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]

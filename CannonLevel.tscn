@@ -15,7 +15,6 @@
 [ext_resource path="res://Cannon/Cannon.tscn" type="PackedScene" id=13]
 [ext_resource path="res://World/wallpaper.png" type="Texture" id=14]
 
-
 [sub_resource type="RectangleShape2D" id=1]
 
 [sub_resource type="DynamicFont" id=2]
