@@ -10,6 +10,7 @@ var is_replaying := false
 var is_recording := false
 # use PoolIntArray()/PoolVector2Array if more speed is needed
 var current_pos_data := []
+var current_anim := []
 var replay_tick := 0
 var replays := []
 const POS_OFFSCREEN := Vector2(-400, -400)
@@ -39,7 +40,7 @@ func record() -> void:
 func stop_recording_save_replay():
 	print("stopping recording, saving current replay")
 	var tmp_replay = replay_character_preload.instance()
-	tmp_replay.init(current_pos_data.duplicate(), POS_OFFSCREEN, replay_timer.wait_time)
+	tmp_replay.init(current_pos_data.duplicate(), current_anim.duplicate(), POS_OFFSCREEN, replay_timer.wait_time)
 	get_tree().get_current_scene().call_deferred("add_child", tmp_replay)
 	replays.append(tmp_replay)
 	current_pos_data = []
@@ -50,10 +51,10 @@ func stop_recording_save_replay():
 
 
 func _on_ReplayTimer_timeout() -> void:
-
 	if is_instance_valid(player) and is_recording:
 		current_pos_data.append(player.position)
-	
+		current_anim.append(player.get_node("AnimationPlayer").current_animation)
+
 	if is_replaying:
 		is_replaying = false
 		for r in replays:

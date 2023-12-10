@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/jetpacker.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Player/fly_backward.tres" type="Animation" id=6]
 [ext_resource path="res://Player/wiper.png" type="Texture" id=7]
 [ext_resource path="res://Player/explosion.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Player/jetpack.ogg" type="AudioStream" id=9]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -67,7 +68,6 @@ position = Vector2( 0, -2 )
 z_index = 1
 texture = ExtResource( 2 )
 hframes = 9
-frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "fly_forward"
@@ -83,6 +83,7 @@ energy = 0.6
 shadow_enabled = true
 
 [node name="JetpackSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
 volume_db = -40.0
 
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
