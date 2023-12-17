@@ -44,6 +44,7 @@ func stop_recording_save_replay():
 	get_tree().get_current_scene().call_deferred("add_child", tmp_replay)
 	replays.append(tmp_replay)
 	current_pos_data = []
+	current_anim = []
 
 	print("ALL REPLAYS:")
 	for x in replays:
