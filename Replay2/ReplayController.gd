@@ -1,9 +1,16 @@
-extends Node
+extends Node2D
 
 signal all_replays_complete
 
 onready var replay_timer: Timer = $ReplayTimer  # set tick rate in the inspector
 const replay_character_preload := preload("res://Replay2/ReplayCharacter.tscn")
+
+var defense_active := false
+
+# TODO: replace with actual turret object
+onready var turret: Sprite = $Sprite
+var TURRET_GROUND_Y_COORD = 425
+var TURRET_CEILING_Y_COORD = 225
 
 var player : KinematicBody2D
 var is_replaying := false
@@ -14,6 +21,16 @@ var current_anim := []
 var replay_tick := 0
 var replays := []
 const POS_OFFSCREEN := Vector2(-400, -400)
+
+
+func activate_defense():
+	defense_active = true
+	replay()
+
+
+func deactivate_defense():
+	defense_active = false
+	stop_replay()
 
 
 func register_player(player_in) -> void:
@@ -63,4 +80,23 @@ func _on_ReplayTimer_timeout() -> void:
 				is_replaying = true
 		if not is_replaying:
 			emit_signal("all_replays_complete")
+			deactivate_defense()
 		replay_tick += 1
+
+
+func _physics_process(_delta: float) -> void:
+	
+	# if defense_active:
+
+	var mouse_pos = get_global_mouse_position()
+	turret.position.x = mouse_pos.x
+
+	if mouse_pos.y > get_viewport().size.y / 2:
+		turret.position.y = TURRET_GROUND_Y_COORD
+	else:
+		turret.position.y = TURRET_CEILING_Y_COORD
+
+	if Input.is_action_just_released("def_place_trap"):
+		# TODO: spawn turret here
+		print("placing trap at: ", turret.position)
+
