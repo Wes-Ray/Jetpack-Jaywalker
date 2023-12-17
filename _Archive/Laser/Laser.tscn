@@ -99,7 +99,7 @@ position = Vector2( -17, 0 )
 texture = ExtResource( 3 )
 
 [node name="GunSprite" type="Sprite" parent="."]
-position = Vector2( -3.69831, 0 )
+position = Vector2( -33, 0 )
 texture = ExtResource( 2 )
 
 [node name="TopLaser" type="Area2D" parent="GunSprite"]

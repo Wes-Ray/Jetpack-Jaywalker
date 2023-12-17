@@ -1,17 +1,48 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://World/circle_light.png" type="Texture" id=1]
 [ext_resource path="res://Cannon/Cannon.gd" type="Script" id=2]
 [ext_resource path="res://Cannon/laser.png" type="Texture" id=3]
 [ext_resource path="res://Cannon/cannon_parts.png" type="Texture" id=4]
 
+[sub_resource type="CapsuleShape2D" id=5]
+
 [sub_resource type="Animation" id=3]
 length = 0.001
+
+[sub_resource type="Animation" id=6]
+resource_name = "firing"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/Laser/Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "project_beam"
+} ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
 tracks/0/type = "value"
-tracks/0/path = NodePath("laser:modulate")
+tracks/0/path = NodePath("Body/Laser/Sprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -23,7 +54,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("laser/Light2D:energy")
+tracks/1/path = NodePath("Body/Laser/Light2D:energy")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -39,7 +70,7 @@ tracks/1/keys = {
 resource_name = "project"
 length = 1.5
 tracks/0/type = "value"
-tracks/0/path = NodePath("laser:modulate")
+tracks/0/path = NodePath("Body/Laser/Sprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -51,7 +82,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0.156863 ), Color( 1, 1, 1, 0.156863 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("laser/Light2D:energy")
+tracks/1/path = NodePath("Body/Laser/Light2D:energy")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -63,42 +94,12 @@ tracks/1/keys = {
 "values": [ 0.1, 0.1, 0.5 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "shoot"
-length = 2.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("laser:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("laser/Light2D:energy")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-
 [node name="Cannon" type="Node2D"]
-position = Vector2( 26, 0 )
 script = ExtResource( 2 )
 
 [node name="Body" type="Sprite" parent="."]
 position = Vector2( 0, -1 )
-rotation = 0.785398
+rotation = 0.784777
 texture = ExtResource( 4 )
 offset = Vector2( 0, -9 )
 region_enabled = true
@@ -112,33 +113,38 @@ texture = ExtResource( 4 )
 region_enabled = true
 region_rect = Rect2( 3, 3, 3, 7 )
 
-[node name="Base" type="Sprite" parent="."]
-position = Vector2( 0, -1 )
-texture = ExtResource( 4 )
-region_enabled = true
-region_rect = Rect2( 1, 13, 7, 6 )
+[node name="Laser" type="Area2D" parent="Body"]
+position = Vector2( 0, -18 )
+scale = Vector2( 0.5, -1 )
 
-[node name="laser" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0.156863 )
-position = Vector2( 12.638, -13.7786 )
-rotation = -2.35619
-scale = Vector2( 0.5, 1 )
+[node name="Sprite" type="Sprite" parent="Body/Laser"]
 texture = ExtResource( 3 )
-centered = false
-offset = Vector2( -1, 0 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 2, 600 )
+region_rect = Rect2( 0, 0, 2, 50 )
 
-[node name="Light2D" type="Light2D" parent="laser"]
+[node name="Light2D" type="Light2D" parent="Body/Laser"]
 scale = Vector2( 1, 10 )
 texture = ExtResource( 1 )
 offset = Vector2( 0.5, 30 )
 color = Color( 0.568627, 0.866667, 1, 1 )
 energy = 0.1
 
+[node name="RayCast2D" type="RayCast2D" parent="Body/Laser"]
+cast_to = Vector2( 0, 1000 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Laser"]
+shape = SubResource( 5 )
+disabled = true
+
+[node name="Base" type="Sprite" parent="."]
+position = Vector2( 0, -1 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 1, 13, 7, 6 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "shoot"
+autoplay = "firing"
 anims/RESET = SubResource( 3 )
+anims/firing = SubResource( 6 )
 anims/idle = SubResource( 2 )
 anims/project = SubResource( 4 )
-anims/shoot = SubResource( 5 )
