@@ -181,5 +181,8 @@ align = 1
 [node name="ChaseWall" parent="." instance=ExtResource( 3 )]
 position = Vector2( 201, 325 )
 
+[node name="Cannon" parent="." instance=ExtResource( 13 )]
+position = Vector2( 392, 423 )
+
 [connection signal="all_replays_complete" from="ReplayController" to="." method="_on_ReplayController_all_replays_complete"]
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]
