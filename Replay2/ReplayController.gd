@@ -8,7 +8,7 @@ const replay_character_preload := preload("res://Replay2/ReplayCharacter.tscn")
 var defense_active := false
 
 # TODO: replace with actual turret object
-onready var turret: Sprite = $Sprite
+onready var turret = $Cannon
 var TURRET_GROUND_Y_COORD = 425
 var TURRET_CEILING_Y_COORD = 225
 
@@ -93,8 +93,10 @@ func _physics_process(_delta: float) -> void:
 
 	if mouse_pos.y > get_viewport().size.y / 2:
 		turret.position.y = TURRET_GROUND_Y_COORD
+		turret.scale.y = 1
 	else:
 		turret.position.y = TURRET_CEILING_Y_COORD
+		turret.scale.y = -1
 
 	if Input.is_action_just_released("def_place_trap"):
 		# TODO: spawn turret here

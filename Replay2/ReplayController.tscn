@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Replay2/ReplayController.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Cannon/Cannon.tscn" type="PackedScene" id=3]
 
 [node name="ReplayController" type="Node2D"]
 script = ExtResource( 1 )
@@ -10,9 +10,7 @@ script = ExtResource( 1 )
 wait_time = 0.05
 autostart = true
 
-[node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.5, 0.5 )
-z_index = 5
-texture = ExtResource( 2 )
+[node name="Cannon" parent="." instance=ExtResource( 3 )]
+scale = Vector2( -1, 1 )
 
 [connection signal="timeout" from="ReplayTimer" to="." method="_on_ReplayTimer_timeout"]
