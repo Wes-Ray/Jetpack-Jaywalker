@@ -21,7 +21,7 @@ export var base_move_speed := 70.0
 
 var velocity := Vector2.ZERO
 
-onready var wiper: Sprite = $Wiper
+ 
 onready var screen_wipe_goal: Position2D = $ScreenWipeGoal
 onready var screen_unwipe_goal: Position2D = $ScreenUnwipeGoal
 onready var current_screen_goal := screen_unwipe_goal.position
@@ -79,7 +79,7 @@ func _physics_process(_delta: float) -> void:
 	###############################################################################################
 	# SCREEN WIPE
 	###############################################################################################
-	wiper.position = lerp(wiper.position, current_screen_goal, 0.2)
+	# wiper.position = lerp(wiper.position, current_screen_goal, 0.2)
 	
 	###############################################################################################
 	# INPUT

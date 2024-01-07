@@ -45,7 +45,7 @@ func player_reached_goal() -> void:
 	player.call_deferred("free")  # must be done second or it will crash
 
 	# TODO: add UI indicator that defense is about to start
-	yield(get_tree().create_timer(1.5), "timeout")
+	yield(get_tree().create_timer(0.5), "timeout")
 	_switch_to_defense()
 	
 

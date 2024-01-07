@@ -29,7 +29,9 @@ func activate_defense():
 
 	if current_turret == null:
 		current_turret = turret_preload.instance()
-		get_tree().get_current_scene().call_deferred("add_child", current_turret)
+		# get_tree().get_current_scene().call_deferred("add_child", current_turret)
+		# note: if replaycontroller.tscn is place at somewhere other than 0,0 - the turrets will be offset
+		add_child(current_turret)
 
 	replay()
 
@@ -109,4 +111,8 @@ func _physics_process(_delta: float) -> void:
 		if Input.is_action_just_released("def_place_trap"):
 			print("placing trap at: ", current_turret.position)
 			current_turret = null
+
+
+func get_last_replay_ref() -> Node2D:
+	return replays[-1]
 

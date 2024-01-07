@@ -6,15 +6,17 @@ onready var collider = $Body/Laser/CollisionShape2D
 onready var sprite = $Body/Laser/Sprite
 onready var light = $Body/Laser/Light2D
 
+var target_replay
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
-	pass # Replace with function body.
+	target_replay = get_parent().get_last_replay_ref()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	project_beam()
+
 
 func project_beam():
 	## force a raycast update at function call
@@ -32,4 +34,5 @@ func project_beam():
 	sprite.region_rect.size.y = laser_length
 	light.scale.y = laser_length / 60
 
+	$Body.rotation = (target_replay.position - global_position).angle() + PI/2
 
