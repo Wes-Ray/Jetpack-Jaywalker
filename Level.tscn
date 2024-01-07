@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://World/Platform.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://World/hatch.png" type="Texture" id=10]
 [ext_resource path="res://World/Wall.tscn" type="PackedScene" id=11]
 [ext_resource path="res://INVASION2000.TTF" type="DynamicFontData" id=12]
-[ext_resource path="res://Cannon/Cannon.tscn" type="PackedScene" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -182,10 +181,6 @@ align = 1
 
 [node name="ChaseWall" parent="." instance=ExtResource( 3 )]
 position = Vector2( 64, 326 )
-
-[node name="Cannon" parent="." instance=ExtResource( 13 )]
-position = Vector2( 722, 229 )
-scale = Vector2( -1, -1 )
 
 [connection signal="all_replays_complete" from="ReplayController" to="." method="_on_ReplayController_all_replays_complete"]
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]

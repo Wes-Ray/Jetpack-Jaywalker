@@ -31,25 +31,8 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("debug1"):
 		spawn_player()
 	
-
-# func _on_ReplayController_spawn_player() -> void:
-# 	player = player_preload.instance()
-# 	player.position = spawn_position.position
-# 	replay_controller.register_player(player)
-# 	get_tree().get_current_scene().add_child(player)
-
-
-# func _on_ReplayController_kill_player() -> void:
-# 	player.free()
-
-
-# func _on_ReplayController_switch_to_overview() -> void:
-# 	camera_2d.current = true
-
-
-# func _on_ReplayController_switch_to_player_view() -> void:
-# 	player.camera.current = true
-
+func _switch_to_defense() -> void:
+	replay_controller.activate_defense()
 
 func _on_ReplayController_all_replays_complete() -> void:
 	print("all replays complete")
@@ -61,8 +44,10 @@ func player_reached_goal() -> void:
 	replay_controller.stop_recording_save_replay()
 	player.call_deferred("free")  # must be done second or it will crash
 
-	# TODO: move to other function to allow for delay
-	replay_controller.activate_defense()
+	# TODO: add UI indicator that defense is about to start
+	yield(get_tree().create_timer(1.5), "timeout")
+	_switch_to_defense()
+	
 
 
 #func player_help(on : bool):

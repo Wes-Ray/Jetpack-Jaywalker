@@ -8,7 +8,8 @@ const replay_character_preload := preload("res://Replay2/ReplayCharacter.tscn")
 var defense_active := false
 
 # TODO: replace with actual turret object
-onready var turret = $Cannon
+const turret_preload := preload("res://Cannon/Cannon.tscn")
+var current_turret = null
 var TURRET_GROUND_Y_COORD = 425
 var TURRET_CEILING_Y_COORD = 225
 
@@ -25,6 +26,11 @@ const POS_OFFSCREEN := Vector2(-400, -400)
 
 func activate_defense():
 	defense_active = true
+
+	if current_turret == null:
+		current_turret = turret_preload.instance()
+		get_tree().get_current_scene().call_deferred("add_child", current_turret)
+
 	replay()
 
 
@@ -86,19 +92,21 @@ func _on_ReplayTimer_timeout() -> void:
 
 func _physics_process(_delta: float) -> void:
 	
-	# if defense_active:
+	if defense_active:
+		if current_turret == null:
+			return
 
-	var mouse_pos = get_global_mouse_position()
-	turret.position.x = mouse_pos.x
+		var mouse_pos = get_global_mouse_position()
+		current_turret.position.x = mouse_pos.x
 
-	if mouse_pos.y > get_viewport().size.y / 2:
-		turret.position.y = TURRET_GROUND_Y_COORD
-		turret.scale.y = 1
-	else:
-		turret.position.y = TURRET_CEILING_Y_COORD
-		turret.scale.y = -1
+		if mouse_pos.y > get_viewport().size.y / 2:
+			current_turret.position.y = TURRET_GROUND_Y_COORD
+			current_turret.scale.y = 1
+		else:
+			current_turret.position.y = TURRET_CEILING_Y_COORD
+			current_turret.scale.y = -1
 
-	if Input.is_action_just_released("def_place_trap"):
-		# TODO: spawn turret here
-		print("placing trap at: ", turret.position)
+		if Input.is_action_just_released("def_place_trap"):
+			print("placing trap at: ", current_turret.position)
+			current_turret = null
 
