@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/cannon.png-7830657e1502f682562f59dbb69bffdc.stex"
+path="res://.import/cannonball.png-f28f5891da3a380254874e8971bf0bf5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cannon/cannon.png"
-dest_files=[ "res://.import/cannon.png-7830657e1502f682562f59dbb69bffdc.stex" ]
+source_file="res://Turret/cannonball.png"
+dest_files=[ "res://.import/cannonball.png-f28f5891da3a380254874e8971bf0bf5.stex" ]
 
 [params]
 

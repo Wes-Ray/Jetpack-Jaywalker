@@ -61,11 +61,11 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 4000, 180 )
 
 [node name="Ceiling" parent="." instance=ExtResource( 4 )]
-position = Vector2( 282, 136 )
+position = Vector2( 282, 128 )
 scale = Vector2( 1000, 50 )
 
 [node name="Floor" parent="." instance=ExtResource( 4 )]
-position = Vector2( 282, 516 )
+position = Vector2( 282, 524 )
 scale = Vector2( 1000, 50 )
 
 [node name="Platform" parent="." instance=ExtResource( 1 )]

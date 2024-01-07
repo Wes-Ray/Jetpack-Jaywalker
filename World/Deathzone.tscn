@@ -4,6 +4,7 @@
 [ext_resource path="res://World/deathzone.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=2]
+resource_local_to_scene = true
 extents = Vector2( 1500, 5 )
 
 [node name="Deathzone" type="Node2D"]

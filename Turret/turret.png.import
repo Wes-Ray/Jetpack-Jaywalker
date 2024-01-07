@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/laser.png-28fa6122858751ff9ae2bb7f858498e4.stex"
+path="res://.import/turret.png-2ea637b1102e83cbf4afa056d3d48ccf.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Cannon/laser.png"
-dest_files=[ "res://.import/laser.png-28fa6122858751ff9ae2bb7f858498e4.stex" ]
+source_file="res://Turret/turret.png"
+dest_files=[ "res://.import/turret.png-2ea637b1102e83cbf4afa056d3d48ccf.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

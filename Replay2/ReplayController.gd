@@ -8,7 +8,7 @@ const replay_character_preload := preload("res://Replay2/ReplayCharacter.tscn")
 var defense_active := false
 
 # TODO: replace with actual turret object
-const turret_preload := preload("res://Cannon/Cannon.tscn")
+const turret_preload := preload("res://Turret/Turret.tscn")
 var current_turret = null
 var TURRET_GROUND_Y_COORD = 425
 var TURRET_CEILING_Y_COORD = 225
@@ -93,7 +93,10 @@ func _on_ReplayTimer_timeout() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	
+	update_turret_placement()
+
+
+func update_turret_placement():
 	if defense_active:
 		if current_turret == null:
 			return
@@ -115,4 +118,3 @@ func _physics_process(_delta: float) -> void:
 
 func get_last_replay_ref() -> Node2D:
 	return replays[-1]
-

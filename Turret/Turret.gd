@@ -8,18 +8,18 @@ onready var light = $Body/Laser/Light2D
 
 var target_replay
 
-
 func _ready():
 	target_replay = get_parent().get_last_replay_ref()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	aim_beam()
 	project_beam()
 
 
 func project_beam():
-	## force a raycast update at function call
+	# force a raycast update at function call
 	raycast.enabled = true
 	raycast.force_raycast_update()
 	# calculate laser length and midpoint based on the raycast collision pos
@@ -34,5 +34,13 @@ func project_beam():
 	sprite.region_rect.size.y = laser_length
 	light.scale.y = laser_length / 60
 
-	$Body.rotation = (target_replay.position - global_position).angle() + PI/2
 
+func aim_beam():
+	# set angle depending if player is above or below the turret
+	if (target_replay.position.y > position.y):
+		$Body.rotation = -(target_replay.position - global_position).angle() + PI/2
+	else:
+		$Body.rotation = (target_replay.position - global_position).angle() + PI/2
+
+func _on_Laser_area_entered(area:Area2D):
+	print("LASER HIT SOMETHING")
