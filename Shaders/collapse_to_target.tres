@@ -1,0 +1,24 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "// collapse_to_target.tres
+shader_type canvas_item;
+
+uniform vec2 target = vec2(0.5, 0.5);
+uniform vec4 color : hint_color;
+
+void fragment() {
+	float radius = 2.0 * abs(sin(TIME));
+	
+	float sw = 2.0 * (1024.0/600.0);
+	float sh = 2.0;
+	
+	float d = distance(vec2(UV.x * sw, UV.y * sh), vec2(target.x * sw, target.y * sh));
+	
+//	float c = smoothstep(radius, radius, d);
+//	COLOR = vec4(color.rgb, c);
+	
+	float c2 = smoothstep(d, d, 0.05);
+	COLOR = vec4(color.rgb, c2);
+}
+"
