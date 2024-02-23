@@ -89,7 +89,7 @@ script = ExtResource( 14 )
 
 [node name="Sprite" type="Sprite" parent="OverviewCamera"]
 material = SubResource( 6 )
-scale = Vector2( 7.789, 4.04 )
+scale = Vector2( 10.2158, 5.92513 )
 z_index = 5
 texture = ExtResource( 13 )
 
