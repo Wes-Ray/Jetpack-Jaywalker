@@ -17,10 +17,15 @@ func wipe_to_target(target : Vector2) -> void:
 
 	var norm = target - position
 	print("\tnormalized: ", norm)
+	
+	var screen_dims = get_viewport().get_visible_rect().size * zoom
 
-	target.x = (target.x / (1024/2)) - 0.5
-	target.y = (target.y / (600/2)) - 0.5
+	
+	target.x = (norm.x / screen_dims.x) + 0.5
+	target.y = (norm.y / screen_dims.y) + 0.5 
 
 	print("\tconverted: ", target)
 
 	sprite.material.set_shader_param("target", target)
+	print("Time is: ", Time.get_ticks_msec() / 1000.00)
+	sprite.material.set_shader_param("start_time", Time.get_ticks_msec() / 1000.00)

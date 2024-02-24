@@ -23,12 +23,9 @@ func _physics_process(_delta: float) -> void:
 		player.set_pos(spawn_position.position)
 	if Input.is_action_just_pressed("debug1"):
 		spawn_player()
-	if Input.is_action_just_pressed("debug2"):
-		var screen_coord = get_global_transform() * player.position
-		overview_camera.wipe_to_target(screen_coord)
 	if Input.is_action_just_pressed("def_place_trap"):
 		# var screen_coord = get_local_mouse_position()
-		var screen_coord = get_global_mouse_position()
+		var screen_coord = get_global_mouse_position() 
 		print("screen coord: ", screen_coord)
 		gd_logo.position = screen_coord
 		overview_camera.wipe_to_target(screen_coord)
