@@ -17,7 +17,7 @@ var round_counter := 0
 
 var game_over := false
 
-const record_preload := preload("res://Replay/Replay.tscn")
+const record_preload := preload("res://Replay/ReplayCharacter.tscn")
 const player_preload := preload("res://Player/Player.tscn")
 
 const splash_preload := preload("res://menu.tscn")

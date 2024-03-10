@@ -3,7 +3,7 @@ extends Node2D
 signal all_replays_complete
 
 onready var replay_timer: Timer = $ReplayTimer  # set tick rate in the inspector
-const replay_character_preload := preload("res://Replay2/ReplayCharacter.tscn")
+const replay_character_preload := preload("res://Replay/ReplayCharacter.tscn")
 
 var defense_active := false
 
