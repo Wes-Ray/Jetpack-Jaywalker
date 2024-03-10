@@ -1,12 +1,9 @@
 extends Node2D
 
-onready var gd_logo = $Sprite
-
 onready var replay_controller: Node = $ReplayController
 onready var spawn_position: Position2D = $SpawnPosition
 const player_preload := preload("res://Player/Player.tscn")
 onready var overview_camera: Camera2D = $OverviewCamera
-onready var wiper = $Wiper
 
 var player : KinematicBody2D
 
@@ -27,7 +24,6 @@ func _physics_process(_delta: float) -> void:
 		# var screen_coord = get_local_mouse_position()
 		var screen_coord = get_global_mouse_position() 
 		print("screen coord: ", screen_coord)
-		gd_logo.position = screen_coord
 		overview_camera.wipe_to_target(screen_coord)
 
 

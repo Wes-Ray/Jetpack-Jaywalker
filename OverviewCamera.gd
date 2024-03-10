@@ -1,6 +1,6 @@
 extends Camera2D
 
-onready var sprite = $Sprite
+onready var wiper = $Wiper
 
 func _ready() -> void:
 	# TODO: set sprite size based on camera/screen resolution
@@ -26,6 +26,6 @@ func wipe_to_target(target : Vector2) -> void:
 
 	print("\tconverted: ", target)
 
-	sprite.material.set_shader_param("target", target)
+	wiper.material.set_shader_param("target", target)
 	print("Time is: ", Time.get_ticks_msec() / 1000.00)
-	sprite.material.set_shader_param("start_time", Time.get_ticks_msec() / 1000.00)
+	wiper.material.set_shader_param("start_time", Time.get_ticks_msec() / 1000.00)
