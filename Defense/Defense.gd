@@ -80,7 +80,6 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 	# animate trap on cursor location
-#	active_trap.position = get_local_mouse_position()
 	var new_trap_pos = get_global_mouse_position()
 	new_trap_pos.x = clamp(new_trap_pos.x, 400, 1400)
 	active_trap.position = new_trap_pos
