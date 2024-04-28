@@ -42,5 +42,18 @@ func aim_beam():
 	else:
 		$Body.rotation = (target_replay.position - global_position).angle() + PI/2
 
+
 func _on_Laser_area_entered(area:Area2D):
+
+	print(Time.get_ticks_msec())
 	print("LASER HIT SOMETHING")
+	print("LASER HIT: ", area)
+	if area.is_in_group("replay"):
+		print("replay hit")
+		# note: this requires that the parent of the target area is the player itself
+		area.get_parent().kill_replay()
+
+	if area.is_in_group("player"):
+		print("player hit")
+		# note: this requires that the parent of the target area is the player itself
+		area.get_parent().kill_player()

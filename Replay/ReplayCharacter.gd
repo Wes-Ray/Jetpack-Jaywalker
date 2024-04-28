@@ -61,3 +61,6 @@ func replay(tick : int) -> bool:
 			self.visible = false
 		return false
 
+
+func test():
+	print("TEST REPLAY")

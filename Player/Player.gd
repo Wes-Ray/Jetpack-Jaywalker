@@ -54,6 +54,9 @@ func set_pos(pos : Vector2) -> void:
 #	position = new_spawn_pos
 
 
+func test():
+	print("TEST PLAYER")
+
 func activate_player() -> void:
 	print("activate player")
 	player_state = PlayerStates.IDLE
