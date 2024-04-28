@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/track.png-c0d40ef8aeb5a2b9f65a63e69003e030.stex"
+path="res://.import/ray_fire.png-f6e94afe507aee50b48f5fdf27caff41.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://_Archive/Laser/track.png"
-dest_files=[ "res://.import/track.png-c0d40ef8aeb5a2b9f65a63e69003e030.stex" ]
+source_file="res://_Archive/ArchiveAssets/ray_fire.png"
+dest_files=[ "res://.import/ray_fire.png-f6e94afe507aee50b48f5fdf27caff41.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

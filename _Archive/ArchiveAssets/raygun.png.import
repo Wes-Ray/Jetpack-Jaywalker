@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/anchor.png-aae7b07d368aa725565d8bf360086114.stex"
+path="res://.import/raygun.png-a9094d87ba13c08f134a322a7f9de7f7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://_Archive/Buzz/anchor.png"
-dest_files=[ "res://.import/anchor.png-aae7b07d368aa725565d8bf360086114.stex" ]
+source_file="res://_Archive/ArchiveAssets/raygun.png"
+dest_files=[ "res://.import/raygun.png-a9094d87ba13c08f134a322a7f9de7f7.stex" ]
 
 [params]
 

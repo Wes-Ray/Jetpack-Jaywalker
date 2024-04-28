@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ray_fire.png-7fe5f7bb1268f233ab9efd227d3ca341.stex"
+path="res://.import/ray_warn.png-12a9bf710af5587d7d4d244fe07354eb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://_Archive/Ray/ray_fire.png"
-dest_files=[ "res://.import/ray_fire.png-7fe5f7bb1268f233ab9efd227d3ca341.stex" ]
+source_file="res://_Archive/ArchiveAssets/ray_warn.png"
+dest_files=[ "res://.import/ray_warn.png-12a9bf710af5587d7d4d244fe07354eb.stex" ]
 
 [params]
 

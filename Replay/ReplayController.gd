@@ -6,10 +6,13 @@ onready var replay_timer: Timer = $ReplayTimer  # set tick rate in the inspector
 const replay_character_preload := preload("res://Replay/ReplayCharacter.tscn")
 
 var defense_active := false
+var round_time := 0.0
 
 # TODO: replace with actual turret object
 const turret_preload := preload("res://Turret/Turret.tscn")
 var current_turret = null
+var turrets := []
+var turret_fire_time := []
 var TURRET_GROUND_Y_COORD = 425
 var TURRET_CEILING_Y_COORD = 225
 
@@ -24,16 +27,26 @@ var replays := []
 const POS_OFFSCREEN := Vector2(-400, -400)
 
 
+func _physics_process(delta: float) -> void:
+	update_turret()
+	if defense_active:
+		round_time += delta
+
+
 func activate_defense():
 	defense_active = true
+	round_time = 0.0
+
+	replay()
 
 	if current_turret == null:
 		current_turret = turret_preload.instance()
 		# get_tree().get_current_scene().call_deferred("add_child", current_turret)
 		# note: if replaycontroller.tscn is place at somewhere other than 0,0 - the turrets will be offset
 		add_child(current_turret)
+		turrets.append(current_turret)
+		turret_fire_time.append(0.0)
 
-	replay()
 
 
 func deactivate_defense():
@@ -51,6 +64,10 @@ func replay() -> void:
 
 	for r in replays:
 		r.reset()
+
+	for i in range(0, turrets.size()):
+		turrets[i].get_node("AnimationPlayer").play("fire")
+		turrets[i].get_node("AnimationPlayer").seek(turret_fire_time[i], true)
 
 
 func stop_replay() -> void:
@@ -92,29 +109,38 @@ func _on_ReplayTimer_timeout() -> void:
 		replay_tick += 1
 
 
-func _physics_process(_delta: float) -> void:
-	update_turret_placement()
+func update_turret():
+	if not defense_active:
+		return
+	
+	if current_turret == null:
+		return
 
+	# animation update
+	if not(current_turret.get_node("AnimationPlayer").is_playing()):
+		current_turret.get_node("AnimationPlayer").play("prefire")
 
-func update_turret_placement():
-	if defense_active:
-		if current_turret == null:
-			return
+	var mouse_pos = get_global_mouse_position()
+	current_turret.position.x = mouse_pos.x
 
-		var mouse_pos = get_global_mouse_position()
-		current_turret.position.x = mouse_pos.x
+	# set turret y position based on snapping thresholds
+	if mouse_pos.y > get_viewport().size.y / 2:
+		current_turret.position.y = TURRET_GROUND_Y_COORD
+		current_turret.scale.y = 1
+	else:
+		current_turret.position.y = TURRET_CEILING_Y_COORD
+		current_turret.scale.y = -1
+	current_turret.aim_beam()
 
-		if mouse_pos.y > get_viewport().size.y / 2:
-			current_turret.position.y = TURRET_GROUND_Y_COORD
-			current_turret.scale.y = 1
-		else:
-			current_turret.position.y = TURRET_CEILING_Y_COORD
-			current_turret.scale.y = -1
-
-		if Input.is_action_just_released("def_place_trap"):
-			print("placing trap at: ", current_turret.position)
-			current_turret = null
-
+	# TODO: fix timing issue (lasers shoot early on replay), print vars and check delta time summation
+	if Input.is_action_just_released("def_place_trap"):
+		print("placing trap at: ", current_turret.position)
+		current_turret.get_node("AnimationPlayer").play("fire")
+		# hard coded skip ahead to 1.5 seconds in the animation (fire time)
+		current_turret.get_node("AnimationPlayer").seek(1.5, true)
+		turret_fire_time.append(fmod(round_time,
+			current_turret.get_node("AnimationPlayer").current_animation_length) + 1.5) 
+		current_turret = null
 
 func get_last_replay_ref() -> Node2D:
 	return replays[-1]
