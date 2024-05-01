@@ -54,5 +54,3 @@ func _on_Laser_area_entered(area:Area2D):
 
 	if area.is_in_group("player"):
 		print("player hit")
-		# note: this requires that the parent of the target area is the player itself
-		area.get_parent().kill_player()
