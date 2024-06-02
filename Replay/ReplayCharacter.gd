@@ -5,6 +5,7 @@ signal replay_killed
 var pos_data := []
 var anim_data := []
 var reset_pos : Vector2
+var corpse : Sprite  # set to visible/invisible and update location on death
 
 var lerp_prev_pos: Vector2
 var lerp_next_pos: Vector2
@@ -16,12 +17,14 @@ var is_alive := true
 onready var collision_shape := $Area2D/CollisionShape2D
 
 
-func init(_pos_data : Array, _anim_data : Array, start_pos : Vector2, _tick_wait_time : float):
+func init(_pos_data : Array, _anim_data : Array, start_pos : Vector2, _tick_wait_time : float, _corpse : Sprite):
 	pos_data = _pos_data  # already duplicated in calling function
 	anim_data = _anim_data
 	position = start_pos
 	reset_pos = start_pos
 	tick_wait_time = _tick_wait_time
+	corpse = _corpse
+	corpse.visible = false
 
 
 func reset():
@@ -83,3 +86,8 @@ func damage():
 	collision_shape.set_deferred("disabled", true)
 	update_anim("death")
 	emit_signal("replay_killed")
+
+	# spawn blood splat (under player? can also just be on timer)
+	corpse.position = position
+	corpse.visible = true
+	print("corpse pos: ", corpse.position)
