@@ -1,8 +1,6 @@
 extends KinematicBody2D
 
 
-var replay_object = null
-
 enum PlayerStates {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD, PAUSED, REACHED_GOAL}
 enum Inputs {LEFT = 1, RIGHT = 0}
 
@@ -34,12 +32,14 @@ onready var debug_velocity_label := $debug_velocity_label
 onready var debug_misc_label := $debug_misc_label
 onready var animation_player := $AnimationPlayer
 onready var camera := $Camera2D
+onready var collision_shape := $Area2D/CollisionShape2D
 
 
 func kill_player() -> void:
 	if player_state != PlayerStates.DEAD:
 		animation_player.play("death")
 	player_state = PlayerStates.DEAD
+	collision_shape.set_deferred("disabled", true)
 
 
 func set_pos(pos : Vector2) -> void:
@@ -47,19 +47,14 @@ func set_pos(pos : Vector2) -> void:
 	velocity = Vector2.ZERO
 
 
-# should be called from the Orchestrator
-#func respawn(new_replay_obj, new_spawn_pos) -> void:
-#	replay_object = new_replay_obj
-#	player_state = Orchestrator.PlayerStates.IDLE
-#	position = new_spawn_pos
-
-
 func test():
 	print("TEST PLAYER")
+
 
 func activate_player() -> void:
 	print("activate player")
 	player_state = PlayerStates.IDLE
+	collision_shape.set_deferred("enabled", true)
 #	camera.current = true
 #	screen_unwipe()
 
@@ -79,14 +74,14 @@ func screen_unwipe() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	###############################################################################################
+	#
 	# SCREEN WIPE
-	###############################################################################################
+	#
 	# wiper.position = lerp(wiper.position, current_screen_goal, 0.2)
 	
-	###############################################################################################
+	#
 	# INPUT
-	###############################################################################################
+	#
 	
 	var input_stall = Input.is_action_pressed("move_left")
 	var input_forward = Input.is_action_pressed("move_right")
@@ -102,9 +97,9 @@ func _physics_process(_delta: float) -> void:
 			current_input = Inputs.LEFT
 	
 		
-	###############################################################################################
+	#
 	# STATE MACHINE
-	###############################################################################################
+	#
 	# TODO: consider adding floor detect distance
 	match player_state:
 		PlayerStates.IDLE:
@@ -142,9 +137,9 @@ func _physics_process(_delta: float) -> void:
 		
 		_:
 			debug_state_label.text = "ERROR"
-	###############################################################################################
+	#
 	# ANIMATION
-	###############################################################################################
+	#
 	if player_state != PlayerStates.DEAD:
 		if current_input == Inputs.RIGHT:
 			animation_player.play("fly_forward")
@@ -152,9 +147,9 @@ func _physics_process(_delta: float) -> void:
 			animation_player.play("fly_backward")
 	
 	
-	###############################################################################################
+	#
 	# MOVEMENT
-	###############################################################################################
+	#
 	# note: consider move_and_slide_with_snap() if the player goes down ramps
 	# note: may need to move velocity updates into states themselves, but could also just adjust
 	# movement multipliers in each state as appropriate
@@ -183,9 +178,8 @@ func _physics_process(_delta: float) -> void:
 		
 	debug_velocity_label.text = str(velocity)
 	
-	###############################################################################################
-	# REPLAY
-	###############################################################################################
-	# TODO: add back
-#	replay_object.record_frame(player_state, position, current_input)
 
+func damage():
+	print("PLAYER TOOK DAMAGE")
+	# kill_player()  # TODO: just need to uncomment for kill to work
+	
