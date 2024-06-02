@@ -27,5 +27,5 @@ func wipe_to_target(target : Vector2) -> void:
 	print("\tconverted: ", target)
 
 	wiper.material.set_shader_param("target", target)
-	print("Time is: ", Time.get_ticks_msec() / 1000.00)
+	# print("Time is: ", Time.get_ticks_msec() / 1000.00)
 	wiper.material.set_shader_param("start_time", Time.get_ticks_msec() / 1000.00)

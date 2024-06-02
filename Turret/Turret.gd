@@ -6,7 +6,12 @@ onready var collider = $Body/Laser/CollisionShape2D
 onready var sprite = $Body/Laser/Sprite
 onready var light = $Body/Laser/Light2D
 
+enum {PLACEMENT, ACTIVE}
+
+var state = PLACEMENT
 var target_replay 
+var fire_offset := 0.0
+var beam_secs := 1.5
 
 func _ready():
 	target_replay = get_parent().get_last_replay_ref()
@@ -42,8 +47,19 @@ func aim_beam():
 		$Body.rotation = (target_replay.position - global_position).angle() + PI/2
 
 
-func _on_Laser_area_entered(area:Area2D):
+func place(round_time:float):
+	state = ACTIVE
+	$AnimationPlayer.play("fire")
+	fire_offset = $AnimationPlayer.current_animation_length - (fmod(round_time, $AnimationPlayer.current_animation_length))
+	$AnimationPlayer.seek(fire_offset + beam_secs)
 
+
+func reset():
+	$AnimationPlayer.play("fire")
+	$AnimationPlayer.seek(fire_offset + beam_secs)
+
+
+func _on_Laser_area_entered(area:Area2D):
 	print(Time.get_ticks_msec())
 	print("LASER HIT SOMETHING")
 	print("LASER HIT: ", area)

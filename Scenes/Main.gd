@@ -34,8 +34,8 @@ func _physics_process(_delta: float) -> void:
 			ui_text.text = "TRANSITION TO DEFENSE (space)"
 			if Input.is_action_just_pressed("ui_accept"):
 				game_state = GameState.OFFENSE
+				replay_controller.activate_offense()
 				spawn_player()
-				replay_controller.replay()
 		GameState.TRANSITION_TO_DEFENSE:
 			ui_text.text = "TRANSITION TO DEFENSE (space)"
 			if Input.is_action_just_pressed("ui_accept"):

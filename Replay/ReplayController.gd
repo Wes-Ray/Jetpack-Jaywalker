@@ -6,6 +6,7 @@ onready var replay_timer: Timer = $ReplayTimer  # set tick rate in the inspector
 const replay_character_preload := preload("res://Replay/ReplayCharacter.tscn")
 
 var defense_active := false
+var offense_active := false
 var round_time := 0.0
 
 # TODO: replace with actual turret object
@@ -29,17 +30,15 @@ const POS_OFFSCREEN := Vector2(-400, -400)
 
 
 func _physics_process(delta: float) -> void:
-	update_turret()
-	if defense_active:
+	if (defense_active or offense_active):
 		round_time += delta
+		update_turret()
 
 
 func activate_defense():
 	defense_active = true
 	round_time = 0.0
-
 	replay()
-
 	if current_turret == null:
 		current_turret = turret_preload.instance()
 		# get_tree().get_current_scene().call_deferred("add_child", current_turret)
@@ -49,8 +48,20 @@ func activate_defense():
 		turret_fire_time.append(0.0)
 
 
+func activate_offense():
+	offense_active = true
+	round_time = 0.0
+
+	replay()
+
+
 func deactivate_defense():
 	defense_active = false
+	stop_replay()
+
+
+func deactivate_offense():
+	offense_active = false
 	stop_replay()
 
 
@@ -66,9 +77,8 @@ func replay() -> void:
 	for r in replays:
 		r.reset()
 
-	for i in range(0, turrets.size()):
-		turrets[i].get_node("AnimationPlayer").play("fire")
-		turrets[i].get_node("AnimationPlayer").seek(turret_fire_time[i], true)
+	for t in turrets:
+		t.reset()	
 
 
 func stop_replay() -> void:
@@ -125,10 +135,6 @@ func update_turret():
 	if current_turret == null:
 		return
 
-	# animation update
-	if not(current_turret.get_node("AnimationPlayer").is_playing()):
-		current_turret.get_node("AnimationPlayer").play("prefire")
-
 	var mouse_pos = get_global_mouse_position()
 	current_turret.position.x = mouse_pos.x
 
@@ -143,12 +149,10 @@ func update_turret():
 
 	# TODO: fix timing issue (lasers shoot early on replay), print vars and check delta time summation
 	if Input.is_action_just_released("def_place_trap"):
-		print("placing trap at: ", current_turret.position)
-		current_turret.get_node("AnimationPlayer").play("fire")
-		# hard coded skip ahead to 1.5 seconds in the animation (fire time)
-		current_turret.get_node("AnimationPlayer").seek(1.5, true)
-		turret_fire_time.append(fmod(round_time,
-			current_turret.get_node("AnimationPlayer").current_animation_length) + 1.5) 
+		print("placing turret at: ", current_turret.position)
+		print("Time is: ", round_time / 1000.00)
+		current_turret.place(round_time)
+
 		current_turret = null
 
 func get_last_replay_ref() -> Node2D:
