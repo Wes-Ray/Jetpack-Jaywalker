@@ -1,5 +1,6 @@
 extends Node2D
 
+signal replay_killed
 
 var pos_data := []
 var anim_data := []
@@ -62,5 +63,12 @@ func replay(tick : int) -> bool:
 		return false
 
 
+# TODO: remove
 func test():
 	print("TEST REPLAY")
+
+
+# called by enemy objects that might damage the replay
+func damage():
+	print("REPLAY took dmg")
+	emit_signal("replay_killed")

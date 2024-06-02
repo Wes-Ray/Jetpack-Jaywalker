@@ -6,7 +6,7 @@ onready var collider = $Body/Laser/CollisionShape2D
 onready var sprite = $Body/Laser/Sprite
 onready var light = $Body/Laser/Light2D
 
-var target_replay
+var target_replay 
 
 func _ready():
 	target_replay = get_parent().get_last_replay_ref()
@@ -50,7 +50,7 @@ func _on_Laser_area_entered(area:Area2D):
 	if area.is_in_group("replay"):
 		print("replay hit")
 		# note: this requires that the parent of the target area is the player itself
-		area.get_parent().test()
+		area.get_parent().damage()
 
 	if area.is_in_group("player"):
 		print("player hit")

@@ -87,15 +87,20 @@ position = Vector2( 282, 524 )
 scale = Vector2( 1000, 50 )
 
 [node name="Platform" parent="." instance=ExtResource( 4 )]
-position = Vector2( 297, 375 )
-scale = Vector2( 2, 1 )
+position = Vector2( 303, 375 )
+scale = Vector2( 2.2, 1 )
 
 [node name="Platform2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 836, 398 )
 scale = Vector2( 2, 1 )
 
 [node name="Wall" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1213, 361 )
+position = Vector2( 359, 359 )
+scale = Vector2( 1, 2.56 )
+
+[node name="Wall2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 324, 282 )
+scale = Vector2( 1, 2.56 )
 
 [node name="Box" parent="." instance=ExtResource( 3 )]
 position = Vector2( 972, 303 )

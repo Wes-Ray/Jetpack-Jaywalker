@@ -24,6 +24,7 @@ var current_pos_data := []
 var current_anim := []
 var replay_tick := 0
 var replays := []
+var active_replay_count := 0  # reflects current active replays, decremented when replays die
 const POS_OFFSCREEN := Vector2(-400, -400)
 
 
@@ -48,7 +49,6 @@ func activate_defense():
 		turret_fire_time.append(0.0)
 
 
-
 func deactivate_defense():
 	defense_active = false
 	stop_replay()
@@ -61,6 +61,7 @@ func register_player(player_in) -> void:
 func replay() -> void:
 	replay_tick = 0
 	is_replaying = true
+	active_replay_count = len(replays)
 
 	for r in replays:
 		r.reset()
@@ -79,11 +80,19 @@ func record() -> void:
 	is_recording = true
 
 
+func _connect_replay_signal_to_controller(replay) -> void:
+	replay.connect("replay_killed", self, "_on_replay_killed")
+
+
 func stop_recording_save_replay():
 	print("stopping recording, saving current replay")
 	var tmp_replay = replay_character_preload.instance()
 	tmp_replay.init(current_pos_data.duplicate(), current_anim.duplicate(), POS_OFFSCREEN, replay_timer.wait_time)
-	get_tree().get_current_scene().call_deferred("add_child", tmp_replay)
+	# TODO: check if we need to get_tree, or if just call_deferred works
+	# get_tree().get_current_scene().call_deferred("add_child", tmp_replay)
+	call_deferred("add_child", tmp_replay)
+	call_deferred("_connect_replay_signal_to_controller", tmp_replay)
+
 	replays.append(tmp_replay)
 	current_pos_data = []
 	current_anim = []
@@ -144,3 +153,6 @@ func update_turret():
 
 func get_last_replay_ref() -> Node2D:
 	return replays[-1]
+
+func _on_replay_killed() -> void:
+	print("REPLAY CONTROLLER SEES REPLAY KILLED")
