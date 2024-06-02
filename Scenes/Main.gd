@@ -14,11 +14,11 @@ enum GameState {
 	OFFENSE,
 	DEFENSE,
 }
-var game_state = GameState.OFFENSE
+var game_state
 
 
 func _ready() -> void:
-	spawn_player()
+	game_state = GameState.TRANSITION_TO_OFFENSE
 	# Orchestrator.init_spawn_created($SpawnPosition)
 	# Orchestrator.register_global_UI($UI)
 	# Orchestrator.register_main(self)
@@ -31,7 +31,7 @@ func _physics_process(_delta: float) -> void:
 
 	match game_state:
 		GameState.TRANSITION_TO_OFFENSE:
-			ui_text.text = "TRANSITION TO DEFENSE (space)"
+			ui_text.text = "TRANSITION TO OFFENSE (space)"
 			if Input.is_action_just_pressed("ui_accept"):
 				game_state = GameState.OFFENSE
 				spawn_player()

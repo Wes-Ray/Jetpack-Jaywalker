@@ -12,6 +12,9 @@ var tick_wait_time : float
 
 var delta_since_tick : float
 
+var is_alive := true
+onready var collision_shape := $Area2D/CollisionShape2D
+
 
 func init(_pos_data : Array, _anim_data : Array, start_pos : Vector2, _tick_wait_time : float):
 	pos_data = _pos_data  # already duplicated in calling function
@@ -24,6 +27,8 @@ func init(_pos_data : Array, _anim_data : Array, start_pos : Vector2, _tick_wait
 func reset():
 	if reset_pos:
 		position = reset_pos
+	is_alive = true
+	collision_shape.set_deferred("disabled", false)
 	
 	print("reset to: ", position)
 
@@ -43,8 +48,11 @@ func _physics_process(delta: float) -> void:
 	position = lerp(lerp_prev_pos, lerp_next_pos, clamp(delta_since_tick / tick_wait_time, 0, 1) )
 
 
-# returns false when pos_data runs out
+# returns false when pos_data runs out or replay is not alive
 func replay(tick : int) -> bool:
+	if not is_alive:
+		return false
+
 	if tick < len(pos_data):
 		# print("replay", self, " tick:", tick)
 		# print("\treplay position: ", pos_data[tick])
@@ -71,4 +79,7 @@ func test():
 # called by enemy objects that might damage the replay
 func damage():
 	print("REPLAY took dmg")
+	is_alive = false
+	collision_shape.set_deferred("disabled", true)
+	update_anim("death")
 	emit_signal("replay_killed")

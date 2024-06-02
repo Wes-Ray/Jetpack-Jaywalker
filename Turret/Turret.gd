@@ -54,3 +54,4 @@ func _on_Laser_area_entered(area:Area2D):
 
 	if area.is_in_group("player"):
 		print("player hit")
+		area.get_parent().damage()
