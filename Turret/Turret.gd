@@ -12,12 +12,14 @@ var state = PLACEMENT
 var target_replay 
 var fire_offset := 0.0
 var beam_secs := 1.5
+var aim_lead = Vector2(3, 0)
 
 func _ready():
 	target_replay = get_parent().get_last_replay_ref()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+# TODO: Why does this break when changed to physics proc?
 func _process(_delta):
 	project_beam()
 
@@ -42,16 +44,16 @@ func project_beam():
 func aim_beam():
 	# set angle depending if player is above or below the turret
 	if (target_replay.position.y > position.y):
-		$Body.rotation = -(target_replay.position - global_position).angle() + PI/2
+		$Body.rotation = -((target_replay.position + aim_lead)  - global_position).angle() + PI/2
 	else:
-		$Body.rotation = (target_replay.position - global_position).angle() + PI/2
+		$Body.rotation = ((target_replay.position + aim_lead) - global_position).angle() + PI/2
 
 
 func place(round_time:float):
 	state = ACTIVE
 	$AnimationPlayer.play("fire")
 	fire_offset = $AnimationPlayer.current_animation_length - (fmod(round_time, $AnimationPlayer.current_animation_length))
-	$AnimationPlayer.seek(fire_offset + beam_secs)
+	$AnimationPlayer.seek(beam_secs)
 
 
 func reset():

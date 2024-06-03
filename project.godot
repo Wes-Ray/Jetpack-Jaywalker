@@ -12,7 +12,6 @@ config_version=4
 
 config/name="Jetpack Jaywalker"
 run/main_scene="res://Scenes/Level.tscn"
-config/icon="res://icon.png"
 
 [display]
 

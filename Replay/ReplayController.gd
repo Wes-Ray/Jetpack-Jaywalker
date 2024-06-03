@@ -131,6 +131,7 @@ func _on_ReplayTimer_timeout() -> void:
 		replay_tick += 1
 
 
+# TODO: move this into the turret object?
 func update_turret():
 	if not defense_active:
 		return
@@ -150,7 +151,6 @@ func update_turret():
 		current_turret.scale.y = -1
 	current_turret.aim_beam()
 
-	# TODO: fix timing issue (lasers shoot early on replay), print vars and check delta time summation
 	if Input.is_action_just_released("def_place_trap"):
 		print("placing turret at: ", current_turret.position)
 		print("Time is: ", round_time / 1000.00)

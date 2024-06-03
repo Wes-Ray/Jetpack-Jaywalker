@@ -89,7 +89,8 @@ func _switch_to_defense() -> void:
 
 func _on_ReplayController_all_replays_complete() -> void:
 	print("all replays complete")
-	game_state = GameState.TRANSITION_TO_OFFENSE
+	if game_state == GameState.DEFENSE:
+		game_state = GameState.TRANSITION_TO_OFFENSE
 
 	yield(get_tree().create_timer(1.0), "timeout")
 
