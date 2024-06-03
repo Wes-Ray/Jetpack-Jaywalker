@@ -4,6 +4,7 @@ signal all_replays_complete
 
 onready var replay_timer: Timer = $ReplayTimer  # set tick rate in the inspector
 const replay_character_preload := preload("res://Replay/ReplayCharacter.tscn")
+const replay_corpse_preload := preload("res://Replay/Corpse.tscn")
 
 var defense_active := false
 var offense_active := false
@@ -96,10 +97,12 @@ func _connect_replay_signal_to_controller(replay) -> void:
 
 func stop_recording_save_replay():
 	print("stopping recording, saving current replay")
+	var tmp_corpse = replay_corpse_preload.instance()
 	var tmp_replay = replay_character_preload.instance()
-	tmp_replay.init(current_pos_data.duplicate(), current_anim.duplicate(), POS_OFFSCREEN, replay_timer.wait_time)
+	tmp_replay.init(current_pos_data.duplicate(), current_anim.duplicate(), POS_OFFSCREEN, replay_timer.wait_time, tmp_corpse)
 	# TODO: check if we need to get_tree, or if just call_deferred works
 	# get_tree().get_current_scene().call_deferred("add_child", tmp_replay)
+	call_deferred("add_child", tmp_corpse)
 	call_deferred("add_child", tmp_replay)
 	call_deferred("_connect_replay_signal_to_controller", tmp_replay)
 
