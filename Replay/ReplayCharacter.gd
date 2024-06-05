@@ -2,6 +2,8 @@ extends Node2D
 
 signal replay_killed
 
+const SPAWN_PROTECTION_SECONDS : float = 0.2
+
 var pos_data := []
 var anim_data := []
 var reset_pos : Vector2
@@ -10,6 +12,8 @@ var corpse : Sprite  # set to visible/invisible and update location on death
 var lerp_prev_pos: Vector2
 var lerp_next_pos: Vector2
 var tick_wait_time : float
+var spawn_protect_ticks : int
+var spawn_protect_invulnerable : bool = false
 
 var delta_since_tick : float
 
@@ -25,7 +29,7 @@ func init(_pos_data : Array, _anim_data : Array, start_pos : Vector2, _tick_wait
 	tick_wait_time = _tick_wait_time
 	corpse = _corpse
 	corpse.visible = false
-
+	spawn_protect_ticks = int(SPAWN_PROTECTION_SECONDS / tick_wait_time)
 
 func reset():
 	if reset_pos:
@@ -53,6 +57,8 @@ func _physics_process(delta: float) -> void:
 
 # returns false when pos_data runs out or replay is not alive
 func replay(tick : int) -> bool:
+	spawn_protect_invulnerable = tick < spawn_protect_ticks
+
 	if not is_alive:
 		return false
 
@@ -81,6 +87,13 @@ func test():
 
 # called by enemy objects that might damage the replay
 func damage():
+	if spawn_protect_invulnerable:
+		print("replay hit during spawn protection")
+		return
+	if not is_alive:
+		print("replay hit when already dead")
+		return
+
 	print("REPLAY took dmg")
 	is_alive = false
 	collision_shape.set_deferred("disabled", true)
