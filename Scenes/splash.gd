@@ -1,10 +1,11 @@
 extends Node2D
 
 
-const main_preload := preload("res://cannon_level.tscn")
+const main_preload := preload("res://Scenes/Level.tscn")
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_released("ui_accept"):
-		get_tree().change_scene_to(main_preload)
+		var err = get_tree().change_scene_to(main_preload)
+		if err != OK:
+			print("error loading scene: ", err)

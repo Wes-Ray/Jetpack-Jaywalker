@@ -85,7 +85,7 @@ func _physics_process(_delta: float) -> void:
 	active_trap.position = new_trap_pos
 	
 	# place track at cursor location
-	if Input.is_action_just_pressed("def_place_trap"):
+	if Input.is_action_just_released("def_place_trap"):
 		active = false
 	
 	# strafe

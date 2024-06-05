@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+signal player_killed
 
 enum PlayerStates {IDLE, RUN, FALL, JUMP, JET_PACK, ON_WALL, DEAD, PAUSED, REACHED_GOAL}
 enum Inputs {LEFT = 1, RIGHT = 0}
@@ -40,6 +41,7 @@ func kill_player() -> void:
 		animation_player.play("death")
 	player_state = PlayerStates.DEAD
 	collision_shape.set_deferred("disabled", true)
+	emit_signal("player_killed")
 
 
 func set_pos(pos : Vector2) -> void:
@@ -181,5 +183,5 @@ func _physics_process(_delta: float) -> void:
 
 func damage():
 	print("PLAYER TOOK DAMAGE")
-	# kill_player()  # TODO: just need to uncomment for kill to work
+	kill_player()
 	

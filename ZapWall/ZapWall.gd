@@ -10,6 +10,14 @@ extends Node2D
 # func _ready():
 #	pass
 
-func _on_Area2D_area_entered(_area: Area2D) -> void:
+func _on_Area2D_area_entered(area: Area2D) -> void:
 	# Orchestrator.apply_damage(area)
-	print('DAMAGED')
+	print('warp wall applying damage')
+	if area.is_in_group("replay"):
+		print("replay hit")
+		# note: this requires that the parent of the target area is the player itself
+		area.get_parent().damage()
+
+	if area.is_in_group("player"):
+		print("player hit")
+		area.get_parent().damage()
