@@ -11,7 +11,7 @@ enum {PLACEMENT, ACTIVE}
 var state = PLACEMENT
 var target_replay 
 var fire_offset := 0.0
-var beam_secs := 1.5
+var beam_secs := 1.6
 var aim_lead = Vector2(3, 0)
 
 func _ready():
