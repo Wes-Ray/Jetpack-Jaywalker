@@ -9,8 +9,8 @@
 [ext_resource path="res://Player/explosion.ogg" type="AudioStream" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 2.0
-height = 2.0
+radius = 6.0
+height = 6.0
 
 [node name="ReplayCharacter" type="Node2D"]
 script = ExtResource( 1 )
@@ -25,7 +25,7 @@ shape = SubResource( 1 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 5 )
 hframes = 9
-frame = 8
+frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/death = ExtResource( 2 )
