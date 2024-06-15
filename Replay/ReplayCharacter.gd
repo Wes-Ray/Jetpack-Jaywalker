@@ -80,11 +80,6 @@ func replay(tick : int) -> bool:
 		return false
 
 
-# TODO: remove
-func test():
-	print("TEST REPLAY")
-
-
 # called by enemy objects that might damage the replay
 func damage():
 	if spawn_protect_invulnerable:

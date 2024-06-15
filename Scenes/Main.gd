@@ -73,7 +73,6 @@ func _physics_process(_delta: float) -> void:
 func spawn_player() -> void:
 	player = player_preload.instance()
 	player.position = spawn_position.position
-	player.add_to_group("player")  # TODO: is this necessary? the area2d is in the group, not sure if this is relevant
 	var err = player.connect("player_killed", self, "_on_player_killed")
 	if err != OK:
 		print("error connecting player: ", err)
@@ -95,7 +94,7 @@ func _switch_to_defense() -> void:
 	# add_child(tween)
 	# tween.interpolate_property(wiper, "shader_param/wipe_amount", 0.0, 1.0, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	# tween.start()
-		
+
 	game_state = GameState.TRANSITION_TO_DEFENSE
 
 
@@ -141,9 +140,6 @@ func _on_AttackerGoal_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player"):
 		player_reached_goal()
 	
-	# TODO: sometimes this doesn't trigger, I think it's because the replay doesn't actually enter the goal
-	# we should probably just trigger it when the replay ends instead of when it intersects, or we can make
-	# the player not despawn instantly when they reach the goal
 	if area.is_in_group("replay"):
 		print("replay entered goal")
 		game_over()
