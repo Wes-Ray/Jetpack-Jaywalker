@@ -8,19 +8,23 @@ onready var light = $Body/Laser/Light2D
 
 enum {PLACEMENT, ACTIVE}
 
+var GROUND_Y_COORD = 425
+var CEILING_Y_COORD = 225
+
 var state = PLACEMENT
 var target_replay 
 var fire_offset := 0.0
 var beam_secs := 1.7
-var aim_lead = Vector2(3, 0)
+var aim_lead = Vector2(4, 0)
 
 func _ready():
 	target_replay = get_parent().get_last_replay_ref()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-# TODO: Why does this break when changed to physics proc?
-func _process(_delta):
+func _physics_process(_delta):
+	if state == PLACEMENT:
+		move_turret()
 	project_beam()
 
 
@@ -41,16 +45,31 @@ func project_beam():
 	light.scale.y = laser_length / 60
 
 
-func aim_beam():
-	# set angle depending if player is above or below the turret
-	if (target_replay.position.y > position.y):
-		$Body.rotation = -((target_replay.position + aim_lead)  - global_position).angle() + PI/2
+func move_turret():
+	var mouse_pos = get_global_mouse_position()
+	position.x = mouse_pos.x
+	# set turret y position based on snapping thresholds
+	if mouse_pos.y > get_viewport().size.y / 2:
+		position.y = GROUND_Y_COORD
+		scale.y = 1
 	else:
-		$Body.rotation = ((target_replay.position + aim_lead) - global_position).angle() + PI/2
+		position.y = CEILING_Y_COORD
+		scale.y = -1
+	if Input.is_action_just_released("def_place_trap"):
+		print("placing turret at: ", position)
+		print("Time is: ", get_parent().round_time / 1000.00)
+		place(get_parent().round_time)
+
+	# set angle depending if player is above or below the turret
+	$Body.rotation = ((target_replay.position + aim_lead) - global_position).angle() 
+	if (target_replay.position.y > position.y):
+		$Body.rotation *= -1
+	$Body.rotation += PI/2
 
 
 func place(round_time:float):
 	state = ACTIVE
+
 	$AnimationPlayer.play("fire")
 	fire_offset = $AnimationPlayer.current_animation_length - (fmod(round_time, $AnimationPlayer.current_animation_length))
 	$AnimationPlayer.seek(beam_secs)

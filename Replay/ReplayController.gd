@@ -16,8 +16,6 @@ var current_turret = null
 var current_chase_wall = null
 var turrets := []
 var turret_fire_time := []
-var TURRET_GROUND_Y_COORD = 425
-var TURRET_CEILING_Y_COORD = 225
 
 var player : KinematicBody2D
 var is_replaying := false
@@ -32,9 +30,13 @@ const POS_OFFSCREEN := Vector2(-400, -400)
 
 
 func _physics_process(delta: float) -> void:
-	if (defense_active or offense_active):
+	if defense_active or offense_active:
 		round_time += delta
-		update_turret()
+		if Input.is_action_just_released("def_place_trap"):
+			print("placing turret at: ", current_turret.position)
+			print("Time is: ", round_time / 1000.00)
+			current_turret.place(round_time)
+			current_turret = null
 
 
 func activate_defense():
@@ -136,35 +138,9 @@ func _on_ReplayTimer_timeout() -> void:
 		replay_tick += 1
 
 
-# TODO: move this into the turret object?
-func update_turret():
-	if not defense_active:
-		return
-	
-	if current_turret == null:
-		return
-
-	var mouse_pos = get_global_mouse_position()
-	current_turret.position.x = mouse_pos.x
-
-	# set turret y position based on snapping thresholds
-	if mouse_pos.y > get_viewport().size.y / 2:
-		current_turret.position.y = TURRET_GROUND_Y_COORD
-		current_turret.scale.y = 1
-	else:
-		current_turret.position.y = TURRET_CEILING_Y_COORD
-		current_turret.scale.y = -1
-	current_turret.aim_beam()
-
-	if Input.is_action_just_released("def_place_trap"):
-		print("placing turret at: ", current_turret.position)
-		print("Time is: ", round_time / 1000.00)
-		current_turret.place(round_time)
-
-		current_turret = null
-
 func get_last_replay_ref() -> Node2D:
 	return replays[-1]
+
 
 func _on_replay_killed() -> void:
 	print("REPLAY CONTROLLER SEES REPLAY KILLED")
