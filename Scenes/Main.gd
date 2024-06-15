@@ -89,15 +89,13 @@ func _on_player_killed() -> void:
 
 	
 func _switch_to_defense() -> void:
-	print("switching to defense in 0.5")
 	# TODO: swap cameras back and forth
 	
 	# var tween = Tween.new()
 	# add_child(tween)
 	# tween.interpolate_property(wiper, "shader_param/wipe_amount", 0.0, 1.0, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	# tween.start()
-	
-	yield(get_tree().create_timer(0.5), "timeout")
+		
 	game_state = GameState.TRANSITION_TO_DEFENSE
 
 
@@ -105,8 +103,6 @@ func _on_ReplayController_all_replays_complete() -> void:
 	print("all replays complete")
 	if game_state == GameState.DEFENSE:
 		game_state = GameState.TRANSITION_TO_OFFENSE
-
-	yield(get_tree().create_timer(1.0), "timeout")
 
 
 func player_reached_goal() -> void:
