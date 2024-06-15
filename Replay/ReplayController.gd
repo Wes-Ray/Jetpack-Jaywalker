@@ -6,12 +6,13 @@ onready var replay_timer: Timer = $ReplayTimer  # set tick rate in the inspector
 const replay_character_preload := preload("res://Replay/ReplayCharacter.tscn")
 const replay_corpse_preload := preload("res://Replay/Corpse.tscn")
 const chase_wall_preload := preload("res://ZapWall/ChaseWall.tscn")
+const turret_preload := preload("res://Turret/Turret.tscn")
 
 var defense_active := false
 var offense_active := false
 var round_time := 0.0
 
-const turret_preload := preload("res://Turret/Turret.tscn")
+var chase_wall_spawn_pos := Vector2(0,0)
 var current_turret = null
 var current_chase_wall = null
 var turrets := []
@@ -41,10 +42,8 @@ func _physics_process(delta: float) -> void:
 
 
 func activate_defense():
-	call_deferred("remove_child", current_chase_wall)
 	defense_active = true
 	round_time = 0.0
-	replay()
 	if current_turret == null:
 		current_turret = turret_preload.instance()
 		# get_tree().get_current_scene().call_deferred("add_child", current_turret)
@@ -52,15 +51,18 @@ func activate_defense():
 		add_child(current_turret)
 		turret_fire_time.append(0.0)
 
+	call_deferred("remove_child", current_chase_wall)
+
+	replay()
 
 
 func activate_offense():
-	# TODO: make wall spawn stuff not ugly
-	current_chase_wall = chase_wall_preload.instance()
-	call_deferred("add_child", current_chase_wall)
-	current_chase_wall.position = get_node("../ChaseWallSpawn").position
 	offense_active = true
 	round_time = 0.0
+
+	current_chase_wall = chase_wall_preload.instance()
+	call_deferred("add_child", current_chase_wall)
+	current_chase_wall.position = chase_wall_spawn_pos
 
 	replay()
 
@@ -93,7 +95,7 @@ func replay() -> void:
 	yield(get_tree().create_timer(0.10), "timeout")
 
 	for t in turrets:
-		t.reset()	
+		t.reset()
 
 func stop_replay() -> void:
 	is_replaying = false

@@ -21,6 +21,7 @@ var game_state
 
 func _ready() -> void:
 	game_state = GameState.TRANSITION_TO_OFFENSE
+	$ReplayController.chase_wall_spawn_pos = $ChaseWallSpawn.position
 	# Orchestrator.init_spawn_created($SpawnPosition)
 	# Orchestrator.register_global_UI($UI)
 	# Orchestrator.register_main(self)

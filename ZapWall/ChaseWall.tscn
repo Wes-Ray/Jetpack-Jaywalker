@@ -152,7 +152,6 @@ tracks/1/keys = {
 
 [node name="ChaseWall" type="Node2D"]
 script = ExtResource( 3 )
-speed = 75
 
 [node name="Zap" type="Node2D" parent="."]
 position = Vector2( 0, -22 )
