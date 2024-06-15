@@ -32,7 +32,7 @@ const POS_OFFSCREEN := Vector2(-400, -400)
 func _physics_process(delta: float) -> void:
 	if defense_active or offense_active:
 		round_time += delta
-		if Input.is_action_just_released("def_place_trap"):
+		if current_turret and Input.is_action_just_released("def_place_trap"):
 			print("placing turret at: ", current_turret.position)
 			print("Time is: ", round_time / 1000.00)
 			current_turret.place(round_time)

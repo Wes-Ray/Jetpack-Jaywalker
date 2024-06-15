@@ -49,6 +49,7 @@ func move_turret():
 	var mouse_pos = get_global_mouse_position()
 	position.x = mouse_pos.x
 	# set turret y position based on snapping thresholds
+	# TODO: this check doesn't work on window resize
 	if mouse_pos.y > get_viewport().size.y / 2:
 		position.y = GROUND_Y_COORD
 		scale.y = 1
