@@ -75,6 +75,8 @@ func place(round_time:float):
 	fire_offset = $AnimationPlayer.current_animation_length - (fmod(round_time, $AnimationPlayer.current_animation_length))
 	$AnimationPlayer.seek(beam_secs)
 
+func deactivate():
+	$AnimationPlayer.play("idle")
 
 func reset():
 	$AnimationPlayer.play("fire")

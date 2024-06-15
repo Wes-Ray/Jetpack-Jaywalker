@@ -132,6 +132,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Vector2( 0, 1 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/Laser/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
 
 [node name="Cannon" type="Node2D"]
 script = ExtResource( 3 )
@@ -151,9 +163,9 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="Sprite" type="Sprite" parent="Body/Laser"]
-modulate = Color( 1, 1, 1, 0.156863 )
+modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 0, 20 )
-scale = Vector2( 0.1, 1 )
+scale = Vector2( 1e-05, 1 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 7, 40 )
@@ -162,7 +174,7 @@ region_rect = Rect2( 0, 0, 7, 40 )
 texture = ExtResource( 4 )
 offset = Vector2( 0.5, 0 )
 color = Color( 0.568627, 0.866667, 1, 1 )
-energy = 0.1
+energy = 0.0
 
 [node name="RayCast2D" type="RayCast2D" parent="Body/Laser"]
 cast_to = Vector2( 0, 2048 )
@@ -186,7 +198,7 @@ region_enabled = true
 region_rect = Rect2( 1, 13, 7, 6 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "RESET"
+autoplay = "idle"
 anims/RESET = SubResource( 3 )
 anims/fire = SubResource( 4 )
 anims/idle = SubResource( 2 )

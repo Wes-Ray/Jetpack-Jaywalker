@@ -36,6 +36,7 @@ func _physics_process(delta: float) -> void:
 			print("placing turret at: ", current_turret.position)
 			print("Time is: ", round_time / 1000.00)
 			current_turret.place(round_time)
+			turrets.append(current_turret)
 			current_turret = null
 
 
@@ -49,8 +50,8 @@ func activate_defense():
 		# get_tree().get_current_scene().call_deferred("add_child", current_turret)
 		# note: if replaycontroller.tscn is place at somewhere other than 0,0 - the turrets will be offset
 		add_child(current_turret)
-		turrets.append(current_turret)
 		turret_fire_time.append(0.0)
+
 
 
 func activate_offense():
@@ -83,12 +84,16 @@ func replay() -> void:
 	is_replaying = true
 	active_replay_count = len(replays)
 
+	for t in turrets:
+		t.deactivate()	
+
 	for r in replays:
 		r.reset()
 
+	yield(get_tree().create_timer(0.10), "timeout")
+
 	for t in turrets:
 		t.reset()	
-
 
 func stop_replay() -> void:
 	is_replaying = false
