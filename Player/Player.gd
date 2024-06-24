@@ -54,15 +54,17 @@ func test():
 
 
 func activate_player() -> void:
+	camera.current = true
 	print("activate player")
-	player_state = PlayerStates.IDLE
-	collision_shape.set_deferred("enabled", true)
+	# player_state = PlayerStates.IDLE
+	# collision_shape.set_deferred("enabled", true)
 #	camera.current = true
 #	screen_unwipe()
 
 
 func deactivate_player() -> void:
 	print("deactivate player")
+	player_state = PlayerStates.REACHED_GOAL
 #	player_state = Orchestrator.PlayerStates.PAUSED
 #	screen_wipe()
 

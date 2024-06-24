@@ -82,6 +82,7 @@ func spawn_player() -> void:
 	replay_controller.record()
 
 	get_tree().get_current_scene().add_child(player)
+	player.activate_player()
 
 
 func _on_player_killed() -> void:
@@ -110,6 +111,8 @@ func player_reached_goal() -> void:
 	yield(get_tree().create_timer(0.15), "timeout")
 	replay_controller.stop_recording_save_replay()
 	player.call_deferred("free")  # must be done second or it will crash
+
+	overview_camera.current = true
 
 	_switch_to_defense()
 	
