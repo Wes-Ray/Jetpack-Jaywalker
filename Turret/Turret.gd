@@ -8,17 +8,20 @@ onready var light = $Body/Laser/Light2D
 
 enum {PLACEMENT, ACTIVE}
 
-var GROUND_Y_COORD = 425
-var CEILING_Y_COORD = 225
+var ceil_y_snap := 0
+var floor_y_snap := 0
 
 var state = PLACEMENT
 var target_replay 
 var fire_offset := 0.0
+# point of the animation to skip to when placed
 var beam_secs := 1.7
 var aim_lead = Vector2(4, 0)
 
 func _ready():
 	target_replay = get_parent().get_last_replay_ref()
+	ceil_y_snap = get_parent().ceil_pos.y
+	floor_y_snap = get_parent().floor_pos.y
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -47,15 +50,16 @@ func project_beam():
 
 func move_turret():
 	var mouse_pos = get_global_mouse_position()
+	var dist_to_ceil = abs(ceil_y_snap - mouse_pos.y)
+	var dist_to_floor = abs(floor_y_snap - mouse_pos.y)
 	position.x = mouse_pos.x
 	# set turret y position based on snapping thresholds
-	# TODO: this check doesn't work on window resize
-	if mouse_pos.y > get_viewport().size.y / 2:
-		position.y = GROUND_Y_COORD
-		scale.y = 1
-	else:
-		position.y = CEILING_Y_COORD
+	if dist_to_ceil < dist_to_floor:
+		position.y = ceil_y_snap
 		scale.y = -1
+	else:
+		position.y = floor_y_snap
+		scale.y = 1
 	if Input.is_action_just_released("def_place_trap"):
 		print("placing turret at: ", position)
 		print("Time is: ", get_parent().round_time / 1000.00)
@@ -75,8 +79,10 @@ func place(round_time:float):
 	fire_offset = $AnimationPlayer.current_animation_length - (fmod(round_time, $AnimationPlayer.current_animation_length))
 	$AnimationPlayer.seek(beam_secs)
 
+
 func deactivate():
 	$AnimationPlayer.play("idle")
+
 
 func reset():
 	$AnimationPlayer.play("fire")

@@ -205,5 +205,11 @@ align = 1
 position = Vector2( 100, 326 )
 scale = Vector2( 0.2, 0.2 )
 
+[node name="FloorPos" type="Position2D" parent="."]
+position = Vector2( 474, 424 )
+
+[node name="CeilPos" type="Position2D" parent="."]
+position = Vector2( 474, 228 )
+
 [connection signal="all_replays_complete" from="ReplayController" to="." method="_on_ReplayController_all_replays_complete"]
 [connection signal="area_entered" from="AttackerGoal" to="." method="_on_AttackerGoal_area_entered"]

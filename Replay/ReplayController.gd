@@ -11,6 +11,8 @@ const turret_preload := preload("res://Turret/Turret.tscn")
 var round_time := 0.0
 
 var chase_wall_spawn_pos := Vector2(0,0)
+var ceil_pos := Vector2.ZERO
+var floor_pos := Vector2.ZERO
 var current_turret = null
 var current_chase_wall = null
 var turrets := []

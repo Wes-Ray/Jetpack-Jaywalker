@@ -12,7 +12,10 @@ var player : KinematicBody2D
 
 func _ready() -> void:
 	Global.game_state = Global.GameState.TRANSITION_TO_OFFENSE
-	$ReplayController.chase_wall_spawn_pos = $ChaseWallSpawn.position
+	if $ReplayController:
+		$ReplayController.chase_wall_spawn_pos = $ChaseWallSpawn.position
+		$ReplayController.ceil_pos = $CeilPos.position
+		$ReplayController.floor_pos = $FloorPos.position
 	# Orchestrator.init_spawn_created($SpawnPosition)
 	# Orchestrator.register_global_UI($UI)
 	# Orchestrator.register_main(self)
