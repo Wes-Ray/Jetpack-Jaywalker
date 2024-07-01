@@ -97,5 +97,5 @@ func damage():
 
 	# spawn blood splat (under player? can also just be on timer)
 	corpse.position = position
-	corpse.visible = true
+	# corpse.visible = true
 	print("corpse pos: ", corpse.position)

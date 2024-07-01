@@ -9,18 +9,9 @@ const splash_scene = "res://Scenes/Splash.tscn"
 
 var player : KinematicBody2D
 
-enum GameState {
-	TRANSITION_TO_OFFENSE,
-	TRANSITION_TO_DEFENSE,
-	OFFENSE,
-	DEFENSE,
-	GAME_OVER,
-}
-var game_state
-
 
 func _ready() -> void:
-	game_state = GameState.TRANSITION_TO_OFFENSE
+	Global.game_state = Global.GameState.TRANSITION_TO_OFFENSE
 	$ReplayController.chase_wall_spawn_pos = $ChaseWallSpawn.position
 	# Orchestrator.init_spawn_created($SpawnPosition)
 	# Orchestrator.register_global_UI($UI)
@@ -32,23 +23,25 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_released("ui_cancel"):
 		get_tree().quit()
 
-	match game_state:
-		GameState.TRANSITION_TO_OFFENSE:
+	match Global.game_state:
+		Global.GameState.TRANSITION_TO_OFFENSE:
 			ui_text.text = "TRANSITION TO OFFENSE (space)"
 			if Input.is_action_just_released("ui_accept"):
-				game_state = GameState.OFFENSE
+				Global.game_state = Global.GameState.OFFENSE
 				replay_controller.activate_offense()
 				spawn_player()
-		GameState.TRANSITION_TO_DEFENSE:
+				player.camera.current = true
+		Global.GameState.TRANSITION_TO_DEFENSE:
 			ui_text.text = "TRANSITION TO DEFENSE (space)"
 			if Input.is_action_just_released("ui_accept"):
-				game_state = GameState.DEFENSE
+				Global.game_state = Global.GameState.DEFENSE
 				replay_controller.activate_defense()
-		GameState.OFFENSE:
+				overview_camera.current = true
+		Global.GameState.OFFENSE:
 			ui_text.text = "OFFENSE"
-		GameState.DEFENSE:
+		Global.GameState.DEFENSE:
 			ui_text.text = "DEFENSE"
-		GameState.GAME_OVER:
+		Global.GameState.GAME_OVER:
 			ui_text.text = "GAME OVER (space to restart)"
 			if Input.is_action_just_released("ui_accept"):
 				var error = get_tree().change_scene(splash_scene)
@@ -89,36 +82,33 @@ func _on_player_killed() -> void:
 	game_over()
 
 	
-func _switch_to_defense() -> void:
+func _transition_camera() -> void:
 	# TODO: swap cameras back and forth
+	pass
 	
 	# var tween = Tween.new()
 	# add_child(tween)
 	# tween.interpolate_property(wiper, "shader_param/wipe_amount", 0.0, 1.0, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	# tween.start()
 
-	game_state = GameState.TRANSITION_TO_DEFENSE
-
 
 func _on_ReplayController_all_replays_complete() -> void:
 	print("all replays complete")
-	if game_state == GameState.DEFENSE:
-		game_state = GameState.TRANSITION_TO_OFFENSE
+	if Global.game_state == Global.GameState.DEFENSE:
+		Global.game_state = Global.GameState.TRANSITION_TO_OFFENSE
 
 
 func player_reached_goal() -> void:
 	print("player reached goal")
 	yield(get_tree().create_timer(0.15), "timeout")
 	replay_controller.stop_recording_save_replay()
-	player.call_deferred("free")  # must be done second or it will crash
-
 	overview_camera.current = true
+	player.call_deferred("free")  # must be done second or it will crash
+	Global.game_state = Global.GameState.TRANSITION_TO_DEFENSE
 
-	_switch_to_defense()
-	
 
 func game_over():
-	game_state = GameState.GAME_OVER
+	Global.game_state = Global.GameState.GAME_OVER
 
 #func player_help(on : bool):
 #	if on:

@@ -54,11 +54,10 @@ func test():
 
 
 func activate_player() -> void:
-	camera.current = true
 	print("activate player")
+#	camera.current = true
 	# player_state = PlayerStates.IDLE
 	# collision_shape.set_deferred("enabled", true)
-#	camera.current = true
 #	screen_unwipe()
 
 

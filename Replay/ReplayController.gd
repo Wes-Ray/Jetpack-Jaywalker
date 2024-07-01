@@ -8,8 +8,6 @@ const replay_corpse_preload := preload("res://Replay/Corpse.tscn")
 const chase_wall_preload := preload("res://ZapWall/ChaseWall.tscn")
 const turret_preload := preload("res://Turret/Turret.tscn")
 
-var defense_active := false
-var offense_active := false
 var round_time := 0.0
 
 var chase_wall_spawn_pos := Vector2(0,0)
@@ -31,7 +29,7 @@ const POS_OFFSCREEN := Vector2(-400, -400)
 
 
 func _physics_process(delta: float) -> void:
-	if defense_active or offense_active:
+	if Global.game_state == Global.GameState.OFFENSE or Global.game_state == Global.GameState.DEFENSE:
 		round_time += delta
 		if current_turret and Input.is_action_just_released("def_place_trap"):
 			print("placing turret at: ", current_turret.position)
@@ -42,7 +40,6 @@ func _physics_process(delta: float) -> void:
 
 
 func activate_defense():
-	defense_active = true
 	round_time = 0.0
 	if current_turret == null:
 		current_turret = turret_preload.instance()
@@ -57,7 +54,6 @@ func activate_defense():
 
 
 func activate_offense():
-	offense_active = true
 	round_time = 0.0
 
 	current_chase_wall = chase_wall_preload.instance()
@@ -65,16 +61,6 @@ func activate_offense():
 	current_chase_wall.position = chase_wall_spawn_pos
 
 	replay()
-
-
-func deactivate_defense():
-	defense_active = false
-	stop_replay()
-
-
-func deactivate_offense():
-	offense_active = false
-	stop_replay()
 
 
 func register_player(player_in) -> void:
@@ -141,7 +127,7 @@ func _on_ReplayTimer_timeout() -> void:
 				is_replaying = true
 		if not is_replaying:
 			emit_signal("all_replays_complete")
-			deactivate_defense()
+			stop_replay()
 		replay_tick += 1
 
 

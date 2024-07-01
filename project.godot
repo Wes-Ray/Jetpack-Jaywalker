@@ -13,6 +13,10 @@ config_version=4
 config/name="Jetpack Jaywalker"
 run/main_scene="res://Scenes/Level.tscn"
 
+[autoload]
+
+Global="*res://World/Global.gd"
+
 [display]
 
 window/size/width=363
